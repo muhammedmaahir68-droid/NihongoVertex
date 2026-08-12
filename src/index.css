@@ -1,0 +1,191 @@
+/* Custom Global CSS resets & variables */
+:root {
+  --bg-gradient: radial-gradient(circle at top, #111b36, #050814 60%);
+  --panel-bg: rgba(12, 20, 40, 0.75);
+  --border-color: #233457;
+  --accent-color: #536dff;
+  --accent-glow: rgba(83, 109, 255, 0.35);
+  --text-primary: #eef2ff;
+  --text-muted: #8f9db8;
+  --panel-border: 1px solid #29385e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060914;
+}
+::-webkit-scrollbar-thumb {
+  background: #1b2848;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #273b6b;
+}
+
+/* Button & interactive states */
+button {
+  font: inherit;
+  border: 1px solid #2b3b61;
+  background: #121c34;
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover {
+  background: #1c2c4e;
+  border-color: #3b5185;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+/* Navigation items */
+.nav-btn:hover {
+  background: rgba(83, 109, 255, 0.08);
+  color: #9db0ff;
+}
+
+.active-nav {
+  box-shadow: inset 0 0 12px rgba(83, 109, 255, 0.1);
+}
+
+/* Layout Blocks */
+.app-shell {
+  max-width: 1400px;
+  margin: auto;
+}
+
+.hero {
+  background: radial-gradient(circle at top right, rgba(83, 109, 255, 0.15), rgba(12, 20, 40, 0.8));
+  border: var(--panel-border);
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: var(--panel-border);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.brand {
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #9db0ff;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 800;
+  margin: 10px 0;
+  background: linear-gradient(135deg, #fff 30%, #9db0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Cards Grid */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.cards article {
+  padding: 20px;
+  border-radius: 16px;
+  background: #111b33;
+  border: 1px solid #263554;
+  transition: all 0.25s ease;
+}
+
+.cards article:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-color);
+  box-shadow: 0 8px 20px rgba(83, 109, 255, 0.1);
+}
+
+.cards p {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* Interactive character panels */
+.kana-card, .kanji-card {
+  transition: all 0.2s ease;
+}
+
+.kana-card:hover, .kanji-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(83, 109, 255, 0.15);
+  border-color: #3f58e3 !important;
+}
+
+.selected {
+  box-shadow: 0 0 16px var(--accent-glow) !important;
+}
+
+/* Animations */
+.japanese-character {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr !important;
+  }
+  .sidebar {
+    height: auto !important;
+    position: static !important;
+  }
+}

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nihongo-frontend
+  namespace: nihongo
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: nihongo-frontend }
+  template:
+    metadata:
+      labels: { app: nihongo-frontend }
+    spec:
+      containers:
+        - name: frontend
+          image: YOUR_REGISTRY/nihongo-frontend:latest
+          ports: [{ containerPort: 5173 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nihongo-frontend
+  namespace: nihongo
+spec:
+  type: ClusterIP
+  selector: { app: nihongo-frontend }
+  ports:
+    - port: 80
+      targetPort: 5173

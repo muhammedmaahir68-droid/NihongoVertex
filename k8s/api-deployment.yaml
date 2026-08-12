@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nihongo-api
+  namespace: nihongo
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: nihongo-api }
+  template:
+    metadata:
+      labels: { app: nihongo-api }
+    spec:
+      containers:
+        - name: api
+          image: YOUR_REGISTRY/nihongo-api:latest
+          ports: [{ containerPort: 8000 }]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef: { name: nihongo-secrets, key: database-url }
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef: { name: nihongo-secrets, key: redis-url }
+          readinessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 15
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits: { cpu: "1000m", memory: "512Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nihongo-api
+  namespace: nihongo
+spec:
+  selector: { app: nihongo-api }
+  ports:
+    - port: 8000
+      targetPort: 8000
