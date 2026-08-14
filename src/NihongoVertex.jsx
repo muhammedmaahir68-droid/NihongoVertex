@@ -2265,12 +2265,14 @@ export default function NihongoVertex(){
         </div>
 
         <main className="flex-1 p-4 md:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
-          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo}/>}
-          {screen==="lessons" && <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/>}
+          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel}/>}
+          {screen==="lessons" && (activeLevel === "N5" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/> : <LevelLessonHub level={activeLevel} goTo={goTo}/>)}
           {screen==="characters" && <CharacterLab/>}
-          {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
-          {screen==="levels" && <LevelSelector progress={progress} lessons={LESSONS} goTo={goTo} otherLevels={OTHER_LEVELS}/>}
-          {screen==="levelDetail" && <LevelDetail level={param} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
+          {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}
+          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
+          {screen==="minnaII" && <BeginnerIILesson lesson={currentBeginnerIILesson} goTo={goTo}/>}
+          {screen==="levels" && <LevelSelector progress={progress} goTo={goTo} otherLevels={OTHER_LEVELS} activeLevel={activeLevel} onSelectLevel={(lv)=>{ setActiveLevel(lv); goTo("lessons"); }}/>}
+          {screen==="levelDetail" && <LevelDetail level={param || activeLevel} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
           {screen==="mistakes" && <MistakeBook mistakes={mistakes}/>}
           {screen==="mock" && <MockExamIntro level={activeLevel} onStart={startMock} goTo={goTo}/>}
           {screen==="mockResult" && mockResult && <MockExamResult result={mockResult} goTo={goTo}/>}
