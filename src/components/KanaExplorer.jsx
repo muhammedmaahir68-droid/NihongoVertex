@@ -130,7 +130,9 @@ export default function KanaExplorer({ level }) {
           { id: "basic", label: "Basic (Gojūon)" },
           { id: "dakuon", label: "Voiced (Dakuon)" },
           { id: "handakuon", label: "Half-voiced" },
-          { id: "yoon", label: "Combo (Yōon)" }
+          { id: "yoon", label: "Combo (Yōon)" },
+          { id: "small", label: "Small" },
+          ...(scriptType === "katakana" ? [{ id: "extended", label: "Extended" }] : [])
         ].map((f) => (
           <button
             key={f.id}

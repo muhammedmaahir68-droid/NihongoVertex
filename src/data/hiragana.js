@@ -131,5 +131,20 @@ export const hiraganaData = [
   
   { char: "ぴゃ", romaji: "pya", type: "yoon", mnemonic: "pi + small ya" },
   { char: "ぴゅ", romaji: "pyu", type: "yoon", mnemonic: "pi + small yu" },
-  { char: "ぴょ", romaji: "pyo", type: "yoon", mnemonic: "pi + small yo" }
+  { char: "ぴょ", romaji: "pyo", type: "yoon", mnemonic: "pi + small yo" },
+
+  // --- Small Characters (Sokuon & Others) ---
+  { char: "ぁ", romaji: "xa", type: "small", mnemonic: "Small あ, used to express foreign sounds or exclamation." },
+  { char: "ぃ", romaji: "xi", type: "small", mnemonic: "Small い, used to express foreign sounds." },
+  { char: "ぅ", romaji: "xu", type: "small", mnemonic: "Small う, used to express foreign sounds." },
+  { char: "ぇ", romaji: "xe", type: "small", mnemonic: "Small え, used to express foreign sounds." },
+  { char: "ぉ", romaji: "xo", type: "small", mnemonic: "Small お, used to express foreign sounds." },
+  { char: "っ", romaji: "xtsu", type: "small", mnemonic: "Sokuon. Creates a double consonant pause in speech." },
+  { char: "ゃ", romaji: "xya", type: "small", mnemonic: "Small や, used in combination (Yōon) characters." },
+  { char: "ゅ", romaji: "xyu", type: "small", mnemonic: "Small ゆ, used in combination (Yōon) characters." },
+  { char: "ょ", romaji: "xyo", type: "small", mnemonic: "Small よ, used in combination (Yōon) characters." },
+  { char: "ゎ", romaji: "xwa", type: "small", mnemonic: "Small わ, used in traditional dialects or archaic spelling." },
+  { char: "ゕ", romaji: "xka", type: "small", mnemonic: "Small か, used historically or for specific abbreviations." },
+  { char: "ゖ", romaji: "xke", type: "small", mnemonic: "Small け, used as a counter particle read as 'ka'." }
 ];
+
