@@ -626,7 +626,7 @@ function Home({progress, lessons, goTo}){
   const nextLesson = lessons.find(l => !progress.completedLessons[l.id]) || lessons[0];
 
   return (<>
-      <AITutor level={"N5"} module="Dashboard" compact={true}/>
+      
     <div className="space-y-6 pb-24 md:pb-6">
       <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
         <div className="absolute -right-10 -top-10 w-52 h-52 rounded-full bg-red-700/20 blur-2xl"/>
@@ -783,7 +783,7 @@ function LevelDetail({level, otherLevels, goTo}){
 // ---------------- Lesson List ----------------
 function LessonList({lessons, progress, goTo}){
   return (<>
-      <AITutor level={"N5"} module="Vocabulary" compact={true}/>
+      
     <div className="space-y-4 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">学習 <span className="text-stone-400 text-base font-normal">N5 Lessons (based on Minna no Nihongo 1–25)</span></h2>
       <div className="grid sm:grid-cols-2 gap-3">
@@ -1050,7 +1050,7 @@ function CharacterLab(){
   const filtered=list.filter(x=>(x[0]+" "+x[1]+" "+x[2]+" "+(x[3]||"")).toLowerCase().includes(query.toLowerCase()));
   function chooseChar(c){ const i=list.findIndex(x=>x[0]===c); if(i>=0){setIdx(i); setQuery("");} }
   return (<>
-      <AITutor level={"N5"} module="Characters" compact={false}/>
+      
     <div className="space-y-5 pb-24 md:pb-6">
       <div>
         <div className="text-xs text-red-700 font-semibold tracking-widest uppercase">Character Lab</div>
@@ -1236,7 +1236,7 @@ function ListeningPractice({items=[]}){
   const [show,setShow]=useState(false);
   const item=items[idx]||{};
   return (<>
-      <AITutor level={"N5"} module="Listening" compact={false}/>
+      
     <Card className="p-5">
       <div className="text-xs uppercase tracking-widest text-red-700 font-semibold">🎧 Listening</div>
       <div className="font-semibold mt-1 mb-4">Listen first. Do not read. Then reveal the answer.</div>
@@ -1264,7 +1264,7 @@ function QuickRevision({lesson, compact=false}){
   const grammar = lesson.grammar || [];
   const vocab = lesson.vocab || [];
   return (<>
-      <AITutor level={"N5"} module="Quick Revision" compact={false}/>
+      
     <Card className={`${compact ? "p-4" : "p-6"} bg-amber-50/60 border-amber-200`}>
       <div className="flex items-center justify-between gap-3 mb-3">
         <div>
@@ -1310,7 +1310,7 @@ function LevelCompletionNotes({level="N5", lessons, progress, goTo}){
   const grammar = lessons.flatMap(l=>l.grammar || []);
   const pct = Math.round((done.length/Math.max(lessons.length,1))*100);
   return (<>
-      <AITutor level={level} module="Level Review" compact={false}/>
+      
     <div className="space-y-5 pb-24 md:pb-6">
       <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-7 md:p-10">
         <div className="text-red-400 text-xs tracking-[0.25em] uppercase">Level Complete</div>
@@ -1398,7 +1398,7 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
   }
   useEffect(()=>{setStage(0);setQuizIdx(0);setSelected(null);setScore(0);setFinished(false)},[lesson.id]);
   return (<>
-      <AITutor level={"N5"} module={stages[stage] || "Lesson"} lesson={lesson} compact={true}/>
+      
     <div className="space-y-5 pb-24 md:pb-6">
       <button onClick={()=>goTo("lessons")} className="flex items-center gap-1 text-sm text-stone-500"><ChevronLeft size={16}/> All lessons</button>
       <div>
@@ -1489,7 +1489,7 @@ function ProgressDashboard({progress, lessons}){
   const mockBest = progress.mockAttempts.length ? Math.max(...progress.mockAttempts.map(m=>Math.round(m.score/m.total*100))) : null;
 
   return (<>
-      <AITutor level={"N5"} module="Progress" compact={true}/>
+      
     <div className="space-y-6 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">進捗 <span className="text-stone-400 text-base font-normal">Progress</span></h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1782,7 +1782,7 @@ function MockExamRunner({exam, onFinish}){
   };
 
   return (<>
-      <AITutor level={"N5"} module="Mock Exam" compact={true}/>
+      
     <div className="fixed inset-0 bg-stone-50 z-40 overflow-y-auto">
       <div className="max-w-3xl mx-auto p-4 md:p-8 pb-32">
         <div className="flex items-center justify-between mb-4">
