@@ -2235,7 +2235,15 @@ export default function NihongoVertex(){
         if (activeLevel === "N1") return l.id >= 76 && l.id <= 85;
         return false;
       });
-      levelQuiz = quizBank[activeLevel] || [];
+      // Each advanced lesson supplies its own original checkpoint question.
+      // Build the level's mock-question pool directly from those lessons.
+      levelQuiz = levelLessonsList.map(lesson => ({
+        q: lesson.q,
+        qta: "",
+        options: lesson.options,
+        answer: lesson.answer,
+        explain: lesson.en,
+      }));
       levelVocab = levelLessonsList.map(l => ({ jp: l.pattern, en: l.en, ta: l.ta }));
     }
 
