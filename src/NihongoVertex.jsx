@@ -6746,12 +6746,12 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
   const [selected,setSelected]=useState(null);
   const [score,setScore]=useState(0);
   const [finished,setFinished]=useState(false);
-  const stages=["Teach","Vocabulary","Grammar","Listening","Spell","Quick Review","Quiz"];
+  const stages=["Teach","Vocabulary (単語)","Sentence Patterns (文型)","Example Sentences (例文)","Grammar Notes (文法解説)","Listening","Quiz"];
   const teachItems=[
     {jp:lesson.jp,r:toRomaji(lesson.jp),en:lesson.en,ta:lesson.ta},
-    ...lesson.vocab.slice(0,2)
+    ...lesson.vocab.slice(0,3)
   ];
-  const listening=lesson.vocab.slice(0,4).map(v=>({jp:v.jp,r:v.r,en:v.en,ta:v.ta,context:`Lesson ${lesson.id}: listen and understand`}));
+  const listening=lesson.vocab.slice(0,5).map(v=>({jp:v.jp,r:v.r,en:v.en,ta:v.ta,context:`Lesson ${lesson.id}: listen and understand`}));
   const q=lesson.quiz[quizIdx];
   const qSpeech=(q?.q||"").match(/[ぁ-んァ-ン一-龯ー々「」]+/g)?.join(" ") || q?.options?.[0] || "";
   function answer(opt){if(selected) return;setSelected(opt);if(opt===q.answer)setScore(s=>s+1);}
@@ -6764,34 +6764,75 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
     <div className="space-y-5 pb-24 md:pb-6">
       <button onClick={()=>goTo("lessons")} className="flex items-center gap-1 text-sm text-stone-500"><ChevronLeft size={16}/> All lessons</button>
       <div>
-        <div className="text-xs text-stone-400">Lesson {lesson.id} / 25 · Learn inch by inch</div>
+        <div className="text-xs text-stone-400">Lesson {lesson.id} / 25 · Complete Line-by-Line Textbook Syllabus</div>
         <h2 className="text-2xl font-bold text-stone-900 mt-1">{lesson.en}</h2>
         <JapaneseReading jp={lesson.jp} className="mt-2"/>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-stone-100 rounded-xl p-1">
-        {stages.map((s,i)=><button key={s} onClick={()=>setStage(i)} className={`px-2 py-2 rounded-lg text-xs sm:text-sm ${stage===i?"bg-white shadow-sm text-stone-900":"text-stone-500"}`}>{i+1}. {s}</button>)}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 bg-stone-100 rounded-xl p-1">
+        {stages.map((s,i)=><button key={s} onClick={()=>setStage(i)} className={`px-2 py-2 rounded-lg text-xs font-medium text-center ${stage===i?"bg-white shadow-sm text-stone-900 font-semibold":"text-stone-500"}`}>{i+1}. {s}</button>)}
       </div>
       <div className="flex items-center gap-2 text-xs text-stone-500">
         <div className="flex-1 h-2 rounded-full bg-stone-100 overflow-hidden"><div className="h-full bg-red-700 transition-all" style={{width:`${((stage+1)/stages.length)*100}%`}}/></div>
         <span>{stage+1}/{stages.length}</span>
       </div>
 
-      {stage===0 && <VoiceTutor items={teachItems} title={`Teacher mode · Lesson ${lesson.id}`} intro="Listen to the teacher one small sentence/word at a time. Hear → read → repeat → understand."/>}
-      {stage===1 && <div className="space-y-4"><VoiceTutor items={lesson.vocab} title="Vocabulary tutor" intro="Learn every word with Japanese, romaji, meaning and voice."/><SpellingPractice items={lesson.vocab}/></div>}
+      {stage===0 && <VoiceTutor items={teachItems} title={`Teacher mode · Lesson ${lesson.id}`} intro="Listen to the teacher one sentence at a time. Hear → read → repeat → understand."/>}
+      
+      {stage===1 && <div className="space-y-4">
+        <VoiceTutor items={lesson.vocab} title={`Complete Vocabulary (単語) · ${lesson.vocab.length} Words`} intro="Every vocabulary word from the Minna no Nihongo textbook with audio, romaji, English & Tamil glosses."/>
+        <SpellingPractice items={lesson.vocab}/>
+      </div>}
+
       {stage===2 && <div className="space-y-4">
+        <Card className="p-5">
+          <h3 className="text-lg font-bold text-stone-900 mb-1">文型 (Sentence Patterns)</h3>
+          <p className="text-xs text-stone-500 mb-4">Official core sentence structures from Lesson {lesson.id}</p>
+          <div className="space-y-3">
+            {(lesson.sentence_patterns || []).map((sp, i) => (
+              <div key={i} className="p-3 bg-stone-50 rounded-xl border border-stone-200/60">
+                <JapaneseReading jp={sp.jp}/>
+                <div className="text-xs text-stone-500 mt-1">{sp.r}</div>
+                <div className="text-sm font-medium text-stone-800 mt-1">{sp.en}</div>
+                <div className="text-xs text-red-700/80 mt-0.5" lang="ta">{sp.ta}</div>
+                <button onClick={()=>speakJapanese(sp.jp)} className="mt-2 inline-flex items-center gap-1.5 text-xs text-stone-700 hover:text-red-700 bg-white border border-stone-200 px-3 py-1 rounded-lg"><Volume2 size={13}/> Hear pattern</button>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>}
+
+      {stage===3 && <div className="space-y-4">
+        <Card className="p-5">
+          <h3 className="text-lg font-bold text-stone-900 mb-1">例文 (Example Sentences & Dialogues)</h3>
+          <p className="text-xs text-stone-500 mb-4">Line-by-line conversational dialogues and examples from Lesson {lesson.id}</p>
+          <div className="space-y-3">
+            {(lesson.example_sentences || []).map((ex, i) => (
+              <div key={i} className="p-3 bg-stone-50 rounded-xl border border-stone-200/60">
+                <JapaneseReading jp={ex.jp}/>
+                <div className="text-xs text-stone-500 mt-1">{ex.r}</div>
+                <div className="text-sm font-medium text-stone-800 mt-1">{ex.en}</div>
+                <div className="text-xs text-red-700/80 mt-0.5" lang="ta">{ex.ta}</div>
+                <button onClick={()=>speakJapanese(ex.jp)} className="mt-2 inline-flex items-center gap-1.5 text-xs text-stone-700 hover:text-red-700 bg-white border border-stone-200 px-3 py-1 rounded-lg"><Volume2 size={13}/> Hear dialogue</button>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>}
+
+      {stage===4 && <div className="space-y-4">
         {lesson.grammar.map((g,i)=><Card key={i} className="p-5">
           <div className="text-xs uppercase tracking-widest text-red-700 font-semibold">Grammar point {i+1}</div>
           <JapaneseReading jp={g.t} className="mt-2"/>
           <div className="text-stone-700 mt-2">{g.en}</div>
           <div className="text-sm text-red-700/70 mt-1" lang="ta">{g.ta}</div>
-          <div className="mt-3 bg-stone-50 rounded-xl p-3"><b>Pattern:</b> {g.form}</div>
-          <div className="mt-3"><JapaneseReading jp={g.ex.jp}/><div className="text-sm text-stone-600 mt-1">{g.ex.en}</div></div>
+          <div className="mt-3 bg-stone-50 rounded-xl p-3"><b>Pattern Rule:</b> {g.form}</div>
+          <div className="mt-3"><JapaneseReading jp={g.ex.jp}/><div className="text-sm text-stone-600 mt-1">{g.ex.en}</div><div className="text-xs text-red-700/70 mt-0.5" lang="ta">{g.ex.ta}</div></div>
           <button onClick={()=>speakJapanese(`${g.t}。${g.ex.jp}`)} className="mt-3 inline-flex items-center gap-2 bg-stone-900 text-white px-4 py-2 rounded-xl"><Volume2 size={15}/> Tutor explanation</button>
         </Card>)}
       </div>}
-      {stage===3 && <ListeningPractice items={listening}/>}
-      {stage===4 && <SpellingPractice items={[...lesson.vocab,{jp:lesson.jp,r:toRomaji(lesson.jp),en:lesson.en}]}/>}
-      {stage===5 && <QuickRevision lesson={lesson}/>}
+
+      {stage===5 && <ListeningPractice items={listening}/>}
+
       {stage===6 && !finished && <Card className="p-6 max-w-xl">
         <div className="text-xs text-stone-400 mb-2">Question {quizIdx+1} / {lesson.quiz.length}</div>
         <div className="text-lg font-medium text-stone-900 mb-1">{q.q}</div>
@@ -6804,22 +6845,22 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
         {selected && <div className="mt-4 p-3 rounded-xl bg-stone-50 text-sm">{selected===q.answer?"✓ Correct! ":"✗ Review: "}{q.explain}</div>}
         <button disabled={!selected} onClick={nextQ} className="mt-4 bg-stone-900 disabled:opacity-30 text-white px-5 py-2.5 rounded-xl">{quizIdx+1<lesson.quiz.length?"Next question":"Finish lesson quiz"}</button>
       </Card>}
+
       {stage===6 && finished && <Card className="p-8 max-w-xl text-center">
         <Award className="mx-auto text-red-700 mb-3" size={40}/>
         <div className="text-2xl font-bold">Lesson complete 🎉</div>
         <div className="text-stone-500 mt-1 mb-5">Quiz score: {score + (selected===q.answer?1:0)} / {lesson.quiz.length}</div>
-        <div className="text-sm text-stone-500 mb-5">You completed: teaching → vocabulary → grammar → listening → spelling → quiz.</div>
+        <div className="text-sm text-stone-500 mb-5">You completed: teaching → vocabulary → sentence patterns → example sentences → grammar notes → quiz.</div>
         <div className="flex gap-3 justify-center flex-wrap">
-          <button onClick={()=>setStage(5)} className="border border-stone-300 rounded-xl px-5 py-2.5">Quick revision</button>
+          <button onClick={()=>setStage(4)} className="border border-stone-300 rounded-xl px-5 py-2.5">Review grammar notes</button>
           {isLastLesson
-            ? <button onClick={()=>goTo("levelComplete","N5")} className="bg-red-700 text-white rounded-xl px-5 py-2.5">View full N5 notes →</button>
+            ? <button onClick={()=>goTo("levelComplete","N5")} className="bg-red-700 text-white rounded-xl px-5 py-2.5">View full exam notes →</button>
             : <button onClick={()=>goTo("lesson",Math.min(lesson.id+1,25))} className="bg-red-700 text-white rounded-xl px-5 py-2.5">Next lesson →</button>}
         </div>
       </Card>}
     </div>
   );
 }
-
 
 // ---------------- Mistake Book ----------------
 function MistakeBook({mistakes}){
