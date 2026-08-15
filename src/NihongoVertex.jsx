@@ -3,6 +3,7 @@ import Syllabus from "./components/Syllabus";
 import KanaExplorer from "./components/KanaExplorer";
 import KanjiDictionary from "./components/KanjiDictionary";
 import QuizEngine from "./components/QuizEngine";
+import { OBJECT_FIRST_SCENES } from "./data/objectFirstScenes";
 import { BookOpen, Home as HomeIcon, Layers, PenTool, Headphones, ListChecks, ClipboardCheck, AlertCircle, TrendingUp, Settings, Menu, X, Flame, Star, ChevronRight, ChevronLeft, Flag, Clock, CheckCircle2, XCircle, Play, Pause, RotateCcw, Award, Lock, Volume2, PenLine, Search, Sparkles, Bot, MessageCircle, CalendarCheck, Target, Briefcase, Send, Trophy, Bell, UserRound, Check, Zap } from "lucide-react";
 
 // ===== Data (N5: sourced from user-uploaded Minna no Nihongo I translation/grammar notes; N4-N1: sample from public JLPT references) =====
@@ -619,22 +620,22 @@ function Card({children, className=""}){
 }
 
 // ---------------- Home / Dashboard ----------------
-function Home({progress, lessons, goTo}){
+function Home({progress, lessons, goTo, activeLevel="N5", onChangeGoal}){
   const completedCount = Object.keys(progress.completedLessons).length;
   const totalLessons = lessons.length;
   const pct = Math.round((completedCount/totalLessons)*100);
   const nextLesson = lessons.find(l => !progress.completedLessons[l.id]) || lessons[0];
 
   return (<>
-      
-    <div className="space-y-6 pb-24 md:pb-6">
-      <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
+    <div className="home-dashboard space-y-6 pb-24 md:pb-6">
+      <button type="button" onClick={onChangeGoal} className="inline-flex items-center gap-2 rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm font-semibold text-sky-800 shadow-sm hover:bg-sky-50"><ChevronLeft size={17}/> Back</button>
+      <div className="home-hero relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
         <div className="absolute -right-10 -top-10 w-52 h-52 rounded-full bg-red-700/20 blur-2xl"/>
         <div className="absolute right-6 top-6 w-3 h-3 rounded-full bg-red-600"/>
         <p className="text-red-400 text-xs tracking-[0.3em] uppercase mb-3">Nihongo Vertex</p>
         <h1 className="text-3xl md:text-5xl font-bold mb-2" lang="ja">日本語を、試験に強い力へ。</h1>
         <p className="text-stone-300 max-w-xl mb-1">Master Japanese from your first hiragana to JLPT N1 — studied through தமிழ் · English · 日本語.</p>
-        <button onClick={()=>goTo("lessons")} className="mt-6 inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
+        <button onClick={()=>activeLevel==="N5"?goTo("lessons"):goTo("levelDetail",activeLevel)} className="mt-6 inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
           Continue Learning <ChevronRight size={18}/>
         </button>
       </div>
@@ -642,7 +643,7 @@ function Home({progress, lessons, goTo}){
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1">Current Level</div>
-          <div className="text-2xl font-bold text-stone-900">N5</div>
+          <div className="text-2xl font-bold text-stone-900">{activeLevel}</div>
         </Card>
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1 flex items-center gap-1"><Flame size={14} className="text-red-600"/> Streak</div>
@@ -653,14 +654,14 @@ function Home({progress, lessons, goTo}){
           <div className="text-2xl font-bold text-stone-900">{progress.xp}</div>
         </Card>
         <Card className="p-5">
-          <div className="text-stone-500 text-xs mb-1">N5 Progress</div>
+          <div className="text-stone-500 text-xs mb-1">{activeLevel} Progress</div>
           <div className="text-2xl font-bold text-stone-900">{pct}%</div>
         </Card>
       </div>
 
       <Card className="p-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-stone-900">N5 Lesson Progress</h3>
+          <h3 className="font-semibold text-stone-900">{activeLevel} Lesson Progress</h3>
           <span className="text-sm text-stone-500">{completedCount} / {totalLessons} lessons</span>
         </div>
         <ProgressBar pct={pct}/>
@@ -1039,6 +1040,33 @@ function WritingPad({character}){
   );
 }
 
+function ObjectFirstScene({scene}){
+  const [replay,setReplay]=useState(0);
+  if(!scene) return null;
+  const delay=(ms)=>({animationDelay:`${ms}ms`});
+  return <div className="shape-mnemonic object-first-scene" key={replay}>
+    <div className="shape-caption"><b>{scene.character} · {scene.romaji}</b> — a <b>{scene.object}</b> becomes the character</div>
+    <svg className="object-first-svg" viewBox="0 0 240 150" role="img" aria-label={`${scene.character}: ${scene.object} transforms into the character`}>
+      <g className="object-lines">
+        {scene.transformationPaths.map((path,index)=><path key={path.id} d={path.from} className="object-first-line" style={delay(index*120)}>
+          <animate attributeName="d" dur={`${scene.timing.loopMs}ms`} repeatCount="indefinite" values={`${path.from};${path.from};${path.to};${path.to}`} keyTimes="0;0.27;0.55;1"/>
+        </path>)}
+      </g>
+    </svg>
+    <div className="scene-controls"><span>object → connected lines → character</span><button type="button" onClick={()=>setReplay(value=>value+1)}>Replay</button></div>
+  </div>;
+}
+
+function ShapeMnemonic({character,romaji,meaning,mnemonic}){
+  const scene=OBJECT_FIRST_SCENES[character];
+  if(scene) return <ObjectFirstScene scene={scene}/>;
+  return <Card className="p-6">
+    <div className="font-semibold mb-3">🎯 Memory trick</div>
+    <div className="text-stone-700 font-medium mb-2">{meaning || mnemonic}</div>
+    <p className="text-sm text-stone-500">Look at the shape, say <b>{romaji}</b> three times, connect it to the object, then write it without looking.</p>
+  </Card>;
+}
+
 function CharacterLab(){
   const [script,setScript]=useState("hiragana");
   const [idx,setIdx]=useState(0);
@@ -1092,18 +1120,7 @@ function CharacterLab(){
           <button onClick={()=>speakJapanese(char)} className="mt-4 inline-flex items-center gap-2 bg-stone-900 text-white px-5 py-2.5 rounded-xl"><Volume2 size={17}/> Hear pronunciation</button>
           <div className="mt-4 text-xs text-stone-400">Say it aloud: <b>{romaji}</b></div>
         </Card>
-        {mode==="practice" ? <WritingPad character={char}/> : (
-          <Card className="p-6">
-            <div className="font-semibold mb-3">🎯 Memory trick</div>
-            <div className="text-5xl mb-3">{script==="kanji"?item[4]:item[2]}</div>
-            <div className="text-stone-700 font-medium mb-2">{script==="kanji"?item[3]:item[3]}</div>
-            <p className="text-sm text-stone-500">Look at the shape, say <b>{romaji}</b> three times, connect it to the object, then write it without looking.</p>
-            <div className="mt-5 p-4 rounded-xl bg-stone-50">
-              <div className="text-xs uppercase tracking-wide text-stone-400 mb-1">3-step memory loop</div>
-              <div className="text-sm">👀 See → 🔊 Say → ✍️ Write → 🔁 Repeat</div>
-            </div>
-          </Card>
-        )}
+        {mode==="practice" ? <WritingPad character={char}/> : <ShapeMnemonic character={char} romaji={romaji} meaning={item[3]} mnemonic={item[3]}/>}
       </div>
       <Card className="p-5">
         <div className="flex items-center justify-between mb-3">
@@ -2167,7 +2184,7 @@ export default function NihongoVertex(){
   const [param, setParam] = useState(null);
   const [mockExamData, setMockExamData] = useState(null);
   const [mockResult, setMockResult] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(()=>typeof window!=="undefined" && window.innerWidth>=768);
   const [mistakes, setMistakes] = useState([]);
   const [activeLevel, setActiveLevel] = useState(()=>{try{return localStorage.getItem("nv-active-level")||"N5";}catch(e){return "N5";}});
   const [hasChosenLevel, setHasChosenLevel] = useState(()=>{try{return localStorage.getItem("nv-level-chosen")==="true";}catch(e){return false;}});
@@ -2176,9 +2193,27 @@ export default function NihongoVertex(){
   const currentBeginnerIILesson = param && BEGINNER_II_LESSONS.find(l=>l.id===param);
 
   function goTo(scr, p=null){
-    if(scr==="levelDetail"){ setActiveLevel(typeof p==="string"?p:(p?.code||"N5")); }
+    if(scr==="levelDetail"){
+      const selectedLevel = typeof p==="string" ? p : (p?.code||"N5");
+      setActiveLevel(LEVELS.includes(selectedLevel) ? selectedLevel : "N5");
+      if(selectedLevel === "N5"){ scr="lessons"; p=null; }
+    }
     setScreen(scr); setParam(p); setSidebarOpen(false);
     window.scrollTo(0,0);
+  }
+
+  function changeExamGoal(){
+    try{localStorage.removeItem("nv-level-chosen");}catch(e){}
+    setSidebarOpen(false);
+    setHasChosenLevel(false);
+    window.scrollTo(0,0);
+  }
+
+  function selectStudyLevel(level){
+    const selectedLevel = LEVELS.includes(level) ? level : "N5";
+    setActiveLevel(selectedLevel);
+    try{localStorage.setItem("nv-active-level",selectedLevel);}catch(e){}
+    goTo(selectedLevel === "N5" ? "lessons" : "levelDetail", selectedLevel);
   }
 
   function handleLessonComplete(lessonId, score, total){
@@ -2221,6 +2256,10 @@ export default function NihongoVertex(){
     return <div className="min-h-screen flex items-center justify-center text-stone-400">Loading...</div>;
   }
 
+  if(!hasChosenLevel){
+    return <LevelOnboarding onChoose={(level)=>{setActiveLevel(level);try{localStorage.setItem("nv-level-chosen","true");}catch(e){}setHasChosenLevel(true);}}/>;
+  }
+
   if(screen === "mockRun" && mockExamData){
     return <MockExamRunner exam={mockExamData} onFinish={finishMock} />;
   }
@@ -2228,26 +2267,24 @@ export default function NihongoVertex(){
   return (
     <div className="min-h-screen bg-stone-50 font-sans" style={{fontFamily:"'Noto Sans JP','Noto Sans Tamil',ui-sans-serif,system-ui"}}>
       <div className="flex">
-        {/* Desktop sidebar */}
-        <aside className="hidden md:flex md:flex-col w-64 shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0">
-          <div className="p-6 border-b border-stone-100">
-            <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-600"/>
-              <span className="font-bold text-stone-900 tracking-tight">Nihongo Vertex</span>
-            </div>
+        {/* Desktop sidebar: compact rail by default, expandable as in the reference UI. */}
+        <aside className={`app-sidebar hidden md:flex md:flex-col shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0 ${sidebarOpen ? "sidebar-expanded" : "sidebar-collapsed"}`}>
+          <div className="sidebar-brand p-4 border-b border-stone-100">
+            <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 rounded-full bg-red-600"/><span className="sidebar-label font-bold text-stone-900 tracking-tight">Nihongo Vertex</span></div>
+            <button type="button" className="sidebar-menu-button" onClick={()=>setSidebarOpen(value=>!value)} aria-label={sidebarOpen ? "Collapse navigation" : "Expand navigation"} aria-expanded={sidebarOpen}>{sidebarOpen ? <X size={19}/> : <Menu size={19}/>}</button>
           </div>
           <nav className="flex-1 p-3 space-y-1">
             {NAV.map(n=>{
               const Icon = n.icon;
-              const active = screen===n.key || (n.key==="lessons" && screen==="lesson") || (n.key==="levels" && screen==="levelDetail") || (n.key==="mock" && (screen==="mockResult"));
+              const active = screen===n.key || (n.key==="lessons" && (screen==="lesson" || screen==="minnaII")) || (n.key==="levels" && screen==="levelDetail") || (n.key==="mock" && (screen==="mockResult"));
               return (
-                <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-red-50 text-red-700 font-medium" : "text-stone-600 hover:bg-stone-50"}`}>
-                  <Icon size={18}/> <span lang="ja">{n.jp}</span><span className="text-stone-400 text-xs">{n.en}</span>
+                <button key={n.key} title={`${n.jp} · ${n.en}`} onClick={()=>goTo(n.key)} className={`sidebar-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-red-50 text-red-700 font-medium" : "text-stone-600 hover:bg-stone-50"}`}>
+                  <Icon size={18}/><span className="sidebar-label" lang="ja">{n.jp}</span><span className="sidebar-label text-stone-400 text-xs">{n.en}</span>
                 </button>
               );
             })}
           </nav>
-          <div className="p-4 border-t border-stone-100 text-xs text-stone-400">
+          <div className="sidebar-label p-4 border-t border-stone-100 text-xs text-stone-400">
             Practice questions are original learning materials inspired by JLPT formats and are not official JLPT questions.
           </div>
         </aside>
@@ -2255,6 +2292,7 @@ export default function NihongoVertex(){
         {/* Mobile top bar */}
         <div className="md:hidden fixed top-0 inset-x-0 z-30 bg-white border-b border-stone-200 flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
+            <button type="button" className="mobile-menu-button" onClick={()=>setSidebarOpen(true)} aria-label="Open navigation"><Menu size={21}/></button>
             <div className="w-2 h-2 rounded-full bg-red-600"/>
             <span className="font-bold text-stone-900">Nihongo Vertex</span>
           </div>
@@ -2264,19 +2302,28 @@ export default function NihongoVertex(){
           </div>
         </div>
 
-        <main className="flex-1 p-4 md:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
-          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel}/>}
+        <div className={`mobile-nav-layer md:hidden ${sidebarOpen ? "is-open" : ""}`} aria-hidden={!sidebarOpen}>
+          <button type="button" className="mobile-nav-backdrop" onClick={()=>setSidebarOpen(false)} aria-label="Close navigation"/>
+          <aside className="mobile-nav-drawer" aria-label="Mobile navigation">
+            <div className="flex items-center justify-between p-5 border-b border-stone-100"><div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-red-600"/><b>Nihongo Vertex</b></div><button type="button" className="mobile-menu-button" onClick={()=>setSidebarOpen(false)} aria-label="Close navigation"><X size={21}/></button></div>
+            <nav className="p-3 space-y-1">{NAV.map(n=>{const Icon=n.icon;const active=screen===n.key || (n.key==="lessons"&&(screen==="lesson"||screen==="minnaII")) || (n.key==="levels"&&screen==="levelDetail");return <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm ${active?"bg-red-50 text-red-700 font-medium":"text-stone-600"}`}><Icon size={19}/><span lang="ja">{n.jp}</span><span className="text-stone-400 text-xs">{n.en}</span></button>})}</nav>
+          </aside>
+        </div>
+
+        <main className="app-main flex-1 p-4 md:p-6 lg:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
+          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel} onChangeGoal={changeExamGoal}/>}
           {screen==="lessons" && (activeLevel === "N5" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/> : <LevelLessonHub level={activeLevel} goTo={goTo}/>)}
           {screen==="characters" && <CharacterLab/>}
           {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}
           {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
           {screen==="minnaII" && <BeginnerIILesson lesson={currentBeginnerIILesson} goTo={goTo}/>}
-          {screen==="levels" && <LevelSelector progress={progress} goTo={goTo} otherLevels={OTHER_LEVELS} activeLevel={activeLevel} onSelectLevel={(lv)=>{ setActiveLevel(lv); goTo("lessons"); }}/>}
+          {screen==="levels" && <LevelSelector progress={progress} goTo={goTo} otherLevels={OTHER_LEVELS} activeLevel={activeLevel} onSelectLevel={selectStudyLevel}/>}
           {screen==="levelDetail" && <LevelDetail level={param || activeLevel} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
           {screen==="mistakes" && <MistakeBook mistakes={mistakes}/>}
           {screen==="mock" && <MockExamIntro level={activeLevel} onStart={startMock} goTo={goTo}/>}
           {screen==="mockResult" && mockResult && <MockExamResult result={mockResult} goTo={goTo}/>}
           {screen==="progress" && <ProgressDashboard progress={progress} lessons={LESSONS}/>}
+          {screen==="aiHub" && <AIMentorHub level={activeLevel} progress={progress} goTo={goTo}/>}
         </main>
       </div>
 
