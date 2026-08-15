@@ -17,7 +17,7 @@ def migration_database_url() -> str:
     return url
 
 config.set_main_option("sqlalchemy.url", migration_database_url())
-if config.config_file_name:
+if config.config_file_name and config.file_config.has_section("formatters"):
     fileConfig(config.config_file_name)
 target_metadata = Base.metadata
 
