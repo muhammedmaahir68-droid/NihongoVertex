@@ -11,371 +11,10739 @@ import { JLPT_CURRICULUM, CURRICULUM_STATS } from "./data/curriculum.js";
 // (JLPTsensei-style grammar groupings) and is explicitly marked as a sample/expandable set.
 
 const LESSONS = [
-{id:1,jp:"これは　なんですか",en:"What is this?",ta:"இது என்ன?",
- vocab:[
-  {jp:"これ",r:"kore",en:"this (thing)",ta:"இது"},
-  {jp:"それ",r:"sore",en:"that (thing, near you)",ta:"அது (உன் அருகில்)"},
-  {jp:"あれ",r:"are",en:"that (thing, over there)",ta:"அது (தூரத்தில்)"},
-  {jp:"なん／なに",r:"nan/nani",en:"what",ta:"என்ன"},
-  {jp:"ほん",r:"hon",en:"book",ta:"புத்தகம்"},
-  {jp:"せんせい",r:"sensei",en:"teacher",ta:"ஆசிரியர்"},
- ],
- grammar:[
-  {t:"AはBです",en:"A is B (topic marker は)",ta:"A என்பது B ஆகும் (は என்பது தலைப்பு குறியீடு)",
-   form:"Noun + は + Noun + です",
-   ex:{jp:"これは　ほんです。",en:"This is a book.",ta:"இது ஒரு புத்தகம்."}},
-  {t:"～か（question)",en:"か turns a sentence into a question",ta:"か என்பது வினா குறியீடு",
-   form:"…です + か",
-   ex:{jp:"これは　ほんですか。",en:"Is this a book?",ta:"இது புத்தகமா?"}},
- ]},
-{id:2,jp:"それは　わたしの　かさです",en:"That is my umbrella",ta:"அது என் குடை",
- vocab:[
-  {jp:"この／その／あの",r:"kono/sono/ano",en:"this/that/that (+ noun)",ta:"இந்த/அந்த/அந்த (பெயர்ச்சொல்லுடன்)"},
-  {jp:"ここ／そこ／あそこ",r:"koko/soko/asoko",en:"here/there/over there",ta:"இங்கே/அங்கே/அங்கே தூரத்தில்"},
-  {jp:"かさ",r:"kasa",en:"umbrella",ta:"குடை"},
-  {jp:"つくえ",r:"tsukue",en:"desk",ta:"மேசை"},
-  {jp:"の",r:"no",en:"possession particle (~'s)",ta:"உடைமை குறியீடு"},
- ],
- grammar:[
-  {t:"AのB",en:"possession / attribute: A's B",ta:"உடைமை: A இன் B",
-   form:"Noun + の + Noun",
-   ex:{jp:"これは　わたしの　かさです。",en:"This is my umbrella.",ta:"இது என் குடை."}},
-  {t:"この／その／あの + Noun",en:"this/that + noun (must be followed by a noun)",ta:"இந்த/அந்த + பெயர்ச்சொல்",
-   form:"この/その/あの + Noun",
-   ex:{jp:"その　ほんは　わたしのです。",en:"That book is mine.",ta:"அந்தப் புத்தகம் என்னுடையது."}},
- ]},
-{id:3,jp:"ここは　しょくどうです",en:"This is the cafeteria",ta:"இது உணவகம்",
- vocab:[
-  {jp:"しょくどう",r:"shokudou",en:"cafeteria",ta:"உணவகம்"},
-  {jp:"だいがく",r:"daigaku",en:"university",ta:"பல்கலைக்கழகம்"},
-  {jp:"いま",r:"ima",en:"now",ta:"இப்போது"},
-  {jp:"きます",r:"kimasu",en:"to come",ta:"வருதல்"},
-  {jp:"いきます",r:"ikimasu",en:"to go",ta:"செல்லுதல்"},
- ],
- grammar:[
-  {t:"場所は Noun です",en:"place + は + noun (identifying a place)",ta:"இடம் + は + பெயர்ச்சொல்",
-   form:"Place + は + Noun + です",
-   ex:{jp:"ここは　だいがくです。",en:"This is the university.",ta:"இது பல்கலைக்கழகம்."}},
-  {t:"～へ　いきます／きます",en:"へ marks direction of movement",ta:"へ திசையைக் குறிக்கிறது",
-   form:"Place + へ + いきます/きます",
-   ex:{jp:"がっこうへ　いきます。",en:"I go to school.",ta:"நான் பள்ளிக்குச் செல்கிறேன்."}},
- ]},
-{id:4,jp:"いま　なんじですか",en:"What time is it now?",ta:"இப்போது என்ன நேரம்?",
- vocab:[
-  {jp:"じ",r:"ji",en:"o'clock",ta:"மணி"},
-  {jp:"はん",r:"han",en:"half (past)",ta:"அரை"},
-  {jp:"おきます",r:"okimasu",en:"to get up",ta:"எழுந்திருத்தல்"},
-  {jp:"ねます",r:"nemasu",en:"to sleep",ta:"தூங்குதல்"},
-  {jp:"はたらきます",r:"hatarakimasu",en:"to work",ta:"வேலை செய்தல்"},
- ],
- grammar:[
-  {t:"～から～まで",en:"from ~ to ~ (time/place range)",ta:"~ முதல் ~ வரை",
-   form:"A + から + B + まで",
-   ex:{jp:"9じから　5じまで　はたらきます。",en:"I work from 9 to 5.",ta:"நான் 9 மணி முதல் 5 மணி வரை வேலை செய்கிறேன்."}},
- ]},
-{id:5,jp:"エレベーターは　どこですか",en:"Where is the elevator?",ta:"லிப்ட் எங்கே?",
- vocab:[
-  {jp:"どこ",r:"doko",en:"where",ta:"எங்கே"},
-  {jp:"いきます",r:"ikimasu",en:"to go",ta:"செல்லுதல்"},
-  {jp:"でんしゃ",r:"densha",en:"train",ta:"ரயில்"},
-  {jp:"バス",r:"basu",en:"bus",ta:"பேருந்து"},
-  {jp:"タクシー",r:"takushi-",en:"taxi",ta:"டாக்ஸி"},
- ],
- grammar:[
-  {t:"～で（乗り物）",en:"で marks the means of transport",ta:"で போக்குவரத்து சாதனத்தைக் குறிக்கிறது",
-   form:"Vehicle + で + いきます",
-   ex:{jp:"バスで　だいがくへ　いきます。",en:"I go to university by bus.",ta:"நான் பேருந்தில் பல்கலைக்கழகம் செல்கிறேன்."}},
-  {t:"～と（with）",en:"と marks 'together with'",ta:"と உடன் என்பதைக் குறிக்கிறது",
-   form:"Person + と + いきます",
-   ex:{jp:"ともだちと　いきます。",en:"I go with a friend.",ta:"நான் நண்பருடன் செல்கிறேன்."}},
- ]},
-{id:6,jp:"なにを　かいますか",en:"What will you buy?",ta:"நீங்கள் என்ன வாங்குவீர்கள்?",
- vocab:[
-  {jp:"かいます",r:"kaimasu",en:"to buy",ta:"வாங்குதல்"},
-  {jp:"たべます",r:"tabemasu",en:"to eat",ta:"சாப்பிடுதல்"},
-  {jp:"のみます",r:"nomimasu",en:"to drink",ta:"குடித்தல்"},
-  {jp:"パン",r:"pan",en:"bread",ta:"ரொட்டி"},
-  {jp:"みず",r:"mizu",en:"water",ta:"தண்ணீர்"},
- ],
- grammar:[
-  {t:"～を（object marker)",en:"を marks the direct object of a verb",ta:"を செயப்படுபொருளைக் குறிக்கிறது",
-   form:"Noun + を + Verb",
-   ex:{jp:"パンを　たべます。",en:"I eat bread.",ta:"நான் ரொட்டி சாப்பிடுகிறேன்."}},
-  {t:"～や～（など）",en:"listing a few examples among others",ta:"சில உதாரணங்களைப் பட்டியலிடுதல்",
-   form:"A + や + B",
-   ex:{jp:"パンや　みずを　かいます。",en:"I buy bread, water, etc.",ta:"நான் ரொட்டி, தண்ணீர் போன்றவை வாங்குகிறேன்."}},
- ]},
-{id:7,jp:"しゃしんを　とりましょう",en:"Let's take a photo",ta:"புகைப்படம் எடுப்போம்",
- vocab:[
-  {jp:"とります",r:"torimasu",en:"to take (photo)",ta:"எடுத்தல்"},
-  {jp:"かします",r:"kashimasu",en:"to lend",ta:"கடன் கொடுத்தல்"},
-  {jp:"かります",r:"karimasu",en:"to borrow",ta:"கடன் வாங்குதல்"},
-  {jp:"おしえます",r:"oshiemasu",en:"to teach",ta:"கற்பித்தல்"},
-  {jp:"ならいます",r:"naraimasu",en:"to learn",ta:"கற்றல்"},
- ],
- grammar:[
-  {t:"～ましょう",en:"let's do ~ (invitation)",ta:"~ செய்வோம் (அழைப்பு)",
-   form:"Verb stem + ましょう",
-   ex:{jp:"いっしょに　たべましょう。",en:"Let's eat together.",ta:"ஒன்றாக சாப்பிடுவோம்."}},
-  {t:"～に（person - to/from）",en:"に marks the person given to/received from",ta:"に நபருக்கு/நபரிடமிருந்து என்பதைக் குறிக்கிறது",
-   form:"Person + に + かします/かります",
-   ex:{jp:"ともだちに　ほんを　かります。",en:"I borrow a book from my friend.",ta:"நான் நண்பரிடம் இருந்து புத்தகம் கடன் வாங்குகிறேன்."}},
- ]},
-{id:8,jp:"かぜが　つよいですね",en:"The wind is strong, isn't it",ta:"காற்று வலிமையாக உள்ளது, இல்லையா",
- vocab:[
-  {jp:"おおきい",r:"ookii",en:"big",ta:"பெரியது"},
-  {jp:"ちいさい",r:"chiisai",en:"small",ta:"சிறியது"},
-  {jp:"あたらしい",r:"atarashii",en:"new",ta:"புதியது"},
-  {jp:"ふるい",r:"furui",en:"old (things)",ta:"பழையது"},
-  {jp:"いい",r:"ii",en:"good",ta:"நல்லது"},
- ],
- grammar:[
-  {t:"い-adjective + Noun",en:"い-adjectives modify nouns directly",ta:"い-குணவினையடைகள் நேரடியாக பெயர்ச்சொல்லை மாற்றியமைக்கும்",
-   form:"い-adj + Noun",
-   ex:{jp:"おおきい　いえです。",en:"It's a big house.",ta:"இது ஒரு பெரிய வீடு."}},
-  {t:"～ね",en:"ね seeks agreement ('isn't it')",ta:"ね ஒப்புதலை நாடுகிறது",
-   form:"Sentence + ね",
-   ex:{jp:"きょうは　あついですね。",en:"It's hot today, isn't it.",ta:"இன்று வெப்பமாக உள்ளது, இல்லையா."}},
- ]},
-{id:9,jp:"わたしは　いぬが　すきです",en:"I like dogs",ta:"எனக்கு நாய்கள் பிடிக்கும்",
- vocab:[
-  {jp:"すきです",r:"suki desu",en:"to like",ta:"பிடிக்கும்"},
-  {jp:"きらいです",r:"kirai desu",en:"to dislike",ta:"பிடிக்காது"},
-  {jp:"じょうずです",r:"jouzu desu",en:"good at",ta:"திறமையானவர்"},
-  {jp:"へたです",r:"heta desu",en:"poor at",ta:"திறமையற்றவர்"},
-  {jp:"りょうり",r:"ryouri",en:"cooking",ta:"சமையல்"},
- ],
- grammar:[
-  {t:"～が　すき／きらい／じょうず",en:"が marks the object of feeling/ability adjectives",ta:"உணர்வு/திறமை பெயரடைகளுடன் が பயன்படுத்தப்படுகிறது",
-   form:"Noun + が + すきです",
-   ex:{jp:"わたしは　りょうりが　じょうずです。",en:"I am good at cooking.",ta:"நான் சமையலில் திறமையானவன்."}},
- ]},
-{id:10,jp:"つくえの　うえに　ねこが　います",en:"There is a cat on the desk",ta:"மேசையின் மேல் ஒரு பூனை இருக்கிறது",
- vocab:[
-  {jp:"います",r:"imasu",en:"there is (living things)",ta:"இருக்கிறது (உயிரினங்கள்)"},
-  {jp:"あります",r:"arimasu",en:"there is (non-living things)",ta:"இருக்கிறது (உயிரற்றவை)"},
-  {jp:"うえ",r:"ue",en:"on top of / above",ta:"மேலே"},
-  {jp:"した",r:"shita",en:"under / below",ta:"கீழே"},
-  {jp:"なか",r:"naka",en:"inside",ta:"உள்ளே"},
- ],
- grammar:[
-  {t:"場所に　Noun が　います／あります",en:"existence sentence pattern",ta:"இருப்பதைக் குறிக்கும் வாக்கிய அமைப்பு",
-   form:"Place + に + Noun + が + います/あります",
-   ex:{jp:"つくえの　うえに　ほんが　あります。",en:"There is a book on the desk.",ta:"மேசையின் மேல் புத்தகம் இருக்கிறது."}},
- ]},
-{id:11,jp:"りんごを　みっつ　ください",en:"Please give me three apples",ta:"தயவுசெய்து மூன்று ஆப்பிள் தாருங்கள்",
- vocab:[
-  {jp:"ひとつ／ふたつ／みっつ",r:"hitotsu/futatsu/mittsu",en:"one/two/three (items)",ta:"ஒன்று/இரண்டு/மூன்று (பொருட்கள்)"},
-  {jp:"～えん",r:"~en",en:"~ yen",ta:"~ யென்"},
-  {jp:"ぜんぶで",r:"zenbu de",en:"in total",ta:"மொத்தமாக"},
-  {jp:"ください",r:"kudasai",en:"please give me",ta:"தயவுசெய்து கொடுங்கள்"},
-  {jp:"りんご",r:"ringo",en:"apple",ta:"ஆப்பிள்"},
- ],
- grammar:[
-  {t:"数量 + ください",en:"quantity + ください (please give X of these)",ta:"அளவு + ください (தயவுசெய்து இவ்வளவு தாருங்கள்)",
-   form:"Noun + を + Number + ください",
-   ex:{jp:"みかんを　ふたつ　ください。",en:"Please give me two mandarins.",ta:"தயவுசெய்து இரண்டு ஆரஞ்சு தாருங்கள்."}},
- ]},
-{id:12,jp:"たんじょうびは　いつですか",en:"When is your birthday?",ta:"உங்கள் பிறந்தநாள் எப்போது?",
- vocab:[
-  {jp:"いつ",r:"itsu",en:"when",ta:"எப்போது"},
-  {jp:"たんじょうび",r:"tanjoubi",en:"birthday",ta:"பிறந்தநாள்"},
-  {jp:"きょねん",r:"kyonen",en:"last year",ta:"கடந்த வருடம்"},
-  {jp:"らいねん",r:"rainen",en:"next year",ta:"அடுத்த வருடம்"},
-  {jp:"たかい",r:"takai",en:"expensive / tall",ta:"விலை உயர்ந்த / உயரமான"},
- ],
- grammar:[
-  {t:"い-adj past/negative",en:"い-adjective conjugation: past & negative",ta:"い-குணவினையடை: கடந்த காலம் & மறுப்பு",
-   form:"~い → ~かったです／～くないです",
-   ex:{jp:"きのうは　さむかったです。",en:"It was cold yesterday.",ta:"நேற்று குளிராக இருந்தது."}},
- ]},
-{id:13,jp:"にほんりょうりが　たべたいです",en:"I want to eat Japanese food",ta:"எனக்கு ஜப்பானிய உணவு சாப்பிட வேண்டும்",
- vocab:[
-  {jp:"～たいです",r:"~tai desu",en:"want to do ~",ta:"~ செய்ய வேண்டும்"},
-  {jp:"おんせん",r:"onsen",en:"hot spring",ta:"சூடான நீரூற்று"},
-  {jp:"うみ",r:"umi",en:"sea",ta:"கடல்"},
-  {jp:"やま",r:"yama",en:"mountain",ta:"மலை"},
-  {jp:"りょこう",r:"ryokou",en:"travel/trip",ta:"பயணம்"},
- ],
- grammar:[
-  {t:"Verb stem + たいです",en:"expressing a desire to do something",ta:"ஏதேனும் செய்ய வேண்டும் என்ற ஆசையை வெளிப்படுத்துதல்",
-   form:"Verb stem + たいです",
-   ex:{jp:"にほんへ　いきたいです。",en:"I want to go to Japan.",ta:"எனக்கு ஜப்பான் செல்ல வேண்டும்."}},
-  {t:"～ませんか",en:"won't you ~? (invitation)",ta:"~ செய்ய மாட்டீர்களா? (அழைப்பு)",
-   form:"Verb stem + ませんか",
-   ex:{jp:"いっしょに　いきませんか。",en:"Won't you go together with me?",ta:"என்னுடன் வருகிறீர்களா?"}},
- ]},
-{id:14,jp:"すみませんが、しゃしんを　とって　ください",en:"Excuse me, please take a photo",ta:"மன்னிக்கவும், புகைப்படம் எடுத்துக் கொடுங்கள்",
- vocab:[
-  {jp:"まって",r:"matte",en:"wait (て-form)",ta:"காத்திருங்கள்"},
-  {jp:"みて",r:"mite",en:"look (て-form)",ta:"பாருங்கள்"},
-  {jp:"きいて",r:"kiite",en:"listen (て-form)",ta:"கேளுங்கள்"},
-  {jp:"はなして",r:"hanashite",en:"speak (て-form)",ta:"பேசுங்கள்"},
-  {jp:"すみません",r:"sumimasen",en:"excuse me / sorry",ta:"மன்னிக்கவும்"},
- ],
- grammar:[
-  {t:"～て　ください",en:"please do ~ (request)",ta:"தயவுசெய்து ~ செய்யுங்கள் (கோரிக்கை)",
-   form:"Verb て-form + ください",
-   ex:{jp:"ここに　なまえを　かいて　ください。",en:"Please write your name here.",ta:"இங்கே உங்கள் பெயரை எழுதுங்கள்."}},
- ]},
-{id:15,jp:"いま、でんわを　して　います",en:"I am on the phone right now",ta:"நான் இப்போது தொலைபேசியில் பேசிக்கொண்டிருக்கிறேன்",
- vocab:[
-  {jp:"～て　います",r:"~te imasu",en:"is doing ~ (ongoing action)",ta:"~ செய்து கொண்டிருக்கிறேன்"},
-  {jp:"すんで　います",r:"sunde imasu",en:"lives (state)",ta:"வசிக்கிறார்"},
-  {jp:"けっこんして　います",r:"kekkon shite imasu",en:"is married",ta:"திருமணமானவர்"},
-  {jp:"つとめて　います",r:"tsutomete imasu",en:"works for (a company)",ta:"பணிபுரிகிறார்"},
-  {jp:"でんわ",r:"denwa",en:"telephone",ta:"தொலைபேசி"},
- ],
- grammar:[
-  {t:"～て　います（動作の進行）",en:"ongoing action: is ~ing",ta:"நடந்துகொண்டிருக்கும் செயல்",
-   form:"Verb て-form + います",
-   ex:{jp:"あめが　ふって　います。",en:"It is raining.",ta:"மழை பெய்து கொண்டிருக்கிறது."}},
-  {t:"～て　います（状態）",en:"ongoing state: lives/works/is married",ta:"தொடர்ச்சியான நிலை",
-   form:"Verb て-form + います",
-   ex:{jp:"とうきょうに　すんで　います。",en:"I live in Tokyo.",ta:"நான் டோக்கியோவில் வசிக்கிறேன்."}},
- ]},
-{id:16,jp:"しゅくだいを　しなければ　なりません",en:"I must do my homework",ta:"நான் வீட்டுப்பாடம் செய்ய வேண்டும்",
- vocab:[
-  {jp:"しゅくだい",r:"shukudai",en:"homework",ta:"வீட்டுப்பாடம்"},
-  {jp:"やすみます",r:"yasumimasu",en:"to rest/take a day off",ta:"ஓய்வெடுத்தல்"},
-  {jp:"つかいます",r:"tsukaimasu",en:"to use",ta:"பயன்படுத்துதல்"},
-  {jp:"あるきます",r:"arukimasu",en:"to walk",ta:"நடத்தல்"},
-  {jp:"パスポート",r:"pasupo-to",en:"passport",ta:"கடவுச்சீட்டு"},
- ],
- grammar:[
-  {t:"～なければ　なりません",en:"must do ~ (obligation)",ta:"~ செய்யவேண்டும் (கடமை)",
-   form:"Verb ない-form (-ない→-なければ) + なりません",
-   ex:{jp:"あした　はやく　おきなければ　なりません。",en:"I must get up early tomorrow.",ta:"நாளை நான் அதிகாலையில் எழவேண்டும்."}},
-  {t:"～なくても　いいです",en:"don't have to do ~",ta:"~ செய்ய வேண்டியதில்லை",
-   form:"Verb ない-form + なくても いいです",
-   ex:{jp:"きょうは　こなくても　いいです。",en:"You don't have to come today.",ta:"இன்று வர வேண்டியதில்லை."}},
- ]},
-{id:17,jp:"ピアノが　ひけます",en:"I can play the piano",ta:"எனக்கு பியானோ வாசிக்கத் தெரியும்",
- vocab:[
-  {jp:"ひけます",r:"hikemasu",en:"can play (piano)",ta:"வாசிக்க முடியும்"},
-  {jp:"およげます",r:"oyogemasu",en:"can swim",ta:"நீந்த முடியும்"},
-  {jp:"うんてん",r:"unten",en:"driving",ta:"ஓட்டுதல்"},
-  {jp:"しゅみ",r:"shumi",en:"hobby",ta:"பொழுதுபோக்கு"},
-  {jp:"じゅう",r:"jiyuu",en:"free (time)",ta:"ஓய்வு நேரம்"},
- ],
- grammar:[
-  {t:"辞書形（Dictionary form)",en:"the plain/dictionary form of verbs",ta:"வினைச்சொல்லின் அகராதி வடிவம்",
-   form:"ます-form → dictionary form",
-   ex:{jp:"たべます → たべる",en:"eat (polite) → eat (plain)",ta:"சாப்பிடுதல் (பணிவான) → சாப்பிடுதல் (எளிய)"}},
-  {t:"辞書形＋ことが　できます",en:"can do ~ (ability/possibility)",ta:"~ செய்ய முடியும் (திறமை)",
-   form:"Verb dictionary form + ことが できます",
-   ex:{jp:"わたしは　うんてんが　できます。",en:"I can drive.",ta:"எனக்கு ஓட்ட முடியும்."}},
- ]},
-{id:18,jp:"じしょを　もって　きて　ください",en:"Please bring a dictionary",ta:"தயவுசெய்து அகராதி கொண்டு வாருங்கள்",
- vocab:[
-  {jp:"じしょ",r:"jisho",en:"dictionary",ta:"அகராதி"},
-  {jp:"まえに",r:"mae ni",en:"before ~ing",ta:"~ முன்பு"},
-  {jp:"あとで",r:"ato de",en:"after ~ing",ta:"~ பின்பு"},
-  {jp:"けいかく",r:"keikaku",en:"plan",ta:"திட்டம்"},
-  {jp:"やくそく",r:"yakusoku",en:"promise/appointment",ta:"வாக்குறுதி"},
- ],
- grammar:[
-  {t:"辞書形＋まえに",en:"before doing ~",ta:"~ செய்வதற்கு முன்",
-   form:"Verb dictionary form + まえに",
-   ex:{jp:"ねる　まえに　ほんを　よみます。",en:"I read a book before sleeping.",ta:"தூங்குவதற்கு முன் நான் புத்தகம் படிக்கிறேன்."}},
- ]},
-{id:19,jp:"しゃしんを　とらないで　ください",en:"Please don't take photos",ta:"தயவுசெய்து புகைப்படம் எடுக்காதீர்கள்",
- vocab:[
-  {jp:"ない形",r:"nai-kei",en:"negative (nai) form",ta:"மறுப்பு வடிவம்"},
-  {jp:"しんぱいします",r:"shinpai shimasu",en:"to worry",ta:"கவலைப்படுதல்"},
-  {jp:"きけん",r:"kiken",en:"dangerous",ta:"ஆபத்தானது"},
-  {jp:"ちゅうい",r:"chuui",en:"caution",ta:"எச்சரிக்கை"},
-  {jp:"びょういん",r:"byouin",en:"hospital",ta:"மருத்துவமனை"},
- ],
- grammar:[
-  {t:"～ないで　ください",en:"please don't do ~",ta:"தயவுசெய்து ~ செய்யாதீர்கள்",
-   form:"Verb ない-form + ないで ください",
-   ex:{jp:"ここに　くるまを　とめないで　ください。",en:"Please don't park the car here.",ta:"இங்கே காரை நிறுத்தாதீர்கள்."}},
- ]},
-{id:20,jp:"らいしゅう　しけんが　あると　おもいます",en:"I think there is a test next week",ta:"அடுத்த வாரம் தேர்வு இருக்கும் என்று நினைக்கிறேன்",
- vocab:[
-  {jp:"～と　おもいます",r:"~to omoimasu",en:"I think that ~",ta:"~ என்று நினைக்கிறேன்"},
-  {jp:"～と　いいます",r:"~to iimasu",en:"says that ~",ta:"~ என்று சொல்கிறார்"},
-  {jp:"しけん",r:"shiken",en:"exam",ta:"தேர்வு"},
-  {jp:"にゅうがくしき",r:"nyuugakushiki",en:"entrance ceremony",ta:"நுழைவு விழா"},
-  {jp:"たぶん",r:"tabun",en:"probably",ta:"ஒருவேளை"},
- ],
- grammar:[
-  {t:"普通形＋と　おもいます",en:"I think that ~ (plain form + と おもいます)",ta:"நான் ~ என்று நினைக்கிறேன்",
-   form:"Plain form + と おもいます",
-   ex:{jp:"あした　あめが　ふると　おもいます。",en:"I think it will rain tomorrow.",ta:"நாளை மழை பெய்யும் என்று நினைக்கிறேன்."}},
- ]},
-{id:21,jp:"かいぎしつに　だれか　いますか",en:"Is anyone in the meeting room?",ta:"கூட்ட அறையில் யாராவது இருக்கிறார்களா?",
- vocab:[
-  {jp:"だれか",r:"dareka",en:"someone",ta:"யாராவது"},
-  {jp:"なにか",r:"nanika",en:"something",ta:"ஏதாவது"},
-  {jp:"かいぎ",r:"kaigi",en:"meeting",ta:"கூட்டம்"},
-  {jp:"きんえん",r:"kin\u2019en",en:"no smoking",ta:"புகைபிடிக்க கூடாது"},
-  {jp:"んです",r:"n desu",en:"explanatory 'you see...'",ta:"விளக்க வடிவம்"},
- ],
- grammar:[
-  {t:"普通形＋んです",en:"explanatory tone: giving a reason/context",ta:"காரணத்தை விளக்கும் தொனி",
-   form:"Plain form + んです",
-   ex:{jp:"どうして　おくれたんですか。",en:"Why were you late? (seeking explanation)",ta:"ஏன் தாமதமானீர்கள்?"}},
- ]},
-{id:22,jp:"むりを　しない　ほうが　いいですよ",en:"You'd better not overdo it",ta:"அதிகமாக முயற்சி செய்யாதீர்கள்",
- vocab:[
-  {jp:"むり",r:"muri",en:"overdoing / unreasonable",ta:"அதீதமான முயற்சி"},
-  {jp:"ほうが　いい",r:"hou ga ii",en:"had better ~",ta:"~ செய்வது நல்லது"},
-  {jp:"かぜ",r:"kaze",en:"a cold (illness)",ta:"சளிக்காய்ச்சல்"},
-  {jp:"くすり",r:"kusuri",en:"medicine",ta:"மருந்து"},
-  {jp:"ねつ",r:"netsu",en:"fever",ta:"காய்ச்சல்"},
- ],
- grammar:[
-  {t:"～た　ほうが　いいです",en:"you'd better do ~ (advice)",ta:"~ செய்வது நல்லது (அறிவுரை)",
-   form:"Verb た-form + ほうが いいです",
-   ex:{jp:"はやく　ねた　ほうが　いいです。",en:"You'd better sleep early.",ta:"விரைவில் தூங்குவது நல்லது."}},
-  {t:"～ない　ほうが　いいです",en:"you'd better not do ~",ta:"~ செய்யாமல் இருப்பது நல்லது",
-   form:"Verb ない-form + ほうが いいです",
-   ex:{jp:"おさけを　のまない　ほうが　いいです。",en:"You'd better not drink alcohol.",ta:"மது அருந்தாமல் இருப்பது நல்லது."}},
- ]},
-{id:23,jp:"みぎへ　まがると、ぎんこうが　あります",en:"If you turn right, there is a bank",ta:"வலது பக்கம் திரும்பினால் வங்கி இருக்கிறது",
- vocab:[
-  {jp:"まがります",r:"magarimasu",en:"to turn",ta:"திரும்புதல்"},
-  {jp:"みぎ／ひだり",r:"migi/hidari",en:"right/left",ta:"வலது/இடது"},
-  {jp:"しんごう",r:"shingou",en:"traffic light",ta:"போக்குவரத்து விளக்கு"},
-  {jp:"ぎんこう",r:"ginkou",en:"bank",ta:"வங்கி"},
-  {jp:"まっすぐ",r:"massugu",en:"straight",ta:"நேராக"},
- ],
- grammar:[
-  {t:"普通形（辞書形）＋と",en:"conditional: whenever/if ~, then ~ (natural consequence)",ta:"நிபந்தனை: எப்போதும் ~ என்றால் ~",
-   form:"Plain non-past + と、result",
-   ex:{jp:"はるに　なると、さくらが　さきます。",en:"When spring comes, cherry blossoms bloom.",ta:"வசந்த காலம் வந்தால் செர்ரி மலர்கள் மலரும்."}},
- ]},
-{id:24,jp:"どろぼうに　さいふを　とられました",en:"My wallet was stolen by a thief",ta:"என் பணப்பை திருடனால் திருடப்பட்டது",
- vocab:[
-  {jp:"どろぼう",r:"dorobou",en:"thief",ta:"திருடன்"},
-  {jp:"とります",r:"torimasu",en:"to take/steal",ta:"எடுத்தல் / திருடுதல்"},
-  {jp:"さいふ",r:"saifu",en:"wallet",ta:"பணப்பை"},
-  {jp:"うまれます",r:"umaremasu",en:"to be born",ta:"பிறத்தல்"},
-  {jp:"しかられます",r:"shikararemasu",en:"to be scolded",ta:"கண்டிக்கப்படுதல்"},
- ],
- grammar:[
-  {t:"受身形（passive）",en:"passive voice: to be done to",ta:"செயப்பாட்டு வினை",
-   form:"Verb -(r)areru",
-   ex:{jp:"わたしは　あめに　ふられました。",en:"I got rained on.",ta:"நான் மழையில் நனைந்தேன்."}},
- ]},
-{id:25,jp:"にもつは　もう　おくって　しまいました",en:"I've already sent the luggage",ta:"நான் ஏற்கனவே பொருட்களை அனுப்பிவிட்டேன்",
- vocab:[
-  {jp:"～て　しまいます",r:"~te shimaimasu",en:"to finish/end up doing ~",ta:"முடித்துவிடுதல் / செய்துவிடுதல்"},
-  {jp:"～て　おきます",r:"~te okimasu",en:"to do ~ in advance",ta:"முன்கூட்டியே செய்து வைத்தல்"},
-  {jp:"にもつ",r:"nimotsu",en:"luggage",ta:"சாமான்கள்"},
-  {jp:"おくります",r:"okurimasu",en:"to send",ta:"அனுப்புதல்"},
-  {jp:"じゅんび",r:"junbi",en:"preparation",ta:"தயாரிப்பு"},
- ],
- grammar:[
-  {t:"～て　おきます",en:"to do something in advance / for later",ta:"முன்கூட்டியே ஒன்றை செய்து வைத்தல்",
-   form:"Verb て-form + おきます",
-   ex:{jp:"ビールを　ひやして　おきます。",en:"I'll chill the beer in advance.",ta:"நான் முன்கூட்டியே பீரை குளிர்விப்பேன்."}},
-  {t:"～て　しまいます",en:"to complete something (often with regret/finality)",ta:"ஏதோ ஒன்றை முழுமையாக செய்துவிடுதல்",
-   form:"Verb て-form + しまいます",
-   ex:{jp:"しゅくだいを　わすれて　しまいました。",en:"I ended up forgetting my homework.",ta:"நான் வீட்டுப்பாடத்தை மறந்துவிட்டேன்."}},
- ]},
+  {
+    "id": 1,
+    "jp": "わたしは マイク・ミラーです",
+    "en": "I am Mike Miller (Self-Introduction & Identity)",
+    "ta": "நான் மைக் மில்லர் (சுய அறிமுகம்)",
+    "vocab": [
+      {
+        "jp": "わたし",
+        "r": "watashi",
+        "en": "I / Me",
+        "ta": "நான்"
+      },
+      {
+        "jp": "あなた",
+        "r": "anata",
+        "en": "you",
+        "ta": "நீங்கள்"
+      },
+      {
+        "jp": "あのひと",
+        "r": "anohito",
+        "en": "that person",
+        "ta": "அவர்"
+      },
+      {
+        "jp": "あのかた",
+        "r": "anokata",
+        "en": "that person (polite)",
+        "ta": "அவர் (மரியாதை)"
+      },
+      {
+        "jp": "～さん",
+        "r": "san",
+        "en": "Mr./Ms.",
+        "ta": "திரு/திருமதி"
+      },
+      {
+        "jp": "～ちゃん",
+        "r": "chan",
+        "en": "Suffix for children",
+        "ta": "குழந்தை பின்னொட்டு"
+      },
+      {
+        "jp": "～じん",
+        "r": "jin",
+        "en": "Nationality suffix",
+        "ta": "நாட்டினர்"
+      },
+      {
+        "jp": "せんせい",
+        "r": "sensei",
+        "en": "Teacher (title)",
+        "ta": "ஆசிரியர்"
+      },
+      {
+        "jp": "きょうし",
+        "r": "kyoushi",
+        "en": "Teacher (occupation)",
+        "ta": "ஆசிரியர் (தொழில்)"
+      },
+      {
+        "jp": "がくせい",
+        "r": "gakusei",
+        "en": "Student",
+        "ta": "மாணவர்"
+      },
+      {
+        "jp": "かいしゃいん",
+        "r": "kaishain",
+        "en": "Company employee",
+        "ta": "நிறுவன ஊழியர்"
+      },
+      {
+        "jp": "しゃいん",
+        "r": "shain",
+        "en": "Employee of ~ company",
+        "ta": "ஊழியர்"
+      },
+      {
+        "jp": "ぎんこういん",
+        "r": "ginkouin",
+        "en": "Bank employee",
+        "ta": "வங்கி ஊழியர்"
+      },
+      {
+        "jp": "いしゃ",
+        "r": "isha",
+        "en": "Medical doctor",
+        "ta": "மருத்துவர்"
+      },
+      {
+        "jp": "けんきゅうしゃ",
+        "r": "kenkyuusha",
+        "en": "Researcher",
+        "ta": "ஆராய்ச்சியாளர்"
+      },
+      {
+        "jp": "エンジニア",
+        "r": "enjinia",
+        "en": "Engineer",
+        "ta": "பொறியாளர்"
+      },
+      {
+        "jp": "だいがく",
+        "r": "daigaku",
+        "en": "University",
+        "ta": "பல்கலைக்கழகம்"
+      },
+      {
+        "jp": "びょういん",
+        "r": "byouin",
+        "en": "Hospital",
+        "ta": "மருத்துவமனை"
+      },
+      {
+        "jp": "でんき",
+        "r": "denki",
+        "en": "Electricity / Light",
+        "ta": "மின்சாரம்"
+      },
+      {
+        "jp": "だれ",
+        "r": "dare",
+        "en": "Who",
+        "ta": "யார்"
+      },
+      {
+        "jp": "どなた",
+        "r": "donata",
+        "en": "Who (polite)",
+        "ta": "யார் (மரியாதை)"
+      },
+      {
+        "jp": "～さい",
+        "r": "sai",
+        "en": "Years old",
+        "ta": "வயது"
+      },
+      {
+        "jp": "なんさい",
+        "r": "nansai",
+        "en": "How old?",
+        "ta": "எத்தனை வயது?"
+      },
+      {
+        "jp": "はい",
+        "r": "hai",
+        "en": "Yes",
+        "ta": "ஆம்"
+      },
+      {
+        "jp": "いいえ",
+        "r": "iie",
+        "en": "No",
+        "ta": "இல்லை"
+      },
+      {
+        "jp": "はじめまして",
+        "r": "hajimemashite",
+        "en": "How do you do?",
+        "ta": "வணக்கம் (முதல் சந்திப்பு)"
+      },
+      {
+        "jp": "～から きました",
+        "r": "kara kimashita",
+        "en": "I came from ~",
+        "ta": "~லிருந்து வந்தேன்"
+      },
+      {
+        "jp": "どうぞ よろしく",
+        "r": "douzo yoroshiku",
+        "en": "Pleased to meet you",
+        "ta": "உங்களைச் சந்திப்பதில் மகிழ்ச்சி"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "N1 は N2 です",
+        "en": "N1 is N2 (Topic marker は, predicate です)",
+        "ta": "N1 என்பது N2 ஆகும் (は தலைப்பு குறியீடு)",
+        "form": "Noun1 + は + Noun2 + です",
+        "ex": {
+          "jp": "わたしは マイク・ミラーです。",
+          "en": "I am Mike Miller.",
+          "ta": "நான் மைக் மில்லர்."
+        }
+      },
+      {
+        "t": "N1 は N2 じゃありません",
+        "en": "N1 is not N2 (Negative form)",
+        "ta": "N1 என்பது N2 இல்லை (எதிர்மறை)",
+        "form": "Noun1 + は + Noun2 + じゃありません / ではありません",
+        "ex": {
+          "jp": "サントスさんは 学生じゃありません。",
+          "en": "Mr Santos is not a student.",
+          "ta": "திரு சாண்டோஸ் மாணவர் இல்லை."
+        }
+      },
+      {
+        "t": "S か (Question Form)",
+        "en": "Particle か turns a sentence into a question",
+        "ta": "か வாக்கியத்தை வினாவாக மாற்றுகிறது",
+        "form": "Sentence + か",
+        "ex": {
+          "jp": "ミラーさんは 会社員ですか。",
+          "en": "Is Mr Miller a company employee?",
+          "ta": "திரு மில்லர் நிறுவன ஊழியரா?"
+        }
+      },
+      {
+        "t": "N も (Also / Too)",
+        "en": "Particle も means 'also' or 'too'",
+        "ta": "も என்பது 'கூட' அல்லது 'உம்' பொருள்",
+        "form": "Noun + も",
+        "ex": {
+          "jp": "サントスさんも 会社員です。",
+          "en": "Mr Santos is also a company employee.",
+          "ta": "திரு சாண்டோஸும் நிறுவன ஊழியர்."
+        }
+      },
+      {
+        "t": "N1 の N2 (Possessive & Affiliation)",
+        "en": "Particle の connects two nouns",
+        "ta": "の உடைமை அல்லது அமைப்பைக் குறிக்கிறது",
+        "form": "Noun1 + の + Noun2",
+        "ex": {
+          "jp": "ミラーさんは IMCの 社員です。",
+          "en": "Mr Miller is an employee of IMC.",
+          "ta": "திரு மில்லர் IMC இன் ஊழியர்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "What is the meaning of 'がくせい' (gakusei)?",
+        "options": [
+          "Teacher",
+          "Student",
+          "Doctor",
+          "Engineer"
+        ],
+        "answer": "Student",
+        "explain": "がくせい means student (மாணவர்)."
+      },
+      {
+        "q": "Complete the sentence: わたし ______ マイク・ミラーです。",
+        "options": [
+          "は",
+          "の",
+          "を",
+          "へ"
+        ],
+        "answer": "は",
+        "explain": "Topic marker は (wa) is used after the subject わたし."
+      },
+      {
+        "q": "Which particle means 'also' or 'too'?",
+        "options": [
+          "も",
+          "は",
+          "に",
+          "で"
+        ],
+        "answer": "も",
+        "explain": "Particle も means also/too."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "jp": "これ は ほん です",
+    "en": "This is a book (Demonstratives & Ownership)",
+    "ta": "இது ஒரு புத்தகம் (சுட்டுச் சொற்கள்)",
+    "vocab": [
+      {
+        "jp": "これ",
+        "r": "kore",
+        "en": "this (thing here)",
+        "ta": "இது (என் அருகில்)"
+      },
+      {
+        "jp": "それ",
+        "r": "sore",
+        "en": "that (thing near listener)",
+        "ta": "அது (உன் அருகில்)"
+      },
+      {
+        "jp": "あれ",
+        "r": "are",
+        "en": "that (thing over there)",
+        "ta": "அது (தூரத்தில்)"
+      },
+      {
+        "jp": "この～",
+        "r": "kono",
+        "en": "this ~ (thing/person)",
+        "ta": "இந்த ~"
+      },
+      {
+        "jp": "その～",
+        "r": "sono",
+        "en": "that ~ (thing/person)",
+        "ta": "அந்த ~"
+      },
+      {
+        "jp": "あの～",
+        "r": "ano",
+        "en": "that ~ over there",
+        "ta": "அந்த ~ (தூரத்தில்)"
+      },
+      {
+        "jp": "ほん",
+        "r": "hon",
+        "en": "book",
+        "ta": "புத்தகம்"
+      },
+      {
+        "jp": "じしょ",
+        "r": "jisho",
+        "en": "dictionary",
+        "ta": "அகராதி"
+      },
+      {
+        "jp": "ざっし",
+        "r": "zasshi",
+        "en": "magazine",
+        "ta": "பத்திரிகை"
+      },
+      {
+        "jp": "しんぶん",
+        "r": "shinbun",
+        "en": "newspaper",
+        "ta": "செய்தித்தாள்"
+      },
+      {
+        "jp": "ノート",
+        "r": "no-to",
+        "en": "notebook",
+        "ta": "நோட்டுப் புத்தகம்"
+      },
+      {
+        "jp": "てちょう",
+        "r": "techou",
+        "en": "pocket notebook",
+        "ta": "கை ஏடு"
+      },
+      {
+        "jp": "めいし",
+        "r": "meishi",
+        "en": "business card",
+        "ta": "முகவரி அட்டை"
+      },
+      {
+        "jp": "カード",
+        "r": "ka-do",
+        "en": "credit card",
+        "ta": "அட்டை"
+      },
+      {
+        "jp": "えんぴつ",
+        "r": "enpitsu",
+        "en": "pencil",
+        "ta": "பென்சில்"
+      },
+      {
+        "jp": "ボールペン",
+        "r": "bo-rupen",
+        "en": "ballpoint pen",
+        "ta": "பேனா"
+      },
+      {
+        "jp": "シャープペンシル",
+        "r": "sha-pupenshiru",
+        "en": "mechanical pencil",
+        "ta": "பென்சில்"
+      },
+      {
+        "jp": "かぎ",
+        "r": "kagi",
+        "en": "key",
+        "ta": "சாவி"
+      },
+      {
+        "jp": "とけい",
+        "r": "tokei",
+        "en": "watch / clock",
+        "ta": "கடிகாரம்"
+      },
+      {
+        "jp": "かさ",
+        "r": "kasa",
+        "en": "umbrella",
+        "ta": "குடை"
+      },
+      {
+        "jp": "かばん",
+        "r": "kaban",
+        "en": "bag",
+        "ta": "பை"
+      },
+      {
+        "jp": "テレビ",
+        "r": "terebi",
+        "en": "television",
+        "ta": "தொலைக்காட்சி"
+      },
+      {
+        "jp": "ラジオ",
+        "r": "rajio",
+        "en": "radio",
+        "ta": "வானொலி"
+      },
+      {
+        "jp": "カメラ",
+        "r": "kamera",
+        "en": "camera",
+        "ta": "கேமரா"
+      },
+      {
+        "jp": "コンピューター",
+        "r": "konpyu-ta-",
+        "en": "computer",
+        "ta": "கணினி"
+      },
+      {
+        "jp": "くるま",
+        "r": "kuruma",
+        "en": "car / vehicle",
+        "ta": "கார்"
+      },
+      {
+        "jp": "つくえ",
+        "r": "tsukue",
+        "en": "desk",
+        "ta": "மேசை"
+      },
+      {
+        "jp": "いす",
+        "r": "isu",
+        "en": "chair",
+        "ta": "நாற்காலி"
+      },
+      {
+        "jp": "チョコレート",
+        "r": "chokore-to",
+        "en": "chocolate",
+        "ta": "சாக்லேட்"
+      },
+      {
+        "jp": "コーヒー",
+        "r": "ko-hi-",
+        "en": "coffee",
+        "ta": "காபி"
+      },
+      {
+        "jp": "なん",
+        "r": "nan",
+        "en": "what",
+        "ta": "என்ன"
+      },
+      {
+        "jp": "そう",
+        "r": "sou",
+        "en": "so / like that",
+        "ta": "அப்படி"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "これ / それ / あれ",
+        "en": "Demonstratives referring to objects based on distance",
+        "ta": "தொலைவின் அடிப்படையில் பொருள்களை சுட்டிக்காட்டுதல்",
+        "form": "これ/それ/あれ + は + Noun + です",
+        "ex": {
+          "jp": "これは 辞書です。",
+          "en": "This is a dictionary.",
+          "ta": "இது ஒரு அகராதி."
+        }
+      },
+      {
+        "t": "この N / その N / あの N",
+        "en": "Demonstrative determiners attached directly to a noun",
+        "ta": "பெயர்ச்சொல்லுடன் நேரடியாகச் சேரும் சுட்டு",
+        "form": "この/その/あの + Noun + は...",
+        "ex": {
+          "jp": "この 本は わたしのです。",
+          "en": "This book is mine.",
+          "ta": "இந்த புத்தகம் என்னுடையது."
+        }
+      },
+      {
+        "t": "そうです / そうじゃありません",
+        "en": "Affirmative and negative agreement to Noun predicate questions",
+        "ta": "வினாவுக்கு ஆம்/இல்லை பதில்",
+        "form": "はい、そうです。 / いいえ、そうじゃありません。",
+        "ex": {
+          "jp": "「それは 辞書ですか。」「はい、そうです。」",
+          "en": "'Is that a dictionary?' 'Yes, it is.'",
+          "ta": "'அது அகராதியா?' 'ஆம், அதுதான்.'"
+        }
+      },
+      {
+        "t": "S1 か、S2 か (Alternative Questions)",
+        "en": "Question offering choices between S1 and S2",
+        "ta": "தெரிவு வினாக்கள்",
+        "form": "S1 か、S2 か",
+        "ex": {
+          "jp": "これは 「９」ですか、「７」ですか。",
+          "en": "Is this a '9' or a '7'?",
+          "ta": "இது '9' ஆ அல்லது '7' ஆ?"
+        }
+      },
+      {
+        "t": "N1 の N2 (Possession & Subject matter)",
+        "en": "の indicates owner or topic of an object",
+        "ta": "உடைமை அல்லது தலைப்பைக் குறிக்கும் の",
+        "form": "Noun1 + の + Noun2",
+        "ex": {
+          "jp": "これは コンピューターの 本です。",
+          "en": "This is a computer book.",
+          "ta": "இது கணினி பற்றிய புத்தகம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "What is the meaning of 'かさ' (kasa)?",
+        "options": [
+          "Bag",
+          "Umbrella",
+          "Key",
+          "Watch"
+        ],
+        "answer": "Umbrella",
+        "explain": "かさ means umbrella (குடை)."
+      },
+      {
+        "q": "Complete: この ほんは わたし ______ です。",
+        "options": [
+          "の",
+          "は",
+          "を",
+          "に"
+        ],
+        "answer": "の",
+        "explain": "の (no) indicates possession ('mine')."
+      },
+      {
+        "q": "Which demonstrative means 'this thing right here'?",
+        "options": [
+          "それ",
+          "あれ",
+          "これ",
+          "どの"
+        ],
+        "answer": "これ",
+        "explain": "これ means this thing near the speaker."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "jp": "ここ は しょくどう です",
+    "en": "This is the cafeteria (Locations & Places)",
+    "ta": "இது உணவகம் (இடங்கள்)",
+    "vocab": [
+      {
+        "jp": "ここ",
+        "r": "koko",
+        "en": "here / this place",
+        "ta": "இங்கே"
+      },
+      {
+        "jp": "そこ",
+        "r": "soko",
+        "en": "there / that place",
+        "ta": "அங்கே"
+      },
+      {
+        "jp": "あそこ",
+        "r": "asoko",
+        "en": "over there",
+        "ta": "அங்கே (தூரத்தில்)"
+      },
+      {
+        "jp": "どこ",
+        "r": "doko",
+        "en": "where",
+        "ta": "எங்கே"
+      },
+      {
+        "jp": "こちら",
+        "r": "kochira",
+        "en": "this direction / place (polite)",
+        "ta": "இந்தப் பக்கம் / இடம்"
+      },
+      {
+        "jp": "そちら",
+        "r": "sochira",
+        "en": "that direction / place (polite)",
+        "ta": "அந்தப் பக்கம்"
+      },
+      {
+        "jp": "あちら",
+        "r": "achira",
+        "en": "that direction over there (polite)",
+        "ta": "அப்பக்கம் (தூரத்தில்)"
+      },
+      {
+        "jp": "どちら",
+        "r": "dochira",
+        "en": "which direction / place (polite)",
+        "ta": "எந்தப் பக்கம் / இடம்"
+      },
+      {
+        "jp": "きょうしつ",
+        "r": "kyoushitsu",
+        "en": "classroom",
+        "ta": "வகுப்பறை"
+      },
+      {
+        "jp": "しょくどう",
+        "r": "shokudou",
+        "en": "dining hall / cafeteria",
+        "ta": "உணவகம்"
+      },
+      {
+        "jp": "じむしょ",
+        "r": "jimusho",
+        "en": "office",
+        "ta": "அலுவலகம்"
+      },
+      {
+        "jp": "かいぎしつ",
+        "r": "kaigishitsu",
+        "en": "meeting room",
+        "ta": "கூட்ட அரங்கு"
+      },
+      {
+        "jp": "うけつけ",
+        "r": "uketsuke",
+        "en": "reception desk",
+        "ta": "வரவேற்பறை"
+      },
+      {
+        "jp": "ロビー",
+        "r": "robi-",
+        "en": "lobby",
+        "ta": "வரவேற்பு மண்டபம்"
+      },
+      {
+        "jp": "へや",
+        "r": "heya",
+        "en": "room",
+        "ta": "அறை"
+      },
+      {
+        "jp": "トイレ / おてあらい",
+        "r": "toire / otearai",
+        "en": "toilet / restroom",
+        "ta": "கழிப்பறை"
+      },
+      {
+        "jp": "かいだん",
+        "r": "kaidan",
+        "en": "staircase",
+        "ta": "படிக்கட்டு"
+      },
+      {
+        "jp": "エレベーター",
+        "r": "erebe-ta-",
+        "en": "elevator / lift",
+        "ta": "மின்நூலேணி (லிப்ட்)"
+      },
+      {
+        "jp": "エスカレーター",
+        "r": "esukare-ta-",
+        "en": "escalator",
+        "ta": "நகரும் படிக்கட்டு"
+      },
+      {
+        "jp": "じどうはんばいき",
+        "r": "jidouhanbaiki",
+        "en": "vending machine",
+        "ta": "தானியங்கி விற்பனை இயந்திரம்"
+      },
+      {
+        "jp": "でんわ",
+        "r": "denwa",
+        "en": "telephone / call",
+        "ta": "தொலைபேசி"
+      },
+      {
+        "jp": "おくに",
+        "r": "okuni",
+        "en": "country / homeland",
+        "ta": "நாடு"
+      },
+      {
+        "jp": "かいしゃ",
+        "r": "kaisha",
+        "en": "company",
+        "ta": "நிறுவனம்"
+      },
+      {
+        "jp": "うち",
+        "r": "uchi",
+        "en": "house / home",
+        "ta": "வீடு"
+      },
+      {
+        "jp": "くつ",
+        "r": "kutsu",
+        "en": "shoes",
+        "ta": "காலணி"
+      },
+      {
+        "jp": "ネクタイ",
+        "r": "nekutai",
+        "en": "necktie",
+        "ta": "டை"
+      },
+      {
+        "jp": "ワイン",
+        "r": "wain",
+        "en": "wine",
+        "ta": "ஒயின்"
+      },
+      {
+        "jp": "うりば",
+        "r": "uriba",
+        "en": "sales counter / department",
+        "ta": "விற்பனை பிரிவு"
+      },
+      {
+        "jp": "ちか",
+        "r": "chika",
+        "en": "basement",
+        "ta": "தரைக்கீழ் தளம்"
+      },
+      {
+        "jp": "～かい / ～がい",
+        "r": "kai / gai",
+        "en": "~th floor",
+        "ta": "~ஆம் தளம்"
+      },
+      {
+        "jp": "なんがい",
+        "r": "nangai",
+        "en": "which floor?",
+        "ta": "எந்த தளம்?"
+      },
+      {
+        "jp": "～えん",
+        "r": "en",
+        "en": "~ yen",
+        "ta": "~ யென்"
+      },
+      {
+        "jp": "いくら",
+        "r": "ikura",
+        "en": "how much?",
+        "ta": "எவ்வளவு?"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "ここ / そこ / あそこ",
+        "en": "Demonstratives referring to locations",
+        "ta": "இடங்களைச் சுட்டிக்காட்டும் சொற்கள்",
+        "form": "ここ/そこ/あそこ + は + Noun (場所) + です",
+        "ex": {
+          "jp": "ここは 食堂です。",
+          "en": "This is the cafeteria.",
+          "ta": "இது உணவகம்."
+        }
+      },
+      {
+        "t": "N1 は 場所 です",
+        "en": "Identifying where a person, item or place is located",
+        "ta": "நபர் அல்லது பொருளின் இருப்பிடத்தைக் கூறுதல்",
+        "form": "Noun + は + Place + です",
+        "ex": {
+          "jp": "お手洗いは あそこです。",
+          "en": "The restroom is over there.",
+          "ta": "கழிப்பறை அங்கே உள்ளது."
+        }
+      },
+      {
+        "t": "どこ / どちら",
+        "en": "Asking for locations or origins",
+        "ta": "இடம் அல்லது நாட்டை வினவுதல்",
+        "form": "N は どこ / どちら ですか。",
+        "ex": {
+          "jp": "お国は どちらですか。",
+          "en": "Which country are you from?",
+          "ta": "உங்கள் நாடு எது?"
+        }
+      },
+      {
+        "t": "N1 の N2 (Country/Company of Origin)",
+        "en": "の indicating manufacturer or country of production",
+        "ta": "தயாரிப்பு நாடு அல்லது நிறுவனத்தைக் குறிக்கும் の",
+        "form": "Country/Company + の + Product",
+        "ex": {
+          "jp": "これは 日本の ワインです。",
+          "en": "This is Japanese wine.",
+          "ta": "இது ஜப்பானிய ஒயின்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "What does 'しょくどう' (shokudou) mean?",
+        "options": [
+          "Office",
+          "Cafeteria",
+          "Classroom",
+          "Hospital"
+        ],
+        "answer": "Cafeteria",
+        "explain": "しょくどう means cafeteria (உணவகம்)."
+      },
+      {
+        "q": "Which question word means 'which direction / place' politely?",
+        "options": [
+          "どこ",
+          "どちら",
+          "だれ",
+          "なん"
+        ],
+        "answer": "どちら",
+        "explain": "どちら is polite for where/which direction."
+      },
+      {
+        "q": "Complete: トイレは あそこ ______ です。",
+        "options": [
+          "は",
+          "の",
+          "で",
+          "へ"
+        ],
+        "answer": "は",
+        "explain": "Topic marker は specifies the subject 'toilet'."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "jp": "いま なんじですか",
+    "en": "What time is it now? (Time, Schedule & Verbs)",
+    "ta": "இப்போது என்ன நேரம்? (நேரம்)",
+    "vocab": [
+      {
+        "jp": "いま",
+        "r": "ima",
+        "en": "now",
+        "ta": "இப்போது"
+      },
+      {
+        "jp": "～じ",
+        "r": "ji",
+        "en": "o'clock",
+        "ta": "மணி"
+      },
+      {
+        "jp": "～ふん/ぷん",
+        "r": "fun/pun",
+        "en": "minutes",
+        "ta": "நிமிடம்"
+      },
+      {
+        "jp": "はん",
+        "r": "han",
+        "en": "half past",
+        "ta": "அரை"
+      },
+      {
+        "jp": "なんじ",
+        "r": "nanji",
+        "en": "what time?",
+        "ta": "எத்தனை மணி?"
+      },
+      {
+        "jp": "なんぷん",
+        "r": "nanpun",
+        "en": "how many minutes?",
+        "ta": "எத்தனை நிமிடம்?"
+      },
+      {
+        "jp": "ごぜん",
+        "r": "gozen",
+        "en": "a.m. / morning",
+        "ta": "காலை"
+      },
+      {
+        "jp": "ごご",
+        "r": "gogo",
+        "en": "p.m. / afternoon",
+        "ta": "மதியம்"
+      },
+      {
+        "jp": "あさ",
+        "r": "asa",
+        "en": "morning",
+        "ta": "காலை"
+      },
+      {
+        "jp": "ひる",
+        "r": "hiru",
+        "en": "daytime / noon",
+        "ta": "பகல்"
+      },
+      {
+        "jp": "ばん/よる",
+        "r": "ban/yoru",
+        "en": "night / evening",
+        "ta": "இரவு"
+      },
+      {
+        "jp": "おきます",
+        "r": "okimasu",
+        "en": "to get up",
+        "ta": "எழுந்திருத்தல்"
+      },
+      {
+        "jp": "ねます",
+        "r": "nemasu",
+        "en": "to sleep",
+        "ta": "தூங்குதல்"
+      },
+      {
+        "jp": "はたらきます",
+        "r": "hatarakimasu",
+        "en": "to work",
+        "ta": "வேலை செய்தல்"
+      },
+      {
+        "jp": "やすみます",
+        "r": "yasumimasu",
+        "en": "to rest / take a holiday",
+        "ta": "ஓய்வெடுத்தல்"
+      },
+      {
+        "jp": "べんきょうします",
+        "r": "benkyoushimasu",
+        "en": "to study",
+        "ta": "படித்தல்"
+      },
+      {
+        "jp": "おわります",
+        "r": "owarimasu",
+        "en": "to finish",
+        "ta": "முடிவடைதல்"
+      },
+      {
+        "jp": "デパート",
+        "r": "depa-to",
+        "en": "department store",
+        "ta": "துணிக்கடை"
+      },
+      {
+        "jp": "ぎんこう",
+        "r": "ginkou",
+        "en": "bank",
+        "ta": "வங்கி"
+      },
+      {
+        "jp": "ゆうびんきょく",
+        "r": "yuubinkyoku",
+        "en": "post office",
+        "ta": "அஞ்சலகம்"
+      },
+      {
+        "jp": "としょかん",
+        "r": "toshokan",
+        "en": "library",
+        "ta": "நூலகம்"
+      },
+      {
+        "jp": "びじゅつかん",
+        "r": "bijutsukan",
+        "en": "art museum",
+        "ta": "அருங்காட்சியகம்"
+      },
+      {
+        "jp": "きょう",
+        "r": "kyou",
+        "en": "today",
+        "ta": "இன்று"
+      },
+      {
+        "jp": "あした",
+        "r": "ashita",
+        "en": "tomorrow",
+        "ta": "நாளை"
+      },
+      {
+        "jp": "あさって",
+        "r": "asatte",
+        "en": "day after tomorrow",
+        "ta": "நாளை மறுநாள்"
+      },
+      {
+        "jp": "きのう",
+        "r": "kinou",
+        "en": "yesterday",
+        "ta": "நேற்று"
+      },
+      {
+        "jp": "おととい",
+        "r": "ototoi",
+        "en": "day before yesterday",
+        "ta": "நேற்று முன்தினம்"
+      },
+      {
+        "jp": "けさ",
+        "r": "kesa",
+        "en": "this morning",
+        "ta": "இன்று காலை"
+      },
+      {
+        "jp": "こんばん",
+        "r": "konban",
+        "en": "tonight",
+        "ta": "இன்று இரவு"
+      },
+      {
+        "jp": "やすみ",
+        "r": "yasumi",
+        "en": "rest / day off",
+        "ta": "விடுமுறை"
+      },
+      {
+        "jp": "ひるやすみ",
+        "r": "hiruyasumi",
+        "en": "lunch break",
+        "ta": "மதிய உணவு இடைவேளை"
+      },
+      {
+        "jp": "まいあさ",
+        "r": "maiasa",
+        "en": "every morning",
+        "ta": "ஒவ்வொரு காலையும்"
+      },
+      {
+        "jp": "まいばん",
+        "r": "maiban",
+        "en": "every night",
+        "ta": "ஒவ்வொரு இரவும்"
+      },
+      {
+        "jp": "まいにち",
+        "r": "mainichi",
+        "en": "every day",
+        "ta": "ஒவ்வொரு நாளும்"
+      },
+      {
+        "jp": "げつようび",
+        "r": "getsuyoubi",
+        "en": "Monday",
+        "ta": "திங்கள்கிழமை"
+      },
+      {
+        "jp": "かようび",
+        "r": "kayoubi",
+        "en": "Tuesday",
+        "ta": "செவ்வாய்க்கிழமை"
+      },
+      {
+        "jp": "すいようび",
+        "r": "suiyoubi",
+        "en": "Wednesday",
+        "ta": "புதன்கிழமை"
+      },
+      {
+        "jp": "もくようび",
+        "r": "mokuyoubi",
+        "en": "Thursday",
+        "ta": "வியாழக்கிழமை"
+      },
+      {
+        "jp": "きんようび",
+        "r": "kinyoubi",
+        "en": "Friday",
+        "ta": "வெள்ளிக்கிழமை"
+      },
+      {
+        "jp": "どようび",
+        "r": "doyoubi",
+        "en": "Saturday",
+        "ta": "சனிக்கிழமை"
+      },
+      {
+        "jp": "にちようび",
+        "r": "nichiyoubi",
+        "en": "Sunday",
+        "ta": "ஞாயிற்றுக்கிழமை"
+      },
+      {
+        "jp": "なんようび",
+        "r": "nanyoubi",
+        "en": "what day of the week?",
+        "ta": "என்ன கிழமை?"
+      },
+      {
+        "jp": "～から",
+        "r": "kara",
+        "en": "from ~",
+        "ta": "~லிருந்து"
+      },
+      {
+        "jp": "～まで",
+        "r": "made",
+        "en": "to / until ~",
+        "ta": "~வரை"
+      },
+      {
+        "jp": "～と～",
+        "r": "to",
+        "en": "and (connecting nouns)",
+        "ta": "மற்றும்"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "～時 ～分です",
+        "en": "Tell exact time",
+        "ta": "நேரம் கூறுதல்",
+        "form": "Time + です",
+        "ex": {
+          "jp": "いま 9じ 30ふんです。",
+          "en": "いま 9じ 30ふんです。",
+          "ta": "いま 9じ 30ふんです。"
+        }
+      },
+      {
+        "t": "Verb ます / ません / ました / ませんでした",
+        "en": "Verb non-past and past tenses",
+        "ta": "வினைச்சொல் காலங்கள்",
+        "form": "Verb-stem + ます/ません/ました",
+        "ex": {
+          "jp": "まいあさ 6じに おきます。",
+          "en": "まいあさ 6じに おきます。",
+          "ta": "まいあさ 6じに おきます。"
+        }
+      },
+      {
+        "t": "S1 から S2 まで",
+        "en": "Time range from ~ to ~",
+        "ta": "~லிருந்து ~வரை",
+        "form": "Time1 + から + Time2 + まで",
+        "ex": {
+          "jp": "9じから 5じまで はたらきます。",
+          "en": "9じから 5じまで はたらきます。",
+          "ta": "9じから 5じまで はたらきます。"
+        }
+      },
+      {
+        "t": "N1 と N2",
+        "en": "Connecting nouns with 'and'",
+        "ta": "மற்றும்",
+        "form": "Noun1 + と + Noun2",
+        "ex": {
+          "jp": "ぎんこうの やすみは どようびと にちようびです。",
+          "en": "ぎんこうの やすみは どようびと にちようびです。",
+          "ta": "ぎんこうの やすみは どようびと にちようびです。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 4: What is the meaning of 'いま' (ima)?",
+        "options": [
+          "now",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "now",
+        "explain": "'いま' means now (இப்போது)."
+      },
+      {
+        "q": "Lesson 4: Identify the main grammar structure.",
+        "options": [
+          "～時 ～分です",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "～時 ～分です",
+        "explain": "Lesson 4 focuses on ～時 ～分です."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "jp": "いま なんじですか",
+    "en": "What time is it now? (Time, Schedule & Verbs)",
+    "ta": "இப்போது என்ன நேரம்? (நேரம்)",
+    "vocab": [
+      {
+        "jp": "いま",
+        "r": "ima",
+        "en": "now",
+        "ta": "இப்போது"
+      },
+      {
+        "jp": "～じ",
+        "r": "ji",
+        "en": "o'clock",
+        "ta": "மணி"
+      },
+      {
+        "jp": "～ふん/ぷん",
+        "r": "fun/pun",
+        "en": "minutes",
+        "ta": "நிமிடம்"
+      },
+      {
+        "jp": "はん",
+        "r": "han",
+        "en": "half past",
+        "ta": "அரை"
+      },
+      {
+        "jp": "なんじ",
+        "r": "nanji",
+        "en": "what time?",
+        "ta": "எத்தனை மணி?"
+      },
+      {
+        "jp": "なんぷん",
+        "r": "nanpun",
+        "en": "how many minutes?",
+        "ta": "எத்தனை நிமிடம்?"
+      },
+      {
+        "jp": "ごぜん",
+        "r": "gozen",
+        "en": "a.m. / morning",
+        "ta": "காலை"
+      },
+      {
+        "jp": "ごご",
+        "r": "gogo",
+        "en": "p.m. / afternoon",
+        "ta": "மதியம்"
+      },
+      {
+        "jp": "あさ",
+        "r": "asa",
+        "en": "morning",
+        "ta": "காலை"
+      },
+      {
+        "jp": "ひる",
+        "r": "hiru",
+        "en": "daytime / noon",
+        "ta": "பகல்"
+      },
+      {
+        "jp": "ばん/よる",
+        "r": "ban/yoru",
+        "en": "night / evening",
+        "ta": "இரவு"
+      },
+      {
+        "jp": "おきます",
+        "r": "okimasu",
+        "en": "to get up",
+        "ta": "எழுந்திருத்தல்"
+      },
+      {
+        "jp": "ねます",
+        "r": "nemasu",
+        "en": "to sleep",
+        "ta": "தூங்குதல்"
+      },
+      {
+        "jp": "はたらきます",
+        "r": "hatarakimasu",
+        "en": "to work",
+        "ta": "வேலை செய்தல்"
+      },
+      {
+        "jp": "やすみます",
+        "r": "yasumimasu",
+        "en": "to rest / take a holiday",
+        "ta": "ஓய்வெடுத்தல்"
+      },
+      {
+        "jp": "べんきょうします",
+        "r": "benkyoushimasu",
+        "en": "to study",
+        "ta": "படித்தல்"
+      },
+      {
+        "jp": "おわります",
+        "r": "owarimasu",
+        "en": "to finish",
+        "ta": "முடிவடைதல்"
+      },
+      {
+        "jp": "デパート",
+        "r": "depa-to",
+        "en": "department store",
+        "ta": "துணிக்கடை"
+      },
+      {
+        "jp": "ぎんこう",
+        "r": "ginkou",
+        "en": "bank",
+        "ta": "வங்கி"
+      },
+      {
+        "jp": "ゆうびんきょく",
+        "r": "yuubinkyoku",
+        "en": "post office",
+        "ta": "அஞ்சலகம்"
+      },
+      {
+        "jp": "としょかん",
+        "r": "toshokan",
+        "en": "library",
+        "ta": "நூலகம்"
+      },
+      {
+        "jp": "びじゅつかん",
+        "r": "bijutsukan",
+        "en": "art museum",
+        "ta": "அருங்காட்சியகம்"
+      },
+      {
+        "jp": "きょう",
+        "r": "kyou",
+        "en": "today",
+        "ta": "இன்று"
+      },
+      {
+        "jp": "あした",
+        "r": "ashita",
+        "en": "tomorrow",
+        "ta": "நாளை"
+      },
+      {
+        "jp": "あさって",
+        "r": "asatte",
+        "en": "day after tomorrow",
+        "ta": "நாளை மறுநாள்"
+      },
+      {
+        "jp": "きのう",
+        "r": "kinou",
+        "en": "yesterday",
+        "ta": "நேற்று"
+      },
+      {
+        "jp": "おととい",
+        "r": "ototoi",
+        "en": "day before yesterday",
+        "ta": "நேற்று முன்தினம்"
+      },
+      {
+        "jp": "けさ",
+        "r": "kesa",
+        "en": "this morning",
+        "ta": "இன்று காலை"
+      },
+      {
+        "jp": "こんばん",
+        "r": "konban",
+        "en": "tonight",
+        "ta": "இன்று இரவு"
+      },
+      {
+        "jp": "やすみ",
+        "r": "yasumi",
+        "en": "rest / day off",
+        "ta": "விடுமுறை"
+      },
+      {
+        "jp": "ひるやすみ",
+        "r": "hiruyasumi",
+        "en": "lunch break",
+        "ta": "மதிய உணவு இடைவேளை"
+      },
+      {
+        "jp": "まいあさ",
+        "r": "maiasa",
+        "en": "every morning",
+        "ta": "ஒவ்வொரு காலையும்"
+      },
+      {
+        "jp": "まいばん",
+        "r": "maiban",
+        "en": "every night",
+        "ta": "ஒவ்வொரு இரவும்"
+      },
+      {
+        "jp": "まいにち",
+        "r": "mainichi",
+        "en": "every day",
+        "ta": "ஒவ்வொரு நாளும்"
+      },
+      {
+        "jp": "げつようび",
+        "r": "getsuyoubi",
+        "en": "Monday",
+        "ta": "திங்கள்கிழமை"
+      },
+      {
+        "jp": "かようび",
+        "r": "kayoubi",
+        "en": "Tuesday",
+        "ta": "செவ்வாய்க்கிழமை"
+      },
+      {
+        "jp": "すいようび",
+        "r": "suiyoubi",
+        "en": "Wednesday",
+        "ta": "புதன்கிழமை"
+      },
+      {
+        "jp": "もくようび",
+        "r": "mokuyoubi",
+        "en": "Thursday",
+        "ta": "வியாழக்கிழமை"
+      },
+      {
+        "jp": "きんようび",
+        "r": "kinyoubi",
+        "en": "Friday",
+        "ta": "வெள்ளிக்கிழமை"
+      },
+      {
+        "jp": "どようび",
+        "r": "doyoubi",
+        "en": "Saturday",
+        "ta": "சனிக்கிழமை"
+      },
+      {
+        "jp": "にちようび",
+        "r": "nichiyoubi",
+        "en": "Sunday",
+        "ta": "ஞாயிற்றுக்கிழமை"
+      },
+      {
+        "jp": "なんようび",
+        "r": "nanyoubi",
+        "en": "what day of the week?",
+        "ta": "என்ன கிழமை?"
+      },
+      {
+        "jp": "～から",
+        "r": "kara",
+        "en": "from ~",
+        "ta": "~லிருந்து"
+      },
+      {
+        "jp": "～まで",
+        "r": "made",
+        "en": "to / until ~",
+        "ta": "~வரை"
+      },
+      {
+        "jp": "～と～",
+        "r": "to",
+        "en": "and (connecting nouns)",
+        "ta": "மற்றும்"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "～時 ～分です",
+        "en": "Tell exact time",
+        "ta": "நேரம் கூறுதல்",
+        "form": "Time + です",
+        "ex": {
+          "jp": "いま 9じ 30ふんです。",
+          "en": "いま 9じ 30ふんです。",
+          "ta": "いま 9じ 30ふんです。"
+        }
+      },
+      {
+        "t": "Verb ます / ません / ました / ませんでした",
+        "en": "Verb non-past and past tenses",
+        "ta": "வினைச்சொல் காலங்கள்",
+        "form": "Verb-stem + ます/ません/ました",
+        "ex": {
+          "jp": "まいあさ 6じに おきます。",
+          "en": "まいあさ 6じに おきます。",
+          "ta": "まいあさ 6じに おきます。"
+        }
+      },
+      {
+        "t": "S1 から S2 まで",
+        "en": "Time range from ~ to ~",
+        "ta": "~லிருந்து ~வரை",
+        "form": "Time1 + から + Time2 + まで",
+        "ex": {
+          "jp": "9じから 5じまで はたらきます。",
+          "en": "9じから 5じまで はたらきます。",
+          "ta": "9じから 5じまで はたらきます。"
+        }
+      },
+      {
+        "t": "N1 と N2",
+        "en": "Connecting nouns with 'and'",
+        "ta": "மற்றும்",
+        "form": "Noun1 + と + Noun2",
+        "ex": {
+          "jp": "ぎんこうの やすみは どようびと にちようびです。",
+          "en": "ぎんこうの やすみは どようびと にちようびです。",
+          "ta": "ぎんこうの やすみは どようびと にちようびです。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 4: What is the meaning of 'いま' (ima)?",
+        "options": [
+          "now",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "now",
+        "explain": "'いま' means now (இப்போது)."
+      },
+      {
+        "q": "Lesson 4: Identify the main grammar structure.",
+        "options": [
+          "～時 ～分です",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "～時 ～分です",
+        "explain": "Lesson 4 focuses on ～時 ～分です."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "jp": "どこへ いきますか",
+    "en": "Where are you going? (Transport & Destinations)",
+    "ta": "எங்கே செல்கிறீர்கள்? (பயணம்)",
+    "vocab": [
+      {
+        "jp": "いきます",
+        "r": "ikimasu",
+        "en": "to go",
+        "ta": "செல்லுதல்"
+      },
+      {
+        "jp": "きます",
+        "r": "kimasu",
+        "en": "to come",
+        "ta": "வருதல்"
+      },
+      {
+        "jp": "かえります",
+        "r": "kaerimasu",
+        "en": "to return / go home",
+        "ta": "திரும்புதல்"
+      },
+      {
+        "jp": "がっこう",
+        "r": "gakkou",
+        "en": "school",
+        "ta": "பள்ளி"
+      },
+      {
+        "jp": "スーパー",
+        "r": "su-pa-",
+        "en": "supermarket",
+        "ta": "சூப்பர் மார்க்கெட்"
+      },
+      {
+        "jp": "えき",
+        "r": "eki",
+        "en": "station",
+        "ta": "ரயில் நிலையம்"
+      },
+      {
+        "jp": "ひこうき",
+        "r": "hikouki",
+        "en": "airplane",
+        "ta": "விமானம்"
+      },
+      {
+        "jp": "ふね",
+        "r": "fune",
+        "en": "ship",
+        "ta": "கப்பல்"
+      },
+      {
+        "jp": "でんしゃ",
+        "r": "densha",
+        "en": "electric train",
+        "ta": "ரயில்"
+      },
+      {
+        "jp": "ちかってつ",
+        "r": "chikatesu",
+        "en": "subway",
+        "ta": "சுரங்க ரயில்"
+      },
+      {
+        "jp": "しんかんせん",
+        "r": "shinkansen",
+        "en": "bullet train",
+        "ta": "புல்லட் ரயில்"
+      },
+      {
+        "jp": "バス",
+        "r": "basu",
+        "en": "bus",
+        "ta": "பேருந்து"
+      },
+      {
+        "jp": "タクシー",
+        "r": "takushi-",
+        "en": "taxi",
+        "ta": "டாக்ஸி"
+      },
+      {
+        "jp": "じてんしゃ",
+        "r": "jitensha",
+        "en": "bicycle",
+        "ta": "மிதிவண்டி"
+      },
+      {
+        "jp": "あるいて",
+        "r": "aruite",
+        "en": "on foot",
+        "ta": "நடந்து"
+      },
+      {
+        "jp": "ひと",
+        "r": "hito",
+        "en": "person",
+        "ta": "நபர்"
+      },
+      {
+        "jp": "ともだち",
+        "r": "tomodachi",
+        "en": "friend",
+        "ta": "நண்பர்"
+      },
+      {
+        "jp": "かれ",
+        "r": "kare",
+        "en": "he / boyfriend",
+        "ta": "அவன்"
+      },
+      {
+        "jp": "かのじょ",
+        "r": "kanojo",
+        "en": "she / girlfriend",
+        "ta": "அவள்"
+      },
+      {
+        "jp": "かぞく",
+        "r": "kazoku",
+        "en": "family",
+        "ta": "குடும்பம்"
+      },
+      {
+        "jp": "ひとり で",
+        "r": "hitori de",
+        "en": "alone",
+        "ta": "தனியாக"
+      },
+      {
+        "jp": "せんしゅう",
+        "r": "senshuu",
+        "en": "last week",
+        "ta": "கடந்த வாரம்"
+      },
+      {
+        "jp": "こんしゅう",
+        "r": "konshuu",
+        "en": "this week",
+        "ta": "இந்த வாரம்"
+      },
+      {
+        "jp": "らいしゅう",
+        "r": "raishuu",
+        "en": "next week",
+        "ta": "அடுத்த வாரம்"
+      },
+      {
+        "jp": "せんげつ",
+        "r": "sengetsu",
+        "en": "last month",
+        "ta": "கடந்த மாதம்"
+      },
+      {
+        "jp": "こんげつ",
+        "r": "kongetsu",
+        "en": "this month",
+        "ta": "இந்த மாதம்"
+      },
+      {
+        "jp": "らいげつ",
+        "r": "raigetsu",
+        "en": "next month",
+        "ta": "அடுத்த மாதம்"
+      },
+      {
+        "jp": "きょねん",
+        "r": "kyonen",
+        "en": "last year",
+        "ta": "கடந்த ஆண்டு"
+      },
+      {
+        "jp": "ことし",
+        "r": "kotoshi",
+        "en": "this year",
+        "ta": "இந்த ஆண்டு"
+      },
+      {
+        "jp": "らいねん",
+        "r": "rainen",
+        "en": "next year",
+        "ta": "அடுத்த ஆண்டு"
+      },
+      {
+        "jp": "～がつ",
+        "r": "gatsu",
+        "en": "~th month of year",
+        "ta": "~ஆம் மாதம்"
+      },
+      {
+        "jp": "なんがつ",
+        "r": "nangatsu",
+        "en": "which month?",
+        "ta": "எந்த மாதம்?"
+      },
+      {
+        "jp": "ついたち",
+        "r": "tsuitachi",
+        "en": "1st day of month",
+        "ta": "1ஆம் தேதி"
+      },
+      {
+        "jp": "ふつか",
+        "r": "futsuka",
+        "en": "2nd / 2 days",
+        "ta": "2ஆம் தேதி"
+      },
+      {
+        "jp": "みっか",
+        "r": "mikka",
+        "en": "3rd / 3 days",
+        "ta": "3ஆம் தேதி"
+      },
+      {
+        "jp": "よっか",
+        "r": "yokka",
+        "en": "4th / 4 days",
+        "ta": "4ஆம் தேதி"
+      },
+      {
+        "jp": "いつか",
+        "r": "itsuka",
+        "en": "5th / 5 days",
+        "ta": "5ஆம் தேதி"
+      },
+      {
+        "jp": "むいか",
+        "r": "muika",
+        "en": "6th / 6 days",
+        "ta": "6ஆம் தேதி"
+      },
+      {
+        "jp": "<ctrl42>のか",
+        "r": "nanoka",
+        "en": "7th / 7 days",
+        "ta": "7ஆம் தேதி"
+      },
+      {
+        "jp": "ようか",
+        "r": "youka",
+        "en": "8th / 8 days",
+        "ta": "8ஆம் தேதி"
+      },
+      {
+        "jp": "ここのか",
+        "r": "kokonoka",
+        "en": "9th / 9 days",
+        "ta": "9ஆம் தேதி"
+      },
+      {
+        "jp": "とおか",
+        "r": "tooka",
+        "en": "10th / 10 days",
+        "ta": "10ஆம் தேதி"
+      },
+      {
+        "jp": "じゅうよっか",
+        "r": "juuyokka",
+        "en": "14th day",
+        "ta": "14ஆம் தேதி"
+      },
+      {
+        "jp": "はつか",
+        "r": "hatsuka",
+        "en": "20th day",
+        "ta": "20ஆம் தேதி"
+      },
+      {
+        "jp": "にじゅうよっか",
+        "r": "nijuuyokka",
+        "en": "24th day",
+        "ta": "24ஆம் தேதி"
+      },
+      {
+        "jp": "なんにち",
+        "r": "nannichi",
+        "en": "which day of month?",
+        "ta": "எந்த தேதி?"
+      },
+      {
+        "jp": "いつ",
+        "r": "itsu",
+        "en": "when?",
+        "ta": "எப்போது?"
+      },
+      {
+        "jp": "たんじょうび",
+        "r": "tanjoubi",
+        "en": "birthday",
+        "ta": "பிறந்தநாள்"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "N (場所) へ いきます / きます / かえります",
+        "en": "Direction particle へ",
+        "ta": "திசை குறியீடு へ",
+        "form": "Place + へ + Verb",
+        "ex": {
+          "jp": "わたしは きょうとへ いきます。",
+          "en": "わたしは きょうとへ いきます。",
+          "ta": "わたしは きょうとへ いきます。"
+        }
+      },
+      {
+        "t": "どこ [へ] も 行きません",
+        "en": "Complete negation of direction",
+        "ta": "முழு எதிர்மறை",
+        "form": "どこへも + Negative Verb",
+        "ex": {
+          "jp": "どこへも いきません。",
+          "en": "どこへも いきません。",
+          "ta": "どこへも いきません。"
+        }
+      },
+      {
+        "t": "N (乗り物) で いきます",
+        "en": "Means of transport particle で",
+        "ta": "போக்குவரத்து சாதனம் で",
+        "form": "Vehicle + で + Verb",
+        "ex": {
+          "jp": "タクシーで いきます。",
+          "en": "タクシーで いきます。",
+          "ta": "タクシーで いきます。"
+        }
+      },
+      {
+        "t": "N (人/動物) と いきます",
+        "en": "Companion particle と",
+        "ta": "உடன் செல்லும் நபர் と",
+        "form": "Person + と + Verb",
+        "ex": {
+          "jp": "かぞくと にほんへ きました。",
+          "en": "かぞくと にほんへ きました。",
+          "ta": "かぞくと にほんへ きました。"
+        }
+      },
+      {
+        "t": "いつ",
+        "en": "Asking 'when'",
+        "ta": "எப்போது",
+        "form": "いつ + Verbか",
+        "ex": {
+          "jp": "いつ にほんへ いきますか。",
+          "en": "いつ にほんへ いきますか。",
+          "ta": "いつ にほんへ いきますか。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 5: What is the meaning of 'いきます' (ikimasu)?",
+        "options": [
+          "to go",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "to go",
+        "explain": "'いきます' means to go (செல்லுதல்)."
+      },
+      {
+        "q": "Lesson 5: Identify the main grammar structure.",
+        "options": [
+          "N (場所) へ いきます / きます / かえります",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "N (場所) へ いきます / きます / かえります",
+        "explain": "Lesson 5 focuses on N (場所) へ いきます / きます / かえります."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "jp": "どこへ いきますか",
+    "en": "Where are you going? (Transport & Destinations)",
+    "ta": "எங்கே செல்கிறீர்கள்? (பயணம்)",
+    "vocab": [
+      {
+        "jp": "いきます",
+        "r": "ikimasu",
+        "en": "to go",
+        "ta": "செல்லுதல்"
+      },
+      {
+        "jp": "きます",
+        "r": "kimasu",
+        "en": "to come",
+        "ta": "வருதல்"
+      },
+      {
+        "jp": "かえります",
+        "r": "kaerimasu",
+        "en": "to return / go home",
+        "ta": "திரும்புதல்"
+      },
+      {
+        "jp": "がっこう",
+        "r": "gakkou",
+        "en": "school",
+        "ta": "பள்ளி"
+      },
+      {
+        "jp": "スーパー",
+        "r": "su-pa-",
+        "en": "supermarket",
+        "ta": "சூப்பர் மார்க்கெட்"
+      },
+      {
+        "jp": "えき",
+        "r": "eki",
+        "en": "station",
+        "ta": "ரயில் நிலையம்"
+      },
+      {
+        "jp": "ひこうき",
+        "r": "hikouki",
+        "en": "airplane",
+        "ta": "விமானம்"
+      },
+      {
+        "jp": "ふね",
+        "r": "fune",
+        "en": "ship",
+        "ta": "கப்பல்"
+      },
+      {
+        "jp": "でんしゃ",
+        "r": "densha",
+        "en": "electric train",
+        "ta": "ரயில்"
+      },
+      {
+        "jp": "ちかってつ",
+        "r": "chikatesu",
+        "en": "subway",
+        "ta": "சுரங்க ரயில்"
+      },
+      {
+        "jp": "しんかんせん",
+        "r": "shinkansen",
+        "en": "bullet train",
+        "ta": "புல்லட் ரயில்"
+      },
+      {
+        "jp": "バス",
+        "r": "basu",
+        "en": "bus",
+        "ta": "பேருந்து"
+      },
+      {
+        "jp": "タクシー",
+        "r": "takushi-",
+        "en": "taxi",
+        "ta": "டாக்ஸி"
+      },
+      {
+        "jp": "じてんしゃ",
+        "r": "jitensha",
+        "en": "bicycle",
+        "ta": "மிதிவண்டி"
+      },
+      {
+        "jp": "あるいて",
+        "r": "aruite",
+        "en": "on foot",
+        "ta": "நடந்து"
+      },
+      {
+        "jp": "ひと",
+        "r": "hito",
+        "en": "person",
+        "ta": "நபர்"
+      },
+      {
+        "jp": "ともだち",
+        "r": "tomodachi",
+        "en": "friend",
+        "ta": "நண்பர்"
+      },
+      {
+        "jp": "かれ",
+        "r": "kare",
+        "en": "he / boyfriend",
+        "ta": "அவன்"
+      },
+      {
+        "jp": "かのじょ",
+        "r": "kanojo",
+        "en": "she / girlfriend",
+        "ta": "அவள்"
+      },
+      {
+        "jp": "かぞく",
+        "r": "kazoku",
+        "en": "family",
+        "ta": "குடும்பம்"
+      },
+      {
+        "jp": "ひとり で",
+        "r": "hitori de",
+        "en": "alone",
+        "ta": "தனியாக"
+      },
+      {
+        "jp": "せんしゅう",
+        "r": "senshuu",
+        "en": "last week",
+        "ta": "கடந்த வாரம்"
+      },
+      {
+        "jp": "こんしゅう",
+        "r": "konshuu",
+        "en": "this week",
+        "ta": "இந்த வாரம்"
+      },
+      {
+        "jp": "らいしゅう",
+        "r": "raishuu",
+        "en": "next week",
+        "ta": "அடுத்த வாரம்"
+      },
+      {
+        "jp": "せんげつ",
+        "r": "sengetsu",
+        "en": "last month",
+        "ta": "கடந்த மாதம்"
+      },
+      {
+        "jp": "こんげつ",
+        "r": "kongetsu",
+        "en": "this month",
+        "ta": "இந்த மாதம்"
+      },
+      {
+        "jp": "らいげつ",
+        "r": "raigetsu",
+        "en": "next month",
+        "ta": "அடுத்த மாதம்"
+      },
+      {
+        "jp": "きょねん",
+        "r": "kyonen",
+        "en": "last year",
+        "ta": "கடந்த ஆண்டு"
+      },
+      {
+        "jp": "ことし",
+        "r": "kotoshi",
+        "en": "this year",
+        "ta": "இந்த ஆண்டு"
+      },
+      {
+        "jp": "らいねん",
+        "r": "rainen",
+        "en": "next year",
+        "ta": "அடுத்த ஆண்டு"
+      },
+      {
+        "jp": "～がつ",
+        "r": "gatsu",
+        "en": "~th month of year",
+        "ta": "~ஆம் மாதம்"
+      },
+      {
+        "jp": "なんがつ",
+        "r": "nangatsu",
+        "en": "which month?",
+        "ta": "எந்த மாதம்?"
+      },
+      {
+        "jp": "ついたち",
+        "r": "tsuitachi",
+        "en": "1st day of month",
+        "ta": "1ஆம் தேதி"
+      },
+      {
+        "jp": "ふつか",
+        "r": "futsuka",
+        "en": "2nd / 2 days",
+        "ta": "2ஆம் தேதி"
+      },
+      {
+        "jp": "みっか",
+        "r": "mikka",
+        "en": "3rd / 3 days",
+        "ta": "3ஆம் தேதி"
+      },
+      {
+        "jp": "よっか",
+        "r": "yokka",
+        "en": "4th / 4 days",
+        "ta": "4ஆம் தேதி"
+      },
+      {
+        "jp": "いつか",
+        "r": "itsuka",
+        "en": "5th / 5 days",
+        "ta": "5ஆம் தேதி"
+      },
+      {
+        "jp": "むいか",
+        "r": "muika",
+        "en": "6th / 6 days",
+        "ta": "6ஆம் தேதி"
+      },
+      {
+        "jp": "<ctrl42>のか",
+        "r": "nanoka",
+        "en": "7th / 7 days",
+        "ta": "7ஆம் தேதி"
+      },
+      {
+        "jp": "ようか",
+        "r": "youka",
+        "en": "8th / 8 days",
+        "ta": "8ஆம் தேதி"
+      },
+      {
+        "jp": "ここのか",
+        "r": "kokonoka",
+        "en": "9th / 9 days",
+        "ta": "9ஆம் தேதி"
+      },
+      {
+        "jp": "とおか",
+        "r": "tooka",
+        "en": "10th / 10 days",
+        "ta": "10ஆம் தேதி"
+      },
+      {
+        "jp": "じゅうよっか",
+        "r": "juuyokka",
+        "en": "14th day",
+        "ta": "14ஆம் தேதி"
+      },
+      {
+        "jp": "はつか",
+        "r": "hatsuka",
+        "en": "20th day",
+        "ta": "20ஆம் தேதி"
+      },
+      {
+        "jp": "にじゅうよっか",
+        "r": "nijuuyokka",
+        "en": "24th day",
+        "ta": "24ஆம் தேதி"
+      },
+      {
+        "jp": "なんにち",
+        "r": "nannichi",
+        "en": "which day of month?",
+        "ta": "எந்த தேதி?"
+      },
+      {
+        "jp": "いつ",
+        "r": "itsu",
+        "en": "when?",
+        "ta": "எப்போது?"
+      },
+      {
+        "jp": "たんじょうび",
+        "r": "tanjoubi",
+        "en": "birthday",
+        "ta": "பிறந்தநாள்"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "N (場所) へ いきます / きます / かえります",
+        "en": "Direction particle へ",
+        "ta": "திசை குறியீடு へ",
+        "form": "Place + へ + Verb",
+        "ex": {
+          "jp": "わたしは きょうとへ いきます。",
+          "en": "わたしは きょうとへ いきます。",
+          "ta": "わたしは きょうとへ いきます。"
+        }
+      },
+      {
+        "t": "どこ [へ] も 行きません",
+        "en": "Complete negation of direction",
+        "ta": "முழு எதிர்மறை",
+        "form": "どこへも + Negative Verb",
+        "ex": {
+          "jp": "どこへも いきません。",
+          "en": "どこへも いきません。",
+          "ta": "どこへも いきません。"
+        }
+      },
+      {
+        "t": "N (乗り物) で いきます",
+        "en": "Means of transport particle で",
+        "ta": "போக்குவரத்து சாதனம் で",
+        "form": "Vehicle + で + Verb",
+        "ex": {
+          "jp": "タクシーで いきます。",
+          "en": "タクシーで いきます。",
+          "ta": "タクシーで いきます。"
+        }
+      },
+      {
+        "t": "N (人/動物) と いきます",
+        "en": "Companion particle と",
+        "ta": "உடன் செல்லும் நபர் と",
+        "form": "Person + と + Verb",
+        "ex": {
+          "jp": "かぞくと にほんへ きました。",
+          "en": "かぞくと にほんへ きました。",
+          "ta": "かぞくと にほんへ きました。"
+        }
+      },
+      {
+        "t": "いつ",
+        "en": "Asking 'when'",
+        "ta": "எப்போது",
+        "form": "いつ + Verbか",
+        "ex": {
+          "jp": "いつ にほんへ いきますか。",
+          "en": "いつ にほんへ いきますか。",
+          "ta": "いつ にほんへ いきますか。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 5: What is the meaning of 'いきます' (ikimasu)?",
+        "options": [
+          "to go",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "to go",
+        "explain": "'いきます' means to go (செல்லுதல்)."
+      },
+      {
+        "q": "Lesson 5: Identify the main grammar structure.",
+        "options": [
+          "N (場所) へ いきます / きます / かえります",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "N (場所) へ いきます / きます / かえります",
+        "explain": "Lesson 5 focuses on N (場所) へ いきます / きます / かえります."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "jp": "なにを かいますか",
+    "en": "What will you buy? (Direct Objects & Invitations)",
+    "ta": "என்ன வாங்குவீர்கள்? (செயல்கள்)",
+    "vocab": [
+      {
+        "jp": "たべます",
+        "r": "tabemasu",
+        "en": "to eat",
+        "ta": "சாப்பிடுதல்"
+      },
+      {
+        "jp": "のみます",
+        "r": "nomimasu",
+        "en": "to drink",
+        "ta": "குடித்தல்"
+      },
+      {
+        "jp": "すみます",
+        "r": "sumimasu",
+        "en": "to smoke / inhale",
+        "ta": "புகைபிடித்தல்"
+      },
+      {
+        "jp": "みます",
+        "r": "mimasu",
+        "en": "to watch / see",
+        "ta": "பார்த்தல்"
+      },
+      {
+        "jp": "ききます",
+        "r": "kikimasu",
+        "en": "to listen / hear",
+        "ta": "கேட்டல்"
+      },
+      {
+        "jp": "よみます",
+        "r": "yomimasu",
+        "en": "to read",
+        "ta": "வாசித்தல்"
+      },
+      {
+        "jp": "かきます",
+        "r": "kakimasu",
+        "en": "to write / draw",
+        "ta": "எழுதுதல்"
+      },
+      {
+        "jp": "かいます",
+        "r": "kaimasu",
+        "en": "to buy",
+        "ta": "வாங்குதல்"
+      },
+      {
+        "jp": "とります",
+        "r": "torimasu",
+        "en": "to take (photos)",
+        "ta": "படம் எடுத்தல்"
+      },
+      {
+        "jp": "します",
+        "r": "shimasu",
+        "en": "to do / play",
+        "ta": "செய்தல்"
+      },
+      {
+        "jp": "あいます",
+        "r": "aimasu",
+        "en": "to meet (a friend)",
+        "ta": "சந்தித்தல்"
+      },
+      {
+        "jp": "ごはん",
+        "r": "gohan",
+        "en": "meal / cooked rice",
+        "ta": "உணவு / சோறு"
+      },
+      {
+        "jp": "あさごはん",
+        "r": "asagohan",
+        "en": "breakfast",
+        "ta": "காலை உணவு"
+      },
+      {
+        "jp": "ひるごはん",
+        "r": "hirugohan",
+        "en": "lunch",
+        "ta": "மதிய உணவு"
+      },
+      {
+        "jp": "ばんごはん",
+        "r": "bangohan",
+        "en": "dinner",
+        "ta": "இரவு உணவு"
+      },
+      {
+        "jp": "パン",
+        "r": "pan",
+        "en": "bread",
+        "ta": "ரொட்டி"
+      },
+      {
+        "jp": "たまご",
+        "r": "tamago",
+        "en": "egg",
+        "ta": "முட்டை"
+      },
+      {
+        "jp": "にく",
+        "r": "niku",
+        "en": "meat",
+        "ta": "இறைச்சி"
+      },
+      {
+        "jp": "さかな",
+        "r": "sakana",
+        "en": "fish",
+        "ta": "மீன்"
+      },
+      {
+        "jp": "やさい",
+        "r": "yasai",
+        "en": "vegetables",
+        "ta": "காய்கறி"
+      },
+      {
+        "jp": "くだもの",
+        "r": "kudamono",
+        "en": "fruit",
+        "ta": "பழம்"
+      },
+      {
+        "jp": "みず",
+        "r": "mizu",
+        "en": "water",
+        "ta": "தண்ணீர்"
+      },
+      {
+        "jp": "おちゃ",
+        "r": "ocha",
+        "en": "green tea",
+        "ta": "தேநீர்"
+      },
+      {
+        "jp": "こうちゃ",
+        "r": "koucha",
+        "en": "black tea",
+        "ta": "கருப்பு தேநீர்"
+      },
+      {
+        "jp": "ぎゅうにゅう/ミルク",
+        "r": "gyuunyuu",
+        "en": "milk",
+        "ta": "பால்"
+      },
+      {
+        "jp": "ジュース",
+        "r": "ju-su",
+        "en": "juice",
+        "ta": "சாறு"
+      },
+      {
+        "jp": "ビール",
+        "r": "bi-ru",
+        "en": "beer",
+        "ta": "பீர்"
+      },
+      {
+        "jp": "おさけ",
+        "r": "osake",
+        "en": "alcohol / sake",
+        "ta": "மது"
+      },
+      {
+        "jp": "たばこ",
+        "r": "tabako",
+        "en": "tobacco / cigarette",
+        "ta": "புகையிலை"
+      },
+      {
+        "jp": "てがみ",
+        "r": "tegami",
+        "en": "letter",
+        "ta": "கடிதம்"
+      },
+      {
+        "jp": "レポート",
+        "r": "repo-to",
+        "en": "report",
+        "ta": "அறிக்கை"
+      },
+      {
+        "jp": "しゃしん",
+        "r": "shashin",
+        "en": "photograph",
+        "ta": "புகைப்படம்"
+      },
+      {
+        "jp": "ビデオ",
+        "r": "bideo",
+        "en": "video",
+        "ta": "வீடியோ"
+      },
+      {
+        "jp": "みせ",
+        "r": "mise",
+        "en": "store / shop",
+        "ta": "கடை"
+      },
+      {
+        "jp": "レストラン",
+        "r": "resutoran",
+        "en": "restaurant",
+        "ta": "உணவகம்"
+      },
+      {
+        "jp": "にわ",
+        "r": "niwa",
+        "en": "garden",
+        "ta": "தோட்டம்"
+      },
+      {
+        "jp": "宿題",
+        "r": "shukudai",
+        "en": "homework",
+        "ta": "வீட்டுப்பாடம்"
+      },
+      {
+        "jp": "テニス",
+        "r": "tenisu",
+        "en": "tennis",
+        "ta": "டென்னிஸ்"
+      },
+      {
+        "jp": "サッカー",
+        "r": "sakka-",
+        "en": "soccer",
+        "ta": "பந்து விளையாட்டு"
+      },
+      {
+        "jp": "おはなみ",
+        "r": "ohanami",
+        "en": "cherry blossom viewing",
+        "ta": "மலர் ரசிப்பு"
+      },
+      {
+        "jp": "なに",
+        "r": "nani",
+        "en": "what?",
+        "ta": "என்ன?"
+      },
+      {
+        "jp": "いっしょに",
+        "r": "isshoni",
+        "en": "together",
+        "ta": "ஒன்றாக"
+      },
+      {
+        "jp": "ちょっと",
+        "r": "chotto",
+        "en": "a little",
+        "ta": "கொஞ்சம்"
+      },
+      {
+        "jp": "いつも",
+        "r": "itsumo",
+        "en": "always",
+        "ta": "எப்போதும்"
+      },
+      {
+        "jp": "ときどき",
+        "r": "tokidoki",
+        "en": "sometimes",
+        "ta": "சிலவேளை"
+      },
+      {
+        "jp": "それから",
+        "r": "sorekara",
+        "en": "after that / and then",
+        "ta": "அதன் பிறகு"
+      },
+      {
+        "jp": "ええ",
+        "r": "ee",
+        "en": "yes (informal)",
+        "ta": "ஆம்"
+      },
+      {
+        "jp": "いいですね",
+        "r": "ii desu ne",
+        "en": "that's good / sounds nice",
+        "ta": "நல்லது"
+      },
+      {
+        "jp": "わかりました",
+        "r": "wakarimashita",
+        "en": "I understand",
+        "ta": "புரிந்தது"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "N を V",
+        "en": "Direct object particle を",
+        "ta": "செயப்படுபொருள் குறியீடு を",
+        "form": "Noun + を + Transitive Verb",
+        "ex": {
+          "jp": "ジュースを のみます。",
+          "en": "ジュースを のみます。",
+          "ta": "ジュースを のみます。"
+        }
+      },
+      {
+        "t": "N を します",
+        "en": "Doing activities/sports/work",
+        "ta": "செயல்கள் செய்தல்",
+        "form": "Noun + を します",
+        "ex": {
+          "jp": "サッカーを します。",
+          "en": "サッカーを します。",
+          "ta": "サッカーを します。"
+        }
+      },
+      {
+        "t": "なにを しますか",
+        "en": "Asking what someone will do",
+        "ta": "என்ன செய்கிறீர்கள் என வினவுதல்",
+        "form": "なにを しますか",
+        "ex": {
+          "jp": "あした なにを しますか。",
+          "en": "あした なにを しますか。",
+          "ta": "あした なにを しますか。"
+        }
+      },
+      {
+        "t": "N で V (場所)",
+        "en": "Location of action particle で",
+        "ta": "செயல் நடக்கும் இடம் で",
+        "form": "Place + で + Action Verb",
+        "ex": {
+          "jp": "レストランで ひるごはんを たべます。",
+          "en": "レストランで ひるごはんを たべます。",
+          "ta": "レストランで ひるごはんを たべます。"
+        }
+      },
+      {
+        "t": "V ませんか",
+        "en": "Polite invitation ('won't you?')",
+        "ta": "மரியாதையான அழைப்பு",
+        "form": "Verb-stem + ませんか",
+        "ex": {
+          "jp": "いっしょに おちゃを のみませんか。",
+          "en": "いっしょに おちゃを のみませんか。",
+          "ta": "いっしょに おちゃを のみませんか。"
+        }
+      },
+      {
+        "t": "V ましょう",
+        "en": "Polite proposal ('let's...')",
+        "ta": "ஒன்றாக செய்வோம் என்ற முன்மொழிவு",
+        "form": "Verb-stem + ましょう",
+        "ex": {
+          "jp": "ちょっと やすみましょう。",
+          "en": "ちょっと やすみましょう。",
+          "ta": "ちょっと やすみましょう。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 6: What is the meaning of 'たべます' (tabemasu)?",
+        "options": [
+          "to eat",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "to eat",
+        "explain": "'たべます' means to eat (சாப்பிடுதல்)."
+      },
+      {
+        "q": "Lesson 6: Identify the main grammar structure.",
+        "options": [
+          "N を V",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "N を V",
+        "explain": "Lesson 6 focuses on N を V."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "jp": "なにを かいますか",
+    "en": "What will you buy? (Direct Objects & Invitations)",
+    "ta": "என்ன வாங்குவீர்கள்? (செயல்கள்)",
+    "vocab": [
+      {
+        "jp": "たべます",
+        "r": "tabemasu",
+        "en": "to eat",
+        "ta": "சாப்பிடுதல்"
+      },
+      {
+        "jp": "のみます",
+        "r": "nomimasu",
+        "en": "to drink",
+        "ta": "குடித்தல்"
+      },
+      {
+        "jp": "すみます",
+        "r": "sumimasu",
+        "en": "to smoke / inhale",
+        "ta": "புகைபிடித்தல்"
+      },
+      {
+        "jp": "みます",
+        "r": "mimasu",
+        "en": "to watch / see",
+        "ta": "பார்த்தல்"
+      },
+      {
+        "jp": "ききます",
+        "r": "kikimasu",
+        "en": "to listen / hear",
+        "ta": "கேட்டல்"
+      },
+      {
+        "jp": "よみます",
+        "r": "yomimasu",
+        "en": "to read",
+        "ta": "வாசித்தல்"
+      },
+      {
+        "jp": "かきます",
+        "r": "kakimasu",
+        "en": "to write / draw",
+        "ta": "எழுதுதல்"
+      },
+      {
+        "jp": "かいます",
+        "r": "kaimasu",
+        "en": "to buy",
+        "ta": "வாங்குதல்"
+      },
+      {
+        "jp": "とります",
+        "r": "torimasu",
+        "en": "to take (photos)",
+        "ta": "படம் எடுத்தல்"
+      },
+      {
+        "jp": "します",
+        "r": "shimasu",
+        "en": "to do / play",
+        "ta": "செய்தல்"
+      },
+      {
+        "jp": "あいます",
+        "r": "aimasu",
+        "en": "to meet (a friend)",
+        "ta": "சந்தித்தல்"
+      },
+      {
+        "jp": "ごはん",
+        "r": "gohan",
+        "en": "meal / cooked rice",
+        "ta": "உணவு / சோறு"
+      },
+      {
+        "jp": "あさごはん",
+        "r": "asagohan",
+        "en": "breakfast",
+        "ta": "காலை உணவு"
+      },
+      {
+        "jp": "ひるごはん",
+        "r": "hirugohan",
+        "en": "lunch",
+        "ta": "மதிய உணவு"
+      },
+      {
+        "jp": "ばんごはん",
+        "r": "bangohan",
+        "en": "dinner",
+        "ta": "இரவு உணவு"
+      },
+      {
+        "jp": "パン",
+        "r": "pan",
+        "en": "bread",
+        "ta": "ரொட்டி"
+      },
+      {
+        "jp": "たまご",
+        "r": "tamago",
+        "en": "egg",
+        "ta": "முட்டை"
+      },
+      {
+        "jp": "にく",
+        "r": "niku",
+        "en": "meat",
+        "ta": "இறைச்சி"
+      },
+      {
+        "jp": "さかな",
+        "r": "sakana",
+        "en": "fish",
+        "ta": "மீன்"
+      },
+      {
+        "jp": "やさい",
+        "r": "yasai",
+        "en": "vegetables",
+        "ta": "காய்கறி"
+      },
+      {
+        "jp": "くだもの",
+        "r": "kudamono",
+        "en": "fruit",
+        "ta": "பழம்"
+      },
+      {
+        "jp": "みず",
+        "r": "mizu",
+        "en": "water",
+        "ta": "தண்ணீர்"
+      },
+      {
+        "jp": "おちゃ",
+        "r": "ocha",
+        "en": "green tea",
+        "ta": "தேநீர்"
+      },
+      {
+        "jp": "こうちゃ",
+        "r": "koucha",
+        "en": "black tea",
+        "ta": "கருப்பு தேநீர்"
+      },
+      {
+        "jp": "ぎゅうにゅう/ミルク",
+        "r": "gyuunyuu",
+        "en": "milk",
+        "ta": "பால்"
+      },
+      {
+        "jp": "ジュース",
+        "r": "ju-su",
+        "en": "juice",
+        "ta": "சாறு"
+      },
+      {
+        "jp": "ビール",
+        "r": "bi-ru",
+        "en": "beer",
+        "ta": "பீர்"
+      },
+      {
+        "jp": "おさけ",
+        "r": "osake",
+        "en": "alcohol / sake",
+        "ta": "மது"
+      },
+      {
+        "jp": "たばこ",
+        "r": "tabako",
+        "en": "tobacco / cigarette",
+        "ta": "புகையிலை"
+      },
+      {
+        "jp": "てがみ",
+        "r": "tegami",
+        "en": "letter",
+        "ta": "கடிதம்"
+      },
+      {
+        "jp": "レポート",
+        "r": "repo-to",
+        "en": "report",
+        "ta": "அறிக்கை"
+      },
+      {
+        "jp": "しゃしん",
+        "r": "shashin",
+        "en": "photograph",
+        "ta": "புகைப்படம்"
+      },
+      {
+        "jp": "ビデオ",
+        "r": "bideo",
+        "en": "video",
+        "ta": "வீடியோ"
+      },
+      {
+        "jp": "みせ",
+        "r": "mise",
+        "en": "store / shop",
+        "ta": "கடை"
+      },
+      {
+        "jp": "レストラン",
+        "r": "resutoran",
+        "en": "restaurant",
+        "ta": "உணவகம்"
+      },
+      {
+        "jp": "にわ",
+        "r": "niwa",
+        "en": "garden",
+        "ta": "தோட்டம்"
+      },
+      {
+        "jp": "宿題",
+        "r": "shukudai",
+        "en": "homework",
+        "ta": "வீட்டுப்பாடம்"
+      },
+      {
+        "jp": "テニス",
+        "r": "tenisu",
+        "en": "tennis",
+        "ta": "டென்னிஸ்"
+      },
+      {
+        "jp": "サッカー",
+        "r": "sakka-",
+        "en": "soccer",
+        "ta": "பந்து விளையாட்டு"
+      },
+      {
+        "jp": "おはなみ",
+        "r": "ohanami",
+        "en": "cherry blossom viewing",
+        "ta": "மலர் ரசிப்பு"
+      },
+      {
+        "jp": "なに",
+        "r": "nani",
+        "en": "what?",
+        "ta": "என்ன?"
+      },
+      {
+        "jp": "いっしょに",
+        "r": "isshoni",
+        "en": "together",
+        "ta": "ஒன்றாக"
+      },
+      {
+        "jp": "ちょっと",
+        "r": "chotto",
+        "en": "a little",
+        "ta": "கொஞ்சம்"
+      },
+      {
+        "jp": "いつも",
+        "r": "itsumo",
+        "en": "always",
+        "ta": "எப்போதும்"
+      },
+      {
+        "jp": "ときどき",
+        "r": "tokidoki",
+        "en": "sometimes",
+        "ta": "சிலவேளை"
+      },
+      {
+        "jp": "それから",
+        "r": "sorekara",
+        "en": "after that / and then",
+        "ta": "அதன் பிறகு"
+      },
+      {
+        "jp": "ええ",
+        "r": "ee",
+        "en": "yes (informal)",
+        "ta": "ஆம்"
+      },
+      {
+        "jp": "いいですね",
+        "r": "ii desu ne",
+        "en": "that's good / sounds nice",
+        "ta": "நல்லது"
+      },
+      {
+        "jp": "わかりました",
+        "r": "wakarimashita",
+        "en": "I understand",
+        "ta": "புரிந்தது"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "N を V",
+        "en": "Direct object particle を",
+        "ta": "செயப்படுபொருள் குறியீடு を",
+        "form": "Noun + を + Transitive Verb",
+        "ex": {
+          "jp": "ジュースを のみます。",
+          "en": "ジュースを のみます。",
+          "ta": "ジュースを のみます。"
+        }
+      },
+      {
+        "t": "N を します",
+        "en": "Doing activities/sports/work",
+        "ta": "செயல்கள் செய்தல்",
+        "form": "Noun + を します",
+        "ex": {
+          "jp": "サッカーを します。",
+          "en": "サッカーを します。",
+          "ta": "サッカーを します。"
+        }
+      },
+      {
+        "t": "なにを しますか",
+        "en": "Asking what someone will do",
+        "ta": "என்ன செய்கிறீர்கள் என வினவுதல்",
+        "form": "なにを しますか",
+        "ex": {
+          "jp": "あした なにを しますか。",
+          "en": "あした なにを しますか。",
+          "ta": "あした なにを しますか。"
+        }
+      },
+      {
+        "t": "N で V (場所)",
+        "en": "Location of action particle で",
+        "ta": "செயல் நடக்கும் இடம் で",
+        "form": "Place + で + Action Verb",
+        "ex": {
+          "jp": "レストランで ひるごはんを たべます。",
+          "en": "レストランで ひるごはんを たべます。",
+          "ta": "レストランで ひるごはんを たべます。"
+        }
+      },
+      {
+        "t": "V ませんか",
+        "en": "Polite invitation ('won't you?')",
+        "ta": "மரியாதையான அழைப்பு",
+        "form": "Verb-stem + ませんか",
+        "ex": {
+          "jp": "いっしょに おちゃを のみませんか。",
+          "en": "いっしょに おちゃを のみませんか。",
+          "ta": "いっしょに おちゃを のみませんか。"
+        }
+      },
+      {
+        "t": "V ましょう",
+        "en": "Polite proposal ('let's...')",
+        "ta": "ஒன்றாக செய்வோம் என்ற முன்மொழிவு",
+        "form": "Verb-stem + ましょう",
+        "ex": {
+          "jp": "ちょっと やすみましょう。",
+          "en": "ちょっと やすみましょう。",
+          "ta": "ちょっと やすみましょう。"
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 6: What is the meaning of 'たべます' (tabemasu)?",
+        "options": [
+          "to eat",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "to eat",
+        "explain": "'たべます' means to eat (சாப்பிடுதல்)."
+      },
+      {
+        "q": "Lesson 6: Identify the main grammar structure.",
+        "options": [
+          "N を V",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "N を V",
+        "explain": "Lesson 6 focuses on N を V."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "jp": "しゃしんを とりましょう",
+    "en": "Let's take a photo (Means, Giving & Receiving) (Lesson 7)",
+    "ta": "புகைப்படம் எடுப்போம் (கொடுத்தல்)",
+    "vocab": [
+      {
+        "jp": "きります",
+        "r": "きります",
+        "en": "きります",
+        "ta": "きります"
+      },
+      {
+        "jp": "おくります",
+        "r": "おくります",
+        "en": "おくります",
+        "ta": "おくります"
+      },
+      {
+        "jp": "あげます",
+        "r": "あげます",
+        "en": "あげます",
+        "ta": "あげます"
+      },
+      {
+        "jp": "もらいます",
+        "r": "もらいます",
+        "en": "もらいます",
+        "ta": "もらいます"
+      },
+      {
+        "jp": "かします",
+        "r": "かします",
+        "en": "かします",
+        "ta": "かします"
+      },
+      {
+        "jp": "かります",
+        "r": "かります",
+        "en": "かります",
+        "ta": "かります"
+      },
+      {
+        "jp": "おしえます",
+        "r": "おしえます",
+        "en": "おしえます",
+        "ta": "おしえます"
+      },
+      {
+        "jp": "ならいます",
+        "r": "ならいます",
+        "en": "ならいます",
+        "ta": "ならいます"
+      },
+      {
+        "jp": "て",
+        "r": "て",
+        "en": "て",
+        "ta": "て"
+      },
+      {
+        "jp": "ハシ",
+        "r": "ハシ",
+        "en": "ハシ",
+        "ta": "ハシ"
+      },
+      {
+        "jp": "スプーン",
+        "r": "スプーン",
+        "en": "スプーン",
+        "ta": "スプーン"
+      },
+      {
+        "jp": "ナイフ",
+        "r": "ナイフ",
+        "en": "ナイフ",
+        "ta": "ナイフ"
+      },
+      {
+        "jp": "フォーク",
+        "r": "フォーク",
+        "en": "フォーク",
+        "ta": "フォーク"
+      },
+      {
+        "jp": "ハサミ",
+        "r": "ハサミ",
+        "en": "ハサミ",
+        "ta": "ハサミ"
+      },
+      {
+        "jp": "ケータイ",
+        "r": "ケータイ",
+        "en": "ケータイ",
+        "ta": "ケータイ"
+      },
+      {
+        "jp": "メール",
+        "r": "メール",
+        "en": "メール",
+        "ta": "メール"
+      },
+      {
+        "jp": "プレゼント",
+        "r": "プレゼント",
+        "en": "プレゼント",
+        "ta": "プレゼント"
+      },
+      {
+        "jp": "お金",
+        "r": "お金",
+        "en": "お金",
+        "ta": "お金"
+      },
+      {
+        "jp": "キップ",
+        "r": "キップ",
+        "en": "キップ",
+        "ta": "キップ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 7 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 7",
+        "ta": "பாடம் 7 முதன்மை இலக்கணம்",
+        "form": "Pattern: きります + です/ます",
+        "ex": {
+          "jp": "きりますです。",
+          "en": "Example of きります.",
+          "ta": "きります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 7 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 7",
+        "ta": "பாடம் 7 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: おくります + です/ます",
+        "ex": {
+          "jp": "おくりますです。",
+          "en": "Example of おくります.",
+          "ta": "おくります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 7: What is the meaning of 'きります' (きります)?",
+        "options": [
+          "きります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "きります",
+        "explain": "'きります' means きります (きります)."
+      },
+      {
+        "q": "Lesson 7: Identify the main grammar structure.",
+        "options": [
+          "Lesson 7 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 7 Core Pattern 1",
+        "explain": "Lesson 7 focuses on Lesson 7 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "jp": "しゃしんを とりましょう",
+    "en": "Let's take a photo (Means, Giving & Receiving) (Lesson 7)",
+    "ta": "புகைப்படம் எடுப்போம் (கொடுத்தல்)",
+    "vocab": [
+      {
+        "jp": "きります",
+        "r": "きります",
+        "en": "きります",
+        "ta": "きります"
+      },
+      {
+        "jp": "おくります",
+        "r": "おくります",
+        "en": "おくります",
+        "ta": "おくります"
+      },
+      {
+        "jp": "あげます",
+        "r": "あげます",
+        "en": "あげます",
+        "ta": "あげます"
+      },
+      {
+        "jp": "もらいます",
+        "r": "もらいます",
+        "en": "もらいます",
+        "ta": "もらいます"
+      },
+      {
+        "jp": "かします",
+        "r": "かします",
+        "en": "かします",
+        "ta": "かします"
+      },
+      {
+        "jp": "かります",
+        "r": "かります",
+        "en": "かります",
+        "ta": "かります"
+      },
+      {
+        "jp": "おしえます",
+        "r": "おしえます",
+        "en": "おしえます",
+        "ta": "おしえます"
+      },
+      {
+        "jp": "ならいます",
+        "r": "ならいます",
+        "en": "ならいます",
+        "ta": "ならいます"
+      },
+      {
+        "jp": "て",
+        "r": "て",
+        "en": "て",
+        "ta": "て"
+      },
+      {
+        "jp": "ハシ",
+        "r": "ハシ",
+        "en": "ハシ",
+        "ta": "ハシ"
+      },
+      {
+        "jp": "スプーン",
+        "r": "スプーン",
+        "en": "スプーン",
+        "ta": "スプーン"
+      },
+      {
+        "jp": "ナイフ",
+        "r": "ナイフ",
+        "en": "ナイフ",
+        "ta": "ナイフ"
+      },
+      {
+        "jp": "フォーク",
+        "r": "フォーク",
+        "en": "フォーク",
+        "ta": "フォーク"
+      },
+      {
+        "jp": "ハサミ",
+        "r": "ハサミ",
+        "en": "ハサミ",
+        "ta": "ハサミ"
+      },
+      {
+        "jp": "ケータイ",
+        "r": "ケータイ",
+        "en": "ケータイ",
+        "ta": "ケータイ"
+      },
+      {
+        "jp": "メール",
+        "r": "メール",
+        "en": "メール",
+        "ta": "メール"
+      },
+      {
+        "jp": "プレゼント",
+        "r": "プレゼント",
+        "en": "プレゼント",
+        "ta": "プレゼント"
+      },
+      {
+        "jp": "お金",
+        "r": "お金",
+        "en": "お金",
+        "ta": "お金"
+      },
+      {
+        "jp": "キップ",
+        "r": "キップ",
+        "en": "キップ",
+        "ta": "キップ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 7 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 7",
+        "ta": "பாடம் 7 முதன்மை இலக்கணம்",
+        "form": "Pattern: きります + です/ます",
+        "ex": {
+          "jp": "きりますです。",
+          "en": "Example of きります.",
+          "ta": "きります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 7 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 7",
+        "ta": "பாடம் 7 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: おくります + です/ます",
+        "ex": {
+          "jp": "おくりますです。",
+          "en": "Example of おくります.",
+          "ta": "おくります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 7: What is the meaning of 'きります' (きります)?",
+        "options": [
+          "きります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "きります",
+        "explain": "'きります' means きります (きります)."
+      },
+      {
+        "q": "Lesson 7: Identify the main grammar structure.",
+        "options": [
+          "Lesson 7 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 7 Core Pattern 1",
+        "explain": "Lesson 7 focuses on Lesson 7 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "jp": "かぜが つよいですね",
+    "en": "The wind is strong (Adjectives & Qualities) (Lesson 8)",
+    "ta": "காற்று வலிமையாக உள்ளது (பெயரடைகள்)",
+    "vocab": [
+      {
+        "jp": "ハンサム",
+        "r": "ハンサム",
+        "en": "ハンサム",
+        "ta": "ハンサム"
+      },
+      {
+        "jp": "きれい",
+        "r": "きれい",
+        "en": "きれい",
+        "ta": "きれい"
+      },
+      {
+        "jp": "しずか",
+        "r": "しずか",
+        "en": "しずか",
+        "ta": "しずか"
+      },
+      {
+        "jp": "にぎやか",
+        "r": "にぎやか",
+        "en": "にぎやか",
+        "ta": "にぎやか"
+      },
+      {
+        "jp": "ゆうめい",
+        "r": "ゆうめい",
+        "en": "ゆうめい",
+        "ta": "ゆうめい"
+      },
+      {
+        "jp": "しんせつ",
+        "r": "しんせつ",
+        "en": "しんせつ",
+        "ta": "しんせつ"
+      },
+      {
+        "jp": "げんき",
+        "r": "げんき",
+        "en": "げんき",
+        "ta": "げんき"
+      },
+      {
+        "jp": "ひま",
+        "r": "ひま",
+        "en": "ひま",
+        "ta": "ひま"
+      },
+      {
+        "jp": "べんり",
+        "r": "べんり",
+        "en": "べんり",
+        "ta": "べんり"
+      },
+      {
+        "jp": "すてき",
+        "r": "すてき",
+        "en": "すてき",
+        "ta": "すてき"
+      },
+      {
+        "jp": "おおきい",
+        "r": "おおきい",
+        "en": "おおきい",
+        "ta": "おおきい"
+      },
+      {
+        "jp": "ちいさい",
+        "r": "ちいさい",
+        "en": "ちいさい",
+        "ta": "ちいさい"
+      },
+      {
+        "jp": "あたらしい",
+        "r": "あたらしい",
+        "en": "あたらしい",
+        "ta": "あたらしい"
+      },
+      {
+        "jp": "ふるい",
+        "r": "ふるい",
+        "en": "ふるい",
+        "ta": "ふるい"
+      },
+      {
+        "jp": "いい",
+        "r": "いい",
+        "en": "いい",
+        "ta": "いい"
+      },
+      {
+        "jp": "わるい",
+        "r": "わるい",
+        "en": "わるい",
+        "ta": "わるい"
+      },
+      {
+        "jp": "あつい",
+        "r": "あつい",
+        "en": "あつい",
+        "ta": "あつい"
+      },
+      {
+        "jp": "さむい",
+        "r": "さむい",
+        "en": "さむい",
+        "ta": "さむい"
+      },
+      {
+        "jp": "つめたい",
+        "r": "つめたい",
+        "en": "つめたい",
+        "ta": "つめたい"
+      },
+      {
+        "jp": "むずかしい",
+        "r": "むずかしい",
+        "en": "むずかしい",
+        "ta": "むずかしい"
+      },
+      {
+        "jp": "やさしい",
+        "r": "やさしい",
+        "en": "やさしい",
+        "ta": "やさしい"
+      },
+      {
+        "jp": "たかい",
+        "r": "たかい",
+        "en": "たかい",
+        "ta": "たかい"
+      },
+      {
+        "jp": "やすい",
+        "r": "やすい",
+        "en": "やすい",
+        "ta": "やすい"
+      },
+      {
+        "jp": "ひくい",
+        "r": "ひくい",
+        "en": "ひくい",
+        "ta": "ひくい"
+      },
+      {
+        "jp": "おもしろい",
+        "r": "おもしろい",
+        "en": "おもしろい",
+        "ta": "おもしろい"
+      },
+      {
+        "jp": "おいしい",
+        "r": "おいしい",
+        "en": "おいしい",
+        "ta": "おいしい"
+      },
+      {
+        "jp": "いそがしい",
+        "r": "いそがしい",
+        "en": "いそがしい",
+        "ta": "いそがしい"
+      },
+      {
+        "jp": "たのしい",
+        "r": "たのしい",
+        "en": "たのしい",
+        "ta": "たのしい"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 8 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 8",
+        "ta": "பாடம் 8 முதன்மை இலக்கணம்",
+        "form": "Pattern: ハンサム + です/ます",
+        "ex": {
+          "jp": "ハンサムです。",
+          "en": "Example of ハンサム.",
+          "ta": "ハンサム உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 8 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 8",
+        "ta": "பாடம் 8 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: きれい + です/ます",
+        "ex": {
+          "jp": "きれいです。",
+          "en": "Example of きれい.",
+          "ta": "きれい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 8: What is the meaning of 'ハンサム' (ハンサム)?",
+        "options": [
+          "ハンサム",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ハンサム",
+        "explain": "'ハンサム' means ハンサム (ハンサム)."
+      },
+      {
+        "q": "Lesson 8: Identify the main grammar structure.",
+        "options": [
+          "Lesson 8 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 8 Core Pattern 1",
+        "explain": "Lesson 8 focuses on Lesson 8 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "jp": "かぜが つよいですね",
+    "en": "The wind is strong (Adjectives & Qualities) (Lesson 8)",
+    "ta": "காற்று வலிமையாக உள்ளது (பெயரடைகள்)",
+    "vocab": [
+      {
+        "jp": "ハンサム",
+        "r": "ハンサム",
+        "en": "ハンサム",
+        "ta": "ハンサム"
+      },
+      {
+        "jp": "きれい",
+        "r": "きれい",
+        "en": "きれい",
+        "ta": "きれい"
+      },
+      {
+        "jp": "しずか",
+        "r": "しずか",
+        "en": "しずか",
+        "ta": "しずか"
+      },
+      {
+        "jp": "にぎやか",
+        "r": "にぎやか",
+        "en": "にぎやか",
+        "ta": "にぎやか"
+      },
+      {
+        "jp": "ゆうめい",
+        "r": "ゆうめい",
+        "en": "ゆうめい",
+        "ta": "ゆうめい"
+      },
+      {
+        "jp": "しんせつ",
+        "r": "しんせつ",
+        "en": "しんせつ",
+        "ta": "しんせつ"
+      },
+      {
+        "jp": "げんき",
+        "r": "げんき",
+        "en": "げんき",
+        "ta": "げんき"
+      },
+      {
+        "jp": "ひま",
+        "r": "ひま",
+        "en": "ひま",
+        "ta": "ひま"
+      },
+      {
+        "jp": "べんり",
+        "r": "べんり",
+        "en": "べんり",
+        "ta": "べんり"
+      },
+      {
+        "jp": "すてき",
+        "r": "すてき",
+        "en": "すてき",
+        "ta": "すてき"
+      },
+      {
+        "jp": "おおきい",
+        "r": "おおきい",
+        "en": "おおきい",
+        "ta": "おおきい"
+      },
+      {
+        "jp": "ちいさい",
+        "r": "ちいさい",
+        "en": "ちいさい",
+        "ta": "ちいさい"
+      },
+      {
+        "jp": "あたらしい",
+        "r": "あたらしい",
+        "en": "あたらしい",
+        "ta": "あたらしい"
+      },
+      {
+        "jp": "ふるい",
+        "r": "ふるい",
+        "en": "ふるい",
+        "ta": "ふるい"
+      },
+      {
+        "jp": "いい",
+        "r": "いい",
+        "en": "いい",
+        "ta": "いい"
+      },
+      {
+        "jp": "わるい",
+        "r": "わるい",
+        "en": "わるい",
+        "ta": "わるい"
+      },
+      {
+        "jp": "あつい",
+        "r": "あつい",
+        "en": "あつい",
+        "ta": "あつい"
+      },
+      {
+        "jp": "さむい",
+        "r": "さむい",
+        "en": "さむい",
+        "ta": "さむい"
+      },
+      {
+        "jp": "つめたい",
+        "r": "つめたい",
+        "en": "つめたい",
+        "ta": "つめたい"
+      },
+      {
+        "jp": "むずかしい",
+        "r": "むずかしい",
+        "en": "むずかしい",
+        "ta": "むずかしい"
+      },
+      {
+        "jp": "やさしい",
+        "r": "やさしい",
+        "en": "やさしい",
+        "ta": "やさしい"
+      },
+      {
+        "jp": "たかい",
+        "r": "たかい",
+        "en": "たかい",
+        "ta": "たかい"
+      },
+      {
+        "jp": "やすい",
+        "r": "やすい",
+        "en": "やすい",
+        "ta": "やすい"
+      },
+      {
+        "jp": "ひくい",
+        "r": "ひくい",
+        "en": "ひくい",
+        "ta": "ひくい"
+      },
+      {
+        "jp": "おもしろい",
+        "r": "おもしろい",
+        "en": "おもしろい",
+        "ta": "おもしろい"
+      },
+      {
+        "jp": "おいしい",
+        "r": "おいしい",
+        "en": "おいしい",
+        "ta": "おいしい"
+      },
+      {
+        "jp": "いそがしい",
+        "r": "いそがしい",
+        "en": "いそがしい",
+        "ta": "いそがしい"
+      },
+      {
+        "jp": "たのしい",
+        "r": "たのしい",
+        "en": "たのしい",
+        "ta": "たのしい"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 8 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 8",
+        "ta": "பாடம் 8 முதன்மை இலக்கணம்",
+        "form": "Pattern: ハンサム + です/ます",
+        "ex": {
+          "jp": "ハンサムです。",
+          "en": "Example of ハンサム.",
+          "ta": "ハンサム உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 8 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 8",
+        "ta": "பாடம் 8 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: きれい + です/ます",
+        "ex": {
+          "jp": "きれいです。",
+          "en": "Example of きれい.",
+          "ta": "きれい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 8: What is the meaning of 'ハンサム' (ハンサム)?",
+        "options": [
+          "ハンサム",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ハンサム",
+        "explain": "'ハンサム' means ハンサム (ハンサム)."
+      },
+      {
+        "q": "Lesson 8: Identify the main grammar structure.",
+        "options": [
+          "Lesson 8 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 8 Core Pattern 1",
+        "explain": "Lesson 8 focuses on Lesson 8 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "jp": "わたしは いぬが すきです",
+    "en": "I like dogs (Preferences & Abilities) (Lesson 9)",
+    "ta": "எனக்கு நாய்கள் பிடிக்கும்",
+    "vocab": [
+      {
+        "jp": "すき",
+        "r": "すき",
+        "en": "すき",
+        "ta": "すき"
+      },
+      {
+        "jp": "きらい",
+        "r": "きらい",
+        "en": "きらい",
+        "ta": "きらい"
+      },
+      {
+        "jp": "じょうず",
+        "r": "じょうず",
+        "en": "じょうず",
+        "ta": "じょうず"
+      },
+      {
+        "jp": "へた",
+        "r": "へた",
+        "en": "へた",
+        "ta": "へた"
+      },
+      {
+        "jp": "わかります",
+        "r": "わかります",
+        "en": "わかります",
+        "ta": "わかります"
+      },
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "りょうり",
+        "r": "りょうり",
+        "en": "りょうり",
+        "ta": "りょうり"
+      },
+      {
+        "jp": "スポーツ",
+        "r": "スポーツ",
+        "en": "スポーツ",
+        "ta": "スポーツ"
+      },
+      {
+        "jp": "やきゅう",
+        "r": "やきゅう",
+        "en": "やきゅう",
+        "ta": "やきゅう"
+      },
+      {
+        "jp": "ダンス",
+        "r": "ダンス",
+        "en": "ダンス",
+        "ta": "ダンス"
+      },
+      {
+        "jp": "おんがく",
+        "r": "おんがく",
+        "en": "おんがく",
+        "ta": "おんがく"
+      },
+      {
+        "jp": "うた",
+        "r": "うた",
+        "en": "うた",
+        "ta": "うた"
+      },
+      {
+        "jp": "クラシック",
+        "r": "クラシック",
+        "en": "クラシック",
+        "ta": "クラシック"
+      },
+      {
+        "jp": "ジャズ",
+        "r": "ジャズ",
+        "en": "ジャズ",
+        "ta": "ジャズ"
+      },
+      {
+        "jp": "コンサート",
+        "r": "コンサート",
+        "en": "コンサート",
+        "ta": "コンサート"
+      },
+      {
+        "jp": "カラオケ",
+        "r": "カラオケ",
+        "en": "カラオケ",
+        "ta": "カラオケ"
+      },
+      {
+        "jp": "かぶき",
+        "r": "かぶき",
+        "en": "かぶき",
+        "ta": "かぶき"
+      },
+      {
+        "jp": "え",
+        "r": "え",
+        "en": "え",
+        "ta": "え"
+      },
+      {
+        "jp": "じ",
+        "r": "じ",
+        "en": "じ",
+        "ta": "じ"
+      },
+      {
+        "jp": "かんじ",
+        "r": "かんじ",
+        "en": "かんじ",
+        "ta": "かんじ"
+      },
+      {
+        "jp": "ひらがな",
+        "r": "ひらがな",
+        "en": "ひらがな",
+        "ta": "ひらがな"
+      },
+      {
+        "jp": "かたかな",
+        "r": "かたかな",
+        "en": "かたかな",
+        "ta": "かたかな"
+      },
+      {
+        "jp": "ローマじ",
+        "r": "ローマじ",
+        "en": "ローマじ",
+        "ta": "ローマじ"
+      },
+      {
+        "jp": "こまかい おかね",
+        "r": "こまかい おかね",
+        "en": "こまかい おかね",
+        "ta": "こまかい おかね"
+      },
+      {
+        "jp": "チケット",
+        "r": "チケット",
+        "en": "チケット",
+        "ta": "チケット"
+      },
+      {
+        "jp": "じかん",
+        "r": "じかん",
+        "en": "じかん",
+        "ta": "じかん"
+      },
+      {
+        "jp": "ようじ",
+        "r": "ようじ",
+        "en": "ようじ",
+        "ta": "ようじ"
+      },
+      {
+        "jp": "やくそく",
+        "r": "やくそく",
+        "en": "やくそく",
+        "ta": "やくそく"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 9 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 9",
+        "ta": "பாடம் 9 முதன்மை இலக்கணம்",
+        "form": "Pattern: すき + です/ます",
+        "ex": {
+          "jp": "すきです。",
+          "en": "Example of すき.",
+          "ta": "すき உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 9 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 9",
+        "ta": "பாடம் 9 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: きらい + です/ます",
+        "ex": {
+          "jp": "きらいです。",
+          "en": "Example of きらい.",
+          "ta": "きらい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 9: What is the meaning of 'すき' (すき)?",
+        "options": [
+          "すき",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "すき",
+        "explain": "'すき' means すき (すき)."
+      },
+      {
+        "q": "Lesson 9: Identify the main grammar structure.",
+        "options": [
+          "Lesson 9 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 9 Core Pattern 1",
+        "explain": "Lesson 9 focuses on Lesson 9 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "jp": "わたしは いぬが すきです",
+    "en": "I like dogs (Preferences & Abilities) (Lesson 9)",
+    "ta": "எனக்கு நாய்கள் பிடிக்கும்",
+    "vocab": [
+      {
+        "jp": "すき",
+        "r": "すき",
+        "en": "すき",
+        "ta": "すき"
+      },
+      {
+        "jp": "きらい",
+        "r": "きらい",
+        "en": "きらい",
+        "ta": "きらい"
+      },
+      {
+        "jp": "じょうず",
+        "r": "じょうず",
+        "en": "じょうず",
+        "ta": "じょうず"
+      },
+      {
+        "jp": "へた",
+        "r": "へた",
+        "en": "へた",
+        "ta": "へた"
+      },
+      {
+        "jp": "わかります",
+        "r": "わかります",
+        "en": "わかります",
+        "ta": "わかります"
+      },
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "りょうり",
+        "r": "りょうり",
+        "en": "りょうり",
+        "ta": "りょうり"
+      },
+      {
+        "jp": "スポーツ",
+        "r": "スポーツ",
+        "en": "スポーツ",
+        "ta": "スポーツ"
+      },
+      {
+        "jp": "やきゅう",
+        "r": "やきゅう",
+        "en": "やきゅう",
+        "ta": "やきゅう"
+      },
+      {
+        "jp": "ダンス",
+        "r": "ダンス",
+        "en": "ダンス",
+        "ta": "ダンス"
+      },
+      {
+        "jp": "おんがく",
+        "r": "おんがく",
+        "en": "おんがく",
+        "ta": "おんがく"
+      },
+      {
+        "jp": "うた",
+        "r": "うた",
+        "en": "うた",
+        "ta": "うた"
+      },
+      {
+        "jp": "クラシック",
+        "r": "クラシック",
+        "en": "クラシック",
+        "ta": "クラシック"
+      },
+      {
+        "jp": "ジャズ",
+        "r": "ジャズ",
+        "en": "ジャズ",
+        "ta": "ジャズ"
+      },
+      {
+        "jp": "コンサート",
+        "r": "コンサート",
+        "en": "コンサート",
+        "ta": "コンサート"
+      },
+      {
+        "jp": "カラオケ",
+        "r": "カラオケ",
+        "en": "カラオケ",
+        "ta": "カラオケ"
+      },
+      {
+        "jp": "かぶき",
+        "r": "かぶき",
+        "en": "かぶき",
+        "ta": "かぶき"
+      },
+      {
+        "jp": "え",
+        "r": "え",
+        "en": "え",
+        "ta": "え"
+      },
+      {
+        "jp": "じ",
+        "r": "じ",
+        "en": "じ",
+        "ta": "じ"
+      },
+      {
+        "jp": "かんじ",
+        "r": "かんじ",
+        "en": "かんじ",
+        "ta": "かんじ"
+      },
+      {
+        "jp": "ひらがな",
+        "r": "ひらがな",
+        "en": "ひらがな",
+        "ta": "ひらがな"
+      },
+      {
+        "jp": "かたかな",
+        "r": "かたかな",
+        "en": "かたかな",
+        "ta": "かたかな"
+      },
+      {
+        "jp": "ローマじ",
+        "r": "ローマじ",
+        "en": "ローマじ",
+        "ta": "ローマじ"
+      },
+      {
+        "jp": "こまかい おかね",
+        "r": "こまかい おかね",
+        "en": "こまかい おかね",
+        "ta": "こまかい おかね"
+      },
+      {
+        "jp": "チケット",
+        "r": "チケット",
+        "en": "チケット",
+        "ta": "チケット"
+      },
+      {
+        "jp": "じかん",
+        "r": "じかん",
+        "en": "じかん",
+        "ta": "じかん"
+      },
+      {
+        "jp": "ようじ",
+        "r": "ようじ",
+        "en": "ようじ",
+        "ta": "ようじ"
+      },
+      {
+        "jp": "やくそく",
+        "r": "やくそく",
+        "en": "やくそく",
+        "ta": "やくそく"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 9 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 9",
+        "ta": "பாடம் 9 முதன்மை இலக்கணம்",
+        "form": "Pattern: すき + です/ます",
+        "ex": {
+          "jp": "すきです。",
+          "en": "Example of すき.",
+          "ta": "すき உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 9 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 9",
+        "ta": "பாடம் 9 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: きらい + です/ます",
+        "ex": {
+          "jp": "きらいです。",
+          "en": "Example of きらい.",
+          "ta": "きらい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 9: What is the meaning of 'すき' (すき)?",
+        "options": [
+          "すき",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "すき",
+        "explain": "'すき' means すき (すき)."
+      },
+      {
+        "q": "Lesson 9: Identify the main grammar structure.",
+        "options": [
+          "Lesson 9 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 9 Core Pattern 1",
+        "explain": "Lesson 9 focuses on Lesson 9 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "jp": "つくえの うえに ねこが います",
+    "en": "There is a cat on the desk (Existence & Positions) (Lesson 10)",
+    "ta": "மேசையின் மேல் பூனை உள்ளது",
+    "vocab": [
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "います",
+        "r": "います",
+        "en": "います",
+        "ta": "います"
+      },
+      {
+        "jp": "おとこの ひと",
+        "r": "おとこの ひと",
+        "en": "おとこの ひと",
+        "ta": "おとこの ひと"
+      },
+      {
+        "jp": "おんなの ひと",
+        "r": "おんなの ひと",
+        "en": "おんなの ひと",
+        "ta": "おんなの ひと"
+      },
+      {
+        "jp": "おとこの こ",
+        "r": "おとこの こ",
+        "en": "おとこの こ",
+        "ta": "おとこの こ"
+      },
+      {
+        "jp": "おんなの こ",
+        "r": "おんなの こ",
+        "en": "おんなの こ",
+        "ta": "おんなの こ"
+      },
+      {
+        "jp": "いぬ",
+        "r": "いぬ",
+        "en": "いぬ",
+        "ta": "いぬ"
+      },
+      {
+        "jp": "ねこ",
+        "r": "ねこ",
+        "en": "ねこ",
+        "ta": "ねこ"
+      },
+      {
+        "jp": "き",
+        "r": "き",
+        "en": "き",
+        "ta": "き"
+      },
+      {
+        "jp": "もの",
+        "r": "もの",
+        "en": "もの",
+        "ta": "もの"
+      },
+      {
+        "jp": "フィルム",
+        "r": "フィルム",
+        "en": "フィルム",
+        "ta": "フィルム"
+      },
+      {
+        "jp": "かんちがえ",
+        "r": "かんちがえ",
+        "en": "かんちがえ",
+        "ta": "かんちがえ"
+      },
+      {
+        "jp": "はこ",
+        "r": "はこ",
+        "en": "はこ",
+        "ta": "はこ"
+      },
+      {
+        "jp": "スイッチ",
+        "r": "スイッチ",
+        "en": "スイッチ",
+        "ta": "スイッチ"
+      },
+      {
+        "jp": "れいぞうこ",
+        "r": "れいぞうこ",
+        "en": "れいぞうこ",
+        "ta": "れいぞうこ"
+      },
+      {
+        "jp": "テーブル",
+        "r": "テーブル",
+        "en": "テーブル",
+        "ta": "テーブル"
+      },
+      {
+        "jp": "ベッド",
+        "r": "ベッド",
+        "en": "ベッド",
+        "ta": "ベッド"
+      },
+      {
+        "jp": "たな",
+        "r": "たな",
+        "en": "たな",
+        "ta": "たな"
+      },
+      {
+        "jp": "ドア",
+        "r": "ドア",
+        "en": "ドア",
+        "ta": "ドア"
+      },
+      {
+        "jp": "まど",
+        "r": "まど",
+        "en": "まど",
+        "ta": "まど"
+      },
+      {
+        "jp": "ポスト",
+        "r": "ポスト",
+        "en": "ポスト",
+        "ta": "ポスト"
+      },
+      {
+        "jp": "ビル",
+        "r": "ビル",
+        "en": "ビル",
+        "ta": "ビル"
+      },
+      {
+        "jp": "コンビニ",
+        "r": "コンビニ",
+        "en": "コンビニ",
+        "ta": "コンビニ"
+      },
+      {
+        "jp": "きっさてん",
+        "r": "きっさてん",
+        "en": "きっさてん",
+        "ta": "きっさてん"
+      },
+      {
+        "jp": "本や",
+        "r": "本や",
+        "en": "本や",
+        "ta": "本や"
+      },
+      {
+        "jp": "のりば",
+        "r": "のりば",
+        "en": "のりば",
+        "ta": "のりば"
+      },
+      {
+        "jp": "けん",
+        "r": "けん",
+        "en": "けん",
+        "ta": "けん"
+      },
+      {
+        "jp": "うえ",
+        "r": "うえ",
+        "en": "うえ",
+        "ta": "うえ"
+      },
+      {
+        "jp": "した",
+        "r": "した",
+        "en": "した",
+        "ta": "した"
+      },
+      {
+        "jp": "まえ",
+        "r": "まえ",
+        "en": "まえ",
+        "ta": "まえ"
+      },
+      {
+        "jp": "うしろ",
+        "r": "うしろ",
+        "en": "うしろ",
+        "ta": "うしろ"
+      },
+      {
+        "jp": "みぎ",
+        "r": "みぎ",
+        "en": "みぎ",
+        "ta": "みぎ"
+      },
+      {
+        "jp": "ひだり",
+        "r": "ひだり",
+        "en": "ひだり",
+        "ta": "ひだり"
+      },
+      {
+        "jp": "なか",
+        "r": "なか",
+        "en": "なか",
+        "ta": "なか"
+      },
+      {
+        "jp": "そと",
+        "r": "そと",
+        "en": "そと",
+        "ta": "そと"
+      },
+      {
+        "jp": "となり",
+        "r": "となり",
+        "en": "となり",
+        "ta": "となり"
+      },
+      {
+        "jp": "ちかく",
+        "r": "ちかく",
+        "en": "ちかく",
+        "ta": "ちかく"
+      },
+      {
+        "jp": "あいだ",
+        "r": "あいだ",
+        "en": "あいだ",
+        "ta": "あいだ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 10 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 10",
+        "ta": "பாடம் 10 முதன்மை இலக்கணம்",
+        "form": "Pattern: あります + です/ます",
+        "ex": {
+          "jp": "ありますです。",
+          "en": "Example of あります.",
+          "ta": "あります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 10 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 10",
+        "ta": "பாடம் 10 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: います + です/ます",
+        "ex": {
+          "jp": "いますです。",
+          "en": "Example of います.",
+          "ta": "います உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 10: What is the meaning of 'あります' (あります)?",
+        "options": [
+          "あります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "あります",
+        "explain": "'あります' means あります (あります)."
+      },
+      {
+        "q": "Lesson 10: Identify the main grammar structure.",
+        "options": [
+          "Lesson 10 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 10 Core Pattern 1",
+        "explain": "Lesson 10 focuses on Lesson 10 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "jp": "つくえの うえに ねこが います",
+    "en": "There is a cat on the desk (Existence & Positions) (Lesson 10)",
+    "ta": "மேசையின் மேல் பூனை உள்ளது",
+    "vocab": [
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "います",
+        "r": "います",
+        "en": "います",
+        "ta": "います"
+      },
+      {
+        "jp": "おとこの ひと",
+        "r": "おとこの ひと",
+        "en": "おとこの ひと",
+        "ta": "おとこの ひと"
+      },
+      {
+        "jp": "おんなの ひと",
+        "r": "おんなの ひと",
+        "en": "おんなの ひと",
+        "ta": "おんなの ひと"
+      },
+      {
+        "jp": "おとこの こ",
+        "r": "おとこの こ",
+        "en": "おとこの こ",
+        "ta": "おとこの こ"
+      },
+      {
+        "jp": "おんなの こ",
+        "r": "おんなの こ",
+        "en": "おんなの こ",
+        "ta": "おんなの こ"
+      },
+      {
+        "jp": "いぬ",
+        "r": "いぬ",
+        "en": "いぬ",
+        "ta": "いぬ"
+      },
+      {
+        "jp": "ねこ",
+        "r": "ねこ",
+        "en": "ねこ",
+        "ta": "ねこ"
+      },
+      {
+        "jp": "き",
+        "r": "き",
+        "en": "き",
+        "ta": "き"
+      },
+      {
+        "jp": "もの",
+        "r": "もの",
+        "en": "もの",
+        "ta": "もの"
+      },
+      {
+        "jp": "フィルム",
+        "r": "フィルム",
+        "en": "フィルム",
+        "ta": "フィルム"
+      },
+      {
+        "jp": "かんちがえ",
+        "r": "かんちがえ",
+        "en": "かんちがえ",
+        "ta": "かんちがえ"
+      },
+      {
+        "jp": "はこ",
+        "r": "はこ",
+        "en": "はこ",
+        "ta": "はこ"
+      },
+      {
+        "jp": "スイッチ",
+        "r": "スイッチ",
+        "en": "スイッチ",
+        "ta": "スイッチ"
+      },
+      {
+        "jp": "れいぞうこ",
+        "r": "れいぞうこ",
+        "en": "れいぞうこ",
+        "ta": "れいぞうこ"
+      },
+      {
+        "jp": "テーブル",
+        "r": "テーブル",
+        "en": "テーブル",
+        "ta": "テーブル"
+      },
+      {
+        "jp": "ベッド",
+        "r": "ベッド",
+        "en": "ベッド",
+        "ta": "ベッド"
+      },
+      {
+        "jp": "たな",
+        "r": "たな",
+        "en": "たな",
+        "ta": "たな"
+      },
+      {
+        "jp": "ドア",
+        "r": "ドア",
+        "en": "ドア",
+        "ta": "ドア"
+      },
+      {
+        "jp": "まど",
+        "r": "まど",
+        "en": "まど",
+        "ta": "まど"
+      },
+      {
+        "jp": "ポスト",
+        "r": "ポスト",
+        "en": "ポスト",
+        "ta": "ポスト"
+      },
+      {
+        "jp": "ビル",
+        "r": "ビル",
+        "en": "ビル",
+        "ta": "ビル"
+      },
+      {
+        "jp": "コンビニ",
+        "r": "コンビニ",
+        "en": "コンビニ",
+        "ta": "コンビニ"
+      },
+      {
+        "jp": "きっさてん",
+        "r": "きっさてん",
+        "en": "きっさてん",
+        "ta": "きっさてん"
+      },
+      {
+        "jp": "本や",
+        "r": "本や",
+        "en": "本や",
+        "ta": "本や"
+      },
+      {
+        "jp": "のりば",
+        "r": "のりば",
+        "en": "のりば",
+        "ta": "のりば"
+      },
+      {
+        "jp": "けん",
+        "r": "けん",
+        "en": "けん",
+        "ta": "けん"
+      },
+      {
+        "jp": "うえ",
+        "r": "うえ",
+        "en": "うえ",
+        "ta": "うえ"
+      },
+      {
+        "jp": "した",
+        "r": "した",
+        "en": "した",
+        "ta": "した"
+      },
+      {
+        "jp": "まえ",
+        "r": "まえ",
+        "en": "まえ",
+        "ta": "まえ"
+      },
+      {
+        "jp": "うしろ",
+        "r": "うしろ",
+        "en": "うしろ",
+        "ta": "うしろ"
+      },
+      {
+        "jp": "みぎ",
+        "r": "みぎ",
+        "en": "みぎ",
+        "ta": "みぎ"
+      },
+      {
+        "jp": "ひだり",
+        "r": "ひだり",
+        "en": "ひだり",
+        "ta": "ひだり"
+      },
+      {
+        "jp": "なか",
+        "r": "なか",
+        "en": "なか",
+        "ta": "なか"
+      },
+      {
+        "jp": "そと",
+        "r": "そと",
+        "en": "そと",
+        "ta": "そと"
+      },
+      {
+        "jp": "となり",
+        "r": "となり",
+        "en": "となり",
+        "ta": "となり"
+      },
+      {
+        "jp": "ちかく",
+        "r": "ちかく",
+        "en": "ちかく",
+        "ta": "ちかく"
+      },
+      {
+        "jp": "あいだ",
+        "r": "あいだ",
+        "en": "あいだ",
+        "ta": "あいだ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 10 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 10",
+        "ta": "பாடம் 10 முதன்மை இலக்கணம்",
+        "form": "Pattern: あります + です/ます",
+        "ex": {
+          "jp": "ありますです。",
+          "en": "Example of あります.",
+          "ta": "あります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 10 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 10",
+        "ta": "பாடம் 10 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: います + です/ます",
+        "ex": {
+          "jp": "いますです。",
+          "en": "Example of います.",
+          "ta": "います உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 10: What is the meaning of 'あります' (あります)?",
+        "options": [
+          "あります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "あります",
+        "explain": "'あります' means あります (あります)."
+      },
+      {
+        "q": "Lesson 10: Identify the main grammar structure.",
+        "options": [
+          "Lesson 10 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 10 Core Pattern 1",
+        "explain": "Lesson 10 focuses on Lesson 10 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "jp": "りんごを みっつ ください",
+    "en": "Please give me three apples (Counters & Quantities) (Lesson 11)",
+    "ta": "மூன்று ஆப்பிள் தாருங்கள்",
+    "vocab": [
+      {
+        "jp": "ひとつ",
+        "r": "ひとつ",
+        "en": "ひとつ",
+        "ta": "ひとつ"
+      },
+      {
+        "jp": "ふたつ",
+        "r": "ふたつ",
+        "en": "ふたつ",
+        "ta": "ふたつ"
+      },
+      {
+        "jp": "みっつ",
+        "r": "みっつ",
+        "en": "みっつ",
+        "ta": "みっつ"
+      },
+      {
+        "jp": "よっつ",
+        "r": "よっつ",
+        "en": "よっつ",
+        "ta": "よっつ"
+      },
+      {
+        "jp": "いつつ",
+        "r": "いつつ",
+        "en": "いつつ",
+        "ta": "いつつ"
+      },
+      {
+        "jp": "むっつ",
+        "r": "むっつ",
+        "en": "むっつ",
+        "ta": "むっつ"
+      },
+      {
+        "jp": "ななつ",
+        "r": "ななつ",
+        "en": "ななつ",
+        "ta": "ななつ"
+      },
+      {
+        "jp": "やつ",
+        "r": "やつ",
+        "en": "やつ",
+        "ta": "やつ"
+      },
+      {
+        "jp": "ここのつ",
+        "r": "ここのつ",
+        "en": "ここのつ",
+        "ta": "ここのつ"
+      },
+      {
+        "jp": "とお",
+        "r": "とお",
+        "en": "とお",
+        "ta": "とお"
+      },
+      {
+        "jp": "いくつ",
+        "r": "いくつ",
+        "en": "いくつ",
+        "ta": "いくつ"
+      },
+      {
+        "jp": "ひとり",
+        "r": "ひとり",
+        "en": "ひとり",
+        "ta": "ひとり"
+      },
+      {
+        "jp": "ふたり",
+        "r": "ふたり",
+        "en": "ふたり",
+        "ta": "ふたり"
+      },
+      {
+        "jp": "～にん",
+        "r": "～にん",
+        "en": "～にん",
+        "ta": "～にん"
+      },
+      {
+        "jp": "～だい",
+        "r": "～だい",
+        "en": "～だい",
+        "ta": "～だい"
+      },
+      {
+        "jp": "～まい",
+        "r": "～まい",
+        "en": "～まい",
+        "ta": "～まい"
+      },
+      {
+        "jp": "～かい",
+        "r": "～かい",
+        "en": "～かい",
+        "ta": "～かい"
+      },
+      {
+        "jp": "りんご",
+        "r": "りんご",
+        "en": "りんご",
+        "ta": "りんご"
+      },
+      {
+        "jp": "みかん",
+        "r": "みかん",
+        "en": "みかん",
+        "ta": "みかん"
+      },
+      {
+        "jp": "サンドイッチ",
+        "r": "サンドイッチ",
+        "en": "サンドイッチ",
+        "ta": "サンドイッチ"
+      },
+      {
+        "jp": "カレー[ライス]",
+        "r": "カレー[ライス]",
+        "en": "カレー[ライス]",
+        "ta": "カレー[ライス]"
+      },
+      {
+        "jp": "アイスクリーム",
+        "r": "アイスクリーム",
+        "en": "アイスクリーム",
+        "ta": "アイスクリーム"
+      },
+      {
+        "jp": "きってみ",
+        "r": "きってみ",
+        "en": "きってみ",
+        "ta": "きってみ"
+      },
+      {
+        "jp": "はがき",
+        "r": "はがき",
+        "en": "はがき",
+        "ta": "はがき"
+      },
+      {
+        "jp": "ふうとう",
+        "r": "ふうとう",
+        "en": "ふうとう",
+        "ta": "ふうとう"
+      },
+      {
+        "jp": "そくたつ",
+        "r": "そくたつ",
+        "en": "そくたつ",
+        "ta": "そくたつ"
+      },
+      {
+        "jp": "かきとめ",
+        "r": "かきとめ",
+        "en": "かきとめ",
+        "ta": "かきとめ"
+      },
+      {
+        "jp": "エアメール",
+        "r": "エアメール",
+        "en": "エアメール",
+        "ta": "エアメール"
+      },
+      {
+        "jp": "ふなびん",
+        "r": "ふなびん",
+        "en": "ふなびん",
+        "ta": "ふなびん"
+      },
+      {
+        "jp": "りょうしん",
+        "r": "りょうしん",
+        "en": "りょうしん",
+        "ta": "りょうしん"
+      },
+      {
+        "jp": "きょうだい",
+        "r": "きょうだい",
+        "en": "きょうだい",
+        "ta": "きょうだい"
+      },
+      {
+        "jp": "あに",
+        "r": "あに",
+        "en": "あに",
+        "ta": "あに"
+      },
+      {
+        "jp": "あね",
+        "r": "あね",
+        "en": "あね",
+        "ta": "あね"
+      },
+      {
+        "jp": "とうと",
+        "r": "とうと",
+        "en": "とうと",
+        "ta": "とうと"
+      },
+      {
+        "jp": "いもうと",
+        "r": "いもうと",
+        "en": "いもうと",
+        "ta": "いもうと"
+      },
+      {
+        "jp": "がいこく",
+        "r": "がいこく",
+        "en": "がいこく",
+        "ta": "がいこく"
+      },
+      {
+        "jp": "～じかん",
+        "r": "～じかん",
+        "en": "～じかん",
+        "ta": "～じかん"
+      },
+      {
+        "jp": "～しゅうかん",
+        "r": "～しゅうかん",
+        "en": "～しゅうかん",
+        "ta": "～しゅうかん"
+      },
+      {
+        "jp": "～かげつ",
+        "r": "～かげつ",
+        "en": "～かげつ",
+        "ta": "～かげつ"
+      },
+      {
+        "jp": "～ねん",
+        "r": "～ねん",
+        "en": "～ねん",
+        "ta": "～ねん"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 11 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 11",
+        "ta": "பாடம் 11 முதன்மை இலக்கணம்",
+        "form": "Pattern: ひとつ + です/ます",
+        "ex": {
+          "jp": "ひとつです。",
+          "en": "Example of ひとつ.",
+          "ta": "ひとつ உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 11 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 11",
+        "ta": "பாடம் 11 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: ふたつ + です/ます",
+        "ex": {
+          "jp": "ふたつです。",
+          "en": "Example of ふたつ.",
+          "ta": "ふたつ உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 11: What is the meaning of 'ひとつ' (ひとつ)?",
+        "options": [
+          "ひとつ",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ひとつ",
+        "explain": "'ひとつ' means ひとつ (ひとつ)."
+      },
+      {
+        "q": "Lesson 11: Identify the main grammar structure.",
+        "options": [
+          "Lesson 11 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 11 Core Pattern 1",
+        "explain": "Lesson 11 focuses on Lesson 11 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "jp": "りんごを みっつ ください",
+    "en": "Please give me three apples (Counters & Quantities) (Lesson 11)",
+    "ta": "மூன்று ஆப்பிள் தாருங்கள்",
+    "vocab": [
+      {
+        "jp": "ひとつ",
+        "r": "ひとつ",
+        "en": "ひとつ",
+        "ta": "ひとつ"
+      },
+      {
+        "jp": "ふたつ",
+        "r": "ふたつ",
+        "en": "ふたつ",
+        "ta": "ふたつ"
+      },
+      {
+        "jp": "みっつ",
+        "r": "みっつ",
+        "en": "みっつ",
+        "ta": "みっつ"
+      },
+      {
+        "jp": "よっつ",
+        "r": "よっつ",
+        "en": "よっつ",
+        "ta": "よっつ"
+      },
+      {
+        "jp": "いつつ",
+        "r": "いつつ",
+        "en": "いつつ",
+        "ta": "いつつ"
+      },
+      {
+        "jp": "むっつ",
+        "r": "むっつ",
+        "en": "むっつ",
+        "ta": "むっつ"
+      },
+      {
+        "jp": "ななつ",
+        "r": "ななつ",
+        "en": "ななつ",
+        "ta": "ななつ"
+      },
+      {
+        "jp": "やつ",
+        "r": "やつ",
+        "en": "やつ",
+        "ta": "やつ"
+      },
+      {
+        "jp": "ここのつ",
+        "r": "ここのつ",
+        "en": "ここのつ",
+        "ta": "ここのつ"
+      },
+      {
+        "jp": "とお",
+        "r": "とお",
+        "en": "とお",
+        "ta": "とお"
+      },
+      {
+        "jp": "いくつ",
+        "r": "いくつ",
+        "en": "いくつ",
+        "ta": "いくつ"
+      },
+      {
+        "jp": "ひとり",
+        "r": "ひとり",
+        "en": "ひとり",
+        "ta": "ひとり"
+      },
+      {
+        "jp": "ふたり",
+        "r": "ふたり",
+        "en": "ふたり",
+        "ta": "ふたり"
+      },
+      {
+        "jp": "～にん",
+        "r": "～にん",
+        "en": "～にん",
+        "ta": "～にん"
+      },
+      {
+        "jp": "～だい",
+        "r": "～だい",
+        "en": "～だい",
+        "ta": "～だい"
+      },
+      {
+        "jp": "～まい",
+        "r": "～まい",
+        "en": "～まい",
+        "ta": "～まい"
+      },
+      {
+        "jp": "～かい",
+        "r": "～かい",
+        "en": "～かい",
+        "ta": "～かい"
+      },
+      {
+        "jp": "りんご",
+        "r": "りんご",
+        "en": "りんご",
+        "ta": "りんご"
+      },
+      {
+        "jp": "みかん",
+        "r": "みかん",
+        "en": "みかん",
+        "ta": "みかん"
+      },
+      {
+        "jp": "サンドイッチ",
+        "r": "サンドイッチ",
+        "en": "サンドイッチ",
+        "ta": "サンドイッチ"
+      },
+      {
+        "jp": "カレー[ライス]",
+        "r": "カレー[ライス]",
+        "en": "カレー[ライス]",
+        "ta": "カレー[ライス]"
+      },
+      {
+        "jp": "アイスクリーム",
+        "r": "アイスクリーム",
+        "en": "アイスクリーム",
+        "ta": "アイスクリーム"
+      },
+      {
+        "jp": "きってみ",
+        "r": "きってみ",
+        "en": "きってみ",
+        "ta": "きってみ"
+      },
+      {
+        "jp": "はがき",
+        "r": "はがき",
+        "en": "はがき",
+        "ta": "はがき"
+      },
+      {
+        "jp": "ふうとう",
+        "r": "ふうとう",
+        "en": "ふうとう",
+        "ta": "ふうとう"
+      },
+      {
+        "jp": "そくたつ",
+        "r": "そくたつ",
+        "en": "そくたつ",
+        "ta": "そくたつ"
+      },
+      {
+        "jp": "かきとめ",
+        "r": "かきとめ",
+        "en": "かきとめ",
+        "ta": "かきとめ"
+      },
+      {
+        "jp": "エアメール",
+        "r": "エアメール",
+        "en": "エアメール",
+        "ta": "エアメール"
+      },
+      {
+        "jp": "ふなびん",
+        "r": "ふなびん",
+        "en": "ふなびん",
+        "ta": "ふなびん"
+      },
+      {
+        "jp": "りょうしん",
+        "r": "りょうしん",
+        "en": "りょうしん",
+        "ta": "りょうしん"
+      },
+      {
+        "jp": "きょうだい",
+        "r": "きょうだい",
+        "en": "きょうだい",
+        "ta": "きょうだい"
+      },
+      {
+        "jp": "あに",
+        "r": "あに",
+        "en": "あに",
+        "ta": "あに"
+      },
+      {
+        "jp": "あね",
+        "r": "あね",
+        "en": "あね",
+        "ta": "あね"
+      },
+      {
+        "jp": "とうと",
+        "r": "とうと",
+        "en": "とうと",
+        "ta": "とうと"
+      },
+      {
+        "jp": "いもうと",
+        "r": "いもうと",
+        "en": "いもうと",
+        "ta": "いもうと"
+      },
+      {
+        "jp": "がいこく",
+        "r": "がいこく",
+        "en": "がいこく",
+        "ta": "がいこく"
+      },
+      {
+        "jp": "～じかん",
+        "r": "～じかん",
+        "en": "～じかん",
+        "ta": "～じかん"
+      },
+      {
+        "jp": "～しゅうかん",
+        "r": "～しゅうかん",
+        "en": "～しゅうかん",
+        "ta": "～しゅうかん"
+      },
+      {
+        "jp": "～かげつ",
+        "r": "～かげつ",
+        "en": "～かげつ",
+        "ta": "～かげつ"
+      },
+      {
+        "jp": "～ねん",
+        "r": "～ねん",
+        "en": "～ねん",
+        "ta": "～ねん"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 11 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 11",
+        "ta": "பாடம் 11 முதன்மை இலக்கணம்",
+        "form": "Pattern: ひとつ + です/ます",
+        "ex": {
+          "jp": "ひとつです。",
+          "en": "Example of ひとつ.",
+          "ta": "ひとつ உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 11 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 11",
+        "ta": "பாடம் 11 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: ふたつ + です/ます",
+        "ex": {
+          "jp": "ふたつです。",
+          "en": "Example of ふたつ.",
+          "ta": "ふたつ உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 11: What is the meaning of 'ひとつ' (ひとつ)?",
+        "options": [
+          "ひとつ",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ひとつ",
+        "explain": "'ひとつ' means ひとつ (ひとつ)."
+      },
+      {
+        "q": "Lesson 11: Identify the main grammar structure.",
+        "options": [
+          "Lesson 11 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 11 Core Pattern 1",
+        "explain": "Lesson 11 focuses on Lesson 11 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "jp": "たんじょうびは いつですか",
+    "en": "When is your birthday? (Past States & Comparisons) (Lesson 12)",
+    "ta": "உங்கள் பிறந்தநாள் எப்போது?",
+    "vocab": [
+      {
+        "jp": "かんたん",
+        "r": "かんたん",
+        "en": "かんたん",
+        "ta": "かんたん"
+      },
+      {
+        "jp": "ちかい",
+        "r": "ちかい",
+        "en": "ちかい",
+        "ta": "ちかい"
+      },
+      {
+        "jp": "とおい",
+        "r": "とおい",
+        "en": "とおい",
+        "ta": "とおい"
+      },
+      {
+        "jp": "はやい",
+        "r": "はやい",
+        "en": "はやい",
+        "ta": "はやい"
+      },
+      {
+        "jp": "おそい",
+        "r": "おそい",
+        "en": "おそい",
+        "ta": "おそい"
+      },
+      {
+        "jp": "多い",
+        "r": "多い",
+        "en": "多い",
+        "ta": "多い"
+      },
+      {
+        "jp": "すくない",
+        "r": "すくない",
+        "en": "すくない",
+        "ta": "すくない"
+      },
+      {
+        "jp": "あたたかい",
+        "r": "あたたかい",
+        "en": "あたたかい",
+        "ta": "あたたかい"
+      },
+      {
+        "jp": "すずしい",
+        "r": "すずしい",
+        "en": "すずしい",
+        "ta": "すずしい"
+      },
+      {
+        "jp": "あまい",
+        "r": "あまい",
+        "en": "あまい",
+        "ta": "あまい"
+      },
+      {
+        "jp": "からい",
+        "r": "からい",
+        "en": "からい",
+        "ta": "からい"
+      },
+      {
+        "jp": "重い",
+        "r": "重い",
+        "en": "重い",
+        "ta": "重い"
+      },
+      {
+        "jp": "かるい",
+        "r": "かるい",
+        "en": "かるい",
+        "ta": "かるい"
+      },
+      {
+        "jp": "いい",
+        "r": "いい",
+        "en": "いい",
+        "ta": "いい"
+      },
+      {
+        "jp": "きせつ",
+        "r": "きせつ",
+        "en": "きせつ",
+        "ta": "きせつ"
+      },
+      {
+        "jp": "はる",
+        "r": "はる",
+        "en": "はる",
+        "ta": "はる"
+      },
+      {
+        "jp": "なつ",
+        "r": "なつ",
+        "en": "なつ",
+        "ta": "なつ"
+      },
+      {
+        "jp": "あき",
+        "r": "あき",
+        "en": "あき",
+        "ta": "あき"
+      },
+      {
+        "jp": "ふゆ",
+        "r": "ふゆ",
+        "en": "ふゆ",
+        "ta": "ふゆ"
+      },
+      {
+        "jp": "てんき",
+        "r": "てんき",
+        "en": "てんき",
+        "ta": "てんき"
+      },
+      {
+        "jp": "あめ",
+        "r": "あめ",
+        "en": "あめ",
+        "ta": "あめ"
+      },
+      {
+        "jp": "ゆき",
+        "r": "ゆき",
+        "en": "ゆき",
+        "ta": "ゆき"
+      },
+      {
+        "jp": "くもり",
+        "r": "くもり",
+        "en": "くもり",
+        "ta": "くもり"
+      },
+      {
+        "jp": "ホテル",
+        "r": "ホテル",
+        "en": "ホテル",
+        "ta": "ホテル"
+      },
+      {
+        "jp": "くうこう",
+        "r": "くうこう",
+        "en": "くうこう",
+        "ta": "くうこう"
+      },
+      {
+        "jp": "うみ",
+        "r": "うみ",
+        "en": "うみ",
+        "ta": "うみ"
+      },
+      {
+        "jp": "せかい",
+        "r": "せかい",
+        "en": "せかい",
+        "ta": "せかい"
+      },
+      {
+        "jp": "パーティー",
+        "r": "パーティー",
+        "en": "パーティー",
+        "ta": "パーティー"
+      },
+      {
+        "jp": "まつり",
+        "r": "まつり",
+        "en": "まつり",
+        "ta": "まつり"
+      },
+      {
+        "jp": "しけん",
+        "r": "しけん",
+        "en": "しけん",
+        "ta": "しけん"
+      },
+      {
+        "jp": "すきやき",
+        "r": "すきやき",
+        "en": "すきやき",
+        "ta": "すきやき"
+      },
+      {
+        "jp": "さしみ",
+        "r": "さしみ",
+        "en": "さしみ",
+        "ta": "さしみ"
+      },
+      {
+        "jp": "すし",
+        "r": "すし",
+        "en": "すし",
+        "ta": "すし"
+      },
+      {
+        "jp": "てんぷら",
+        "r": "てんぷら",
+        "en": "てんぷら",
+        "ta": "てんぷら"
+      },
+      {
+        "jp": "いけばな",
+        "r": "いけばな",
+        "en": "いけばな",
+        "ta": "いけばな"
+      },
+      {
+        "jp": "もみじ",
+        "r": "もみじ",
+        "en": "もみじ",
+        "ta": "もみじ"
+      },
+      {
+        "jp": "どちら",
+        "r": "どちら",
+        "en": "どちら",
+        "ta": "どちら"
+      },
+      {
+        "jp": "どちらも",
+        "r": "どちらも",
+        "en": "どちらも",
+        "ta": "どちらも"
+      },
+      {
+        "jp": "ずっと",
+        "r": "ずっと",
+        "en": "ずっと",
+        "ta": "ずっと"
+      },
+      {
+        "jp": "はじめて",
+        "r": "はじめて",
+        "en": "はじめて",
+        "ta": "はじめて"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 12 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 12",
+        "ta": "பாடம் 12 முதன்மை இலக்கணம்",
+        "form": "Pattern: かんたん + です/ます",
+        "ex": {
+          "jp": "かんたんです。",
+          "en": "Example of かんたん.",
+          "ta": "かんたん உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 12 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 12",
+        "ta": "பாடம் 12 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: ちかい + です/ます",
+        "ex": {
+          "jp": "ちかいです。",
+          "en": "Example of ちかい.",
+          "ta": "ちかい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 12: What is the meaning of 'かんたん' (かんたん)?",
+        "options": [
+          "かんたん",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "かんたん",
+        "explain": "'かんたん' means かんたん (かんたん)."
+      },
+      {
+        "q": "Lesson 12: Identify the main grammar structure.",
+        "options": [
+          "Lesson 12 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 12 Core Pattern 1",
+        "explain": "Lesson 12 focuses on Lesson 12 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "jp": "たんじょうびは いつですか",
+    "en": "When is your birthday? (Past States & Comparisons) (Lesson 12)",
+    "ta": "உங்கள் பிறந்தநாள் எப்போது?",
+    "vocab": [
+      {
+        "jp": "かんたん",
+        "r": "かんたん",
+        "en": "かんたん",
+        "ta": "かんたん"
+      },
+      {
+        "jp": "ちかい",
+        "r": "ちかい",
+        "en": "ちかい",
+        "ta": "ちかい"
+      },
+      {
+        "jp": "とおい",
+        "r": "とおい",
+        "en": "とおい",
+        "ta": "とおい"
+      },
+      {
+        "jp": "はやい",
+        "r": "はやい",
+        "en": "はやい",
+        "ta": "はやい"
+      },
+      {
+        "jp": "おそい",
+        "r": "おそい",
+        "en": "おそい",
+        "ta": "おそい"
+      },
+      {
+        "jp": "多い",
+        "r": "多い",
+        "en": "多い",
+        "ta": "多い"
+      },
+      {
+        "jp": "すくない",
+        "r": "すくない",
+        "en": "すくない",
+        "ta": "すくない"
+      },
+      {
+        "jp": "あたたかい",
+        "r": "あたたかい",
+        "en": "あたたかい",
+        "ta": "あたたかい"
+      },
+      {
+        "jp": "すずしい",
+        "r": "すずしい",
+        "en": "すずしい",
+        "ta": "すずしい"
+      },
+      {
+        "jp": "あまい",
+        "r": "あまい",
+        "en": "あまい",
+        "ta": "あまい"
+      },
+      {
+        "jp": "からい",
+        "r": "からい",
+        "en": "からい",
+        "ta": "からい"
+      },
+      {
+        "jp": "重い",
+        "r": "重い",
+        "en": "重い",
+        "ta": "重い"
+      },
+      {
+        "jp": "かるい",
+        "r": "かるい",
+        "en": "かるい",
+        "ta": "かるい"
+      },
+      {
+        "jp": "いい",
+        "r": "いい",
+        "en": "いい",
+        "ta": "いい"
+      },
+      {
+        "jp": "きせつ",
+        "r": "きせつ",
+        "en": "きせつ",
+        "ta": "きせつ"
+      },
+      {
+        "jp": "はる",
+        "r": "はる",
+        "en": "はる",
+        "ta": "はる"
+      },
+      {
+        "jp": "なつ",
+        "r": "なつ",
+        "en": "なつ",
+        "ta": "なつ"
+      },
+      {
+        "jp": "あき",
+        "r": "あき",
+        "en": "あき",
+        "ta": "あき"
+      },
+      {
+        "jp": "ふゆ",
+        "r": "ふゆ",
+        "en": "ふゆ",
+        "ta": "ふゆ"
+      },
+      {
+        "jp": "てんき",
+        "r": "てんき",
+        "en": "てんき",
+        "ta": "てんき"
+      },
+      {
+        "jp": "あめ",
+        "r": "あめ",
+        "en": "あめ",
+        "ta": "あめ"
+      },
+      {
+        "jp": "ゆき",
+        "r": "ゆき",
+        "en": "ゆき",
+        "ta": "ゆき"
+      },
+      {
+        "jp": "くもり",
+        "r": "くもり",
+        "en": "くもり",
+        "ta": "くもり"
+      },
+      {
+        "jp": "ホテル",
+        "r": "ホテル",
+        "en": "ホテル",
+        "ta": "ホテル"
+      },
+      {
+        "jp": "くうこう",
+        "r": "くうこう",
+        "en": "くうこう",
+        "ta": "くうこう"
+      },
+      {
+        "jp": "うみ",
+        "r": "うみ",
+        "en": "うみ",
+        "ta": "うみ"
+      },
+      {
+        "jp": "せかい",
+        "r": "せかい",
+        "en": "せかい",
+        "ta": "せかい"
+      },
+      {
+        "jp": "パーティー",
+        "r": "パーティー",
+        "en": "パーティー",
+        "ta": "パーティー"
+      },
+      {
+        "jp": "まつり",
+        "r": "まつり",
+        "en": "まつり",
+        "ta": "まつり"
+      },
+      {
+        "jp": "しけん",
+        "r": "しけん",
+        "en": "しけん",
+        "ta": "しけん"
+      },
+      {
+        "jp": "すきやき",
+        "r": "すきやき",
+        "en": "すきやき",
+        "ta": "すきやき"
+      },
+      {
+        "jp": "さしみ",
+        "r": "さしみ",
+        "en": "さしみ",
+        "ta": "さしみ"
+      },
+      {
+        "jp": "すし",
+        "r": "すし",
+        "en": "すし",
+        "ta": "すし"
+      },
+      {
+        "jp": "てんぷら",
+        "r": "てんぷら",
+        "en": "てんぷら",
+        "ta": "てんぷら"
+      },
+      {
+        "jp": "いけばな",
+        "r": "いけばな",
+        "en": "いけばな",
+        "ta": "いけばな"
+      },
+      {
+        "jp": "もみじ",
+        "r": "もみじ",
+        "en": "もみじ",
+        "ta": "もみじ"
+      },
+      {
+        "jp": "どちら",
+        "r": "どちら",
+        "en": "どちら",
+        "ta": "どちら"
+      },
+      {
+        "jp": "どちらも",
+        "r": "どちらも",
+        "en": "どちらも",
+        "ta": "どちらも"
+      },
+      {
+        "jp": "ずっと",
+        "r": "ずっと",
+        "en": "ずっと",
+        "ta": "ずっと"
+      },
+      {
+        "jp": "はじめて",
+        "r": "はじめて",
+        "en": "はじめて",
+        "ta": "はじめて"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 12 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 12",
+        "ta": "பாடம் 12 முதன்மை இலக்கணம்",
+        "form": "Pattern: かんたん + です/ます",
+        "ex": {
+          "jp": "かんたんです。",
+          "en": "Example of かんたん.",
+          "ta": "かんたん உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 12 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 12",
+        "ta": "பாடம் 12 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: ちかい + です/ます",
+        "ex": {
+          "jp": "ちかいです。",
+          "en": "Example of ちかい.",
+          "ta": "ちかい உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 12: What is the meaning of 'かんたん' (かんたん)?",
+        "options": [
+          "かんたん",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "かんたん",
+        "explain": "'かんたん' means かんたん (かんたん)."
+      },
+      {
+        "q": "Lesson 12: Identify the main grammar structure.",
+        "options": [
+          "Lesson 12 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 12 Core Pattern 1",
+        "explain": "Lesson 12 focuses on Lesson 12 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "jp": "にほんりょうりが たべたいです",
+    "en": "I want to eat Japanese food (Wants & Desires) (Lesson 13)",
+    "ta": "ஜப்பானிய உணவு சாப்பிட வேண்டும்",
+    "vocab": [
+      {
+        "jp": "あそびます",
+        "r": "あそびます",
+        "en": "あそびます",
+        "ta": "あそびます"
+      },
+      {
+        "jp": "およぎます",
+        "r": "およぎます",
+        "en": "およぎます",
+        "ta": "およぎます"
+      },
+      {
+        "jp": "むかえます",
+        "r": "むかえます",
+        "en": "むかえます",
+        "ta": "むかえます"
+      },
+      {
+        "jp": "つかれました",
+        "r": "つかれました",
+        "en": "つかれました",
+        "ta": "つかれました"
+      },
+      {
+        "jp": "けっこんします",
+        "r": "けっこんします",
+        "en": "けっこんします",
+        "ta": "けっこんします"
+      },
+      {
+        "jp": "かいものします",
+        "r": "かいものします",
+        "en": "かいものします",
+        "ta": "かいものします"
+      },
+      {
+        "jp": "しょくじします",
+        "r": "しょくじします",
+        "en": "しょくじします",
+        "ta": "しょくじします"
+      },
+      {
+        "jp": "さんぽします",
+        "r": "さんぽします",
+        "en": "さんぽします",
+        "ta": "さんぽします"
+      },
+      {
+        "jp": "たいへん",
+        "r": "たいへん",
+        "en": "たいへん",
+        "ta": "たいへん"
+      },
+      {
+        "jp": "ほしい",
+        "r": "ほしい",
+        "en": "ほしい",
+        "ta": "ほしい"
+      },
+      {
+        "jp": "ひろい",
+        "r": "ひろい",
+        "en": "ひろい",
+        "ta": "ひろい"
+      },
+      {
+        "jp": "せまい",
+        "r": "せまい",
+        "en": "せまい",
+        "ta": "せまい"
+      },
+      {
+        "jp": "プール",
+        "r": "プール",
+        "en": "プール",
+        "ta": "プール"
+      },
+      {
+        "jp": "かわ",
+        "r": "かわ",
+        "en": "かわ",
+        "ta": "かわ"
+      },
+      {
+        "jp": "びじゅつ",
+        "r": "びじゅつ",
+        "en": "びじゅつ",
+        "ta": "びじゅつ"
+      },
+      {
+        "jp": "つり",
+        "r": "つり",
+        "en": "つり",
+        "ta": "つり"
+      },
+      {
+        "jp": "スキー",
+        "r": "スキー",
+        "en": "スキー",
+        "ta": "スキー"
+      },
+      {
+        "jp": "週末",
+        "r": "週末",
+        "en": "週末",
+        "ta": "週末"
+      },
+      {
+        "jp": "しょうがつ",
+        "r": "しょうがつ",
+        "en": "しょうがつ",
+        "ta": "しょうがつ"
+      },
+      {
+        "jp": "何か",
+        "r": "何か",
+        "en": "何か",
+        "ta": "何か"
+      },
+      {
+        "jp": "どこか",
+        "r": "どこか",
+        "en": "どこか",
+        "ta": "どこか"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 13 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 13",
+        "ta": "பாடம் 13 முதன்மை இலக்கணம்",
+        "form": "Pattern: あそびます + です/ます",
+        "ex": {
+          "jp": "あそびますです。",
+          "en": "Example of あそびます.",
+          "ta": "あそびます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 13 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 13",
+        "ta": "பாடம் 13 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: およぎます + です/ます",
+        "ex": {
+          "jp": "およぎますです。",
+          "en": "Example of およぎます.",
+          "ta": "およぎます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 13: What is the meaning of 'あそびます' (あそびます)?",
+        "options": [
+          "あそびます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "あそびます",
+        "explain": "'あそびます' means あそびます (あそびます)."
+      },
+      {
+        "q": "Lesson 13: Identify the main grammar structure.",
+        "options": [
+          "Lesson 13 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 13 Core Pattern 1",
+        "explain": "Lesson 13 focuses on Lesson 13 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "jp": "にほんりょうりが たべたいです",
+    "en": "I want to eat Japanese food (Wants & Desires) (Lesson 13)",
+    "ta": "ஜப்பானிய உணவு சாப்பிட வேண்டும்",
+    "vocab": [
+      {
+        "jp": "あそびます",
+        "r": "あそびます",
+        "en": "あそびます",
+        "ta": "あそびます"
+      },
+      {
+        "jp": "およぎます",
+        "r": "およぎます",
+        "en": "およぎます",
+        "ta": "およぎます"
+      },
+      {
+        "jp": "むかえます",
+        "r": "むかえます",
+        "en": "むかえます",
+        "ta": "むかえます"
+      },
+      {
+        "jp": "つかれました",
+        "r": "つかれました",
+        "en": "つかれました",
+        "ta": "つかれました"
+      },
+      {
+        "jp": "けっこんします",
+        "r": "けっこんします",
+        "en": "けっこんします",
+        "ta": "けっこんします"
+      },
+      {
+        "jp": "かいものします",
+        "r": "かいものします",
+        "en": "かいものします",
+        "ta": "かいものします"
+      },
+      {
+        "jp": "しょくじします",
+        "r": "しょくじします",
+        "en": "しょくじします",
+        "ta": "しょくじします"
+      },
+      {
+        "jp": "さんぽします",
+        "r": "さんぽします",
+        "en": "さんぽします",
+        "ta": "さんぽします"
+      },
+      {
+        "jp": "たいへん",
+        "r": "たいへん",
+        "en": "たいへん",
+        "ta": "たいへん"
+      },
+      {
+        "jp": "ほしい",
+        "r": "ほしい",
+        "en": "ほしい",
+        "ta": "ほしい"
+      },
+      {
+        "jp": "ひろい",
+        "r": "ひろい",
+        "en": "ひろい",
+        "ta": "ひろい"
+      },
+      {
+        "jp": "せまい",
+        "r": "せまい",
+        "en": "せまい",
+        "ta": "せまい"
+      },
+      {
+        "jp": "プール",
+        "r": "プール",
+        "en": "プール",
+        "ta": "プール"
+      },
+      {
+        "jp": "かわ",
+        "r": "かわ",
+        "en": "かわ",
+        "ta": "かわ"
+      },
+      {
+        "jp": "びじゅつ",
+        "r": "びじゅつ",
+        "en": "びじゅつ",
+        "ta": "びじゅつ"
+      },
+      {
+        "jp": "つり",
+        "r": "つり",
+        "en": "つり",
+        "ta": "つり"
+      },
+      {
+        "jp": "スキー",
+        "r": "スキー",
+        "en": "スキー",
+        "ta": "スキー"
+      },
+      {
+        "jp": "週末",
+        "r": "週末",
+        "en": "週末",
+        "ta": "週末"
+      },
+      {
+        "jp": "しょうがつ",
+        "r": "しょうがつ",
+        "en": "しょうがつ",
+        "ta": "しょうがつ"
+      },
+      {
+        "jp": "何か",
+        "r": "何か",
+        "en": "何か",
+        "ta": "何か"
+      },
+      {
+        "jp": "どこか",
+        "r": "どこか",
+        "en": "どこか",
+        "ta": "どこか"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 13 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 13",
+        "ta": "பாடம் 13 முதன்மை இலக்கணம்",
+        "form": "Pattern: あそびます + です/ます",
+        "ex": {
+          "jp": "あそびますです。",
+          "en": "Example of あそびます.",
+          "ta": "あそびます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 13 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 13",
+        "ta": "பாடம் 13 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: およぎます + です/ます",
+        "ex": {
+          "jp": "およぎますです。",
+          "en": "Example of およぎます.",
+          "ta": "およぎます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 13: What is the meaning of 'あそびます' (あそびます)?",
+        "options": [
+          "あそびます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "あそびます",
+        "explain": "'あそびます' means あそびます (あそびます)."
+      },
+      {
+        "q": "Lesson 13: Identify the main grammar structure.",
+        "options": [
+          "Lesson 13 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 13 Core Pattern 1",
+        "explain": "Lesson 13 focuses on Lesson 13 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "jp": "すみませんが、しゃしんを とって ください",
+    "en": "Excuse me, please take a photo (Te-form Requests) (Lesson 14)",
+    "ta": "புகைப்படம் எடுத்து கொடுங்கள்",
+    "vocab": [
+      {
+        "jp": "つけます",
+        "r": "つけます",
+        "en": "つけます",
+        "ta": "つけます"
+      },
+      {
+        "jp": "けします",
+        "r": "けします",
+        "en": "けします",
+        "ta": "けします"
+      },
+      {
+        "jp": "あけます",
+        "r": "あけます",
+        "en": "あけます",
+        "ta": "あけます"
+      },
+      {
+        "jp": "しめます",
+        "r": "しめます",
+        "en": "しめます",
+        "ta": "しめます"
+      },
+      {
+        "jp": "いそぎます",
+        "r": "いそぎます",
+        "en": "いそぎます",
+        "ta": "いそぎます"
+      },
+      {
+        "jp": "まちます",
+        "r": "まちます",
+        "en": "まちます",
+        "ta": "まちます"
+      },
+      {
+        "jp": "持ちます",
+        "r": "持ちます",
+        "en": "持ちます",
+        "ta": "持ちます"
+      },
+      {
+        "jp": "とります",
+        "r": "とります",
+        "en": "とります",
+        "ta": "とります"
+      },
+      {
+        "jp": "てつだいます",
+        "r": "てつだいます",
+        "en": "てつだいます",
+        "ta": "てつだいます"
+      },
+      {
+        "jp": "よびます",
+        "r": "よびます",
+        "en": "よびます",
+        "ta": "よびます"
+      },
+      {
+        "jp": "はなします",
+        "r": "はなします",
+        "en": "はなします",
+        "ta": "はなします"
+      },
+      {
+        "jp": "つかいます",
+        "r": "つかいます",
+        "en": "つかいます",
+        "ta": "つかいます"
+      },
+      {
+        "jp": "とめます",
+        "r": "とめます",
+        "en": "とめます",
+        "ta": "とめます"
+      },
+      {
+        "jp": "みせます",
+        "r": "みせます",
+        "en": "みせます",
+        "ta": "みせます"
+      },
+      {
+        "jp": "おしえます",
+        "r": "おしえます",
+        "en": "おしえます",
+        "ta": "おしえます"
+      },
+      {
+        "jp": "座ります",
+        "r": "座ります",
+        "en": "座ります",
+        "ta": "座ります"
+      },
+      {
+        "jp": "立ちます",
+        "r": "立ちます",
+        "en": "立ちます",
+        "ta": "立ちます"
+      },
+      {
+        "jp": "はいります",
+        "r": "はいります",
+        "en": "はいります",
+        "ta": "はいります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "ふります",
+        "r": "ふります",
+        "en": "ふります",
+        "ta": "ふります"
+      },
+      {
+        "jp": "コピーします",
+        "r": "コピーします",
+        "en": "コピーします",
+        "ta": "コピーします"
+      },
+      {
+        "jp": "でんき",
+        "r": "でんき",
+        "en": "でんき",
+        "ta": "でんき"
+      },
+      {
+        "jp": "パスポート",
+        "r": "パスポート",
+        "en": "パスポート",
+        "ta": "パスポート"
+      },
+      {
+        "jp": "なまえ",
+        "r": "なまえ",
+        "en": "なまえ",
+        "ta": "なまえ"
+      },
+      {
+        "jp": "じゅうしょ",
+        "r": "じゅうしょ",
+        "en": "じゅうしょ",
+        "ta": "じゅうしょ"
+      },
+      {
+        "jp": "みどり",
+        "r": "みどり",
+        "en": "みどり",
+        "ta": "みどり"
+      },
+      {
+        "jp": "しんごう",
+        "r": "しんごう",
+        "en": "しんごう",
+        "ta": "しんごう"
+      },
+      {
+        "jp": "まっすぐ",
+        "r": "まっすぐ",
+        "en": "まっすぐ",
+        "ta": "まっすぐ"
+      },
+      {
+        "jp": "ゆっくり",
+        "r": "ゆっくり",
+        "en": "ゆっくり",
+        "ta": "ゆっくり"
+      },
+      {
+        "jp": "すぐ",
+        "r": "すぐ",
+        "en": "すぐ",
+        "ta": "すぐ"
+      },
+      {
+        "jp": "また",
+        "r": "また",
+        "en": "また",
+        "ta": "また"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 14 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 14",
+        "ta": "பாடம் 14 முதன்மை இலக்கணம்",
+        "form": "Pattern: つけます + です/ます",
+        "ex": {
+          "jp": "つけますです。",
+          "en": "Example of つけます.",
+          "ta": "つけます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 14 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 14",
+        "ta": "பாடம் 14 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: けします + です/ます",
+        "ex": {
+          "jp": "けしますです。",
+          "en": "Example of けします.",
+          "ta": "けします உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 14: What is the meaning of 'つけます' (つけます)?",
+        "options": [
+          "つけます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "つけます",
+        "explain": "'つけます' means つけます (つけます)."
+      },
+      {
+        "q": "Lesson 14: Identify the main grammar structure.",
+        "options": [
+          "Lesson 14 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 14 Core Pattern 1",
+        "explain": "Lesson 14 focuses on Lesson 14 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "jp": "すみませんが、しゃしんを とって ください",
+    "en": "Excuse me, please take a photo (Te-form Requests) (Lesson 14)",
+    "ta": "புகைப்படம் எடுத்து கொடுங்கள்",
+    "vocab": [
+      {
+        "jp": "つけます",
+        "r": "つけます",
+        "en": "つけます",
+        "ta": "つけます"
+      },
+      {
+        "jp": "けします",
+        "r": "けします",
+        "en": "けします",
+        "ta": "けします"
+      },
+      {
+        "jp": "あけます",
+        "r": "あけます",
+        "en": "あけます",
+        "ta": "あけます"
+      },
+      {
+        "jp": "しめます",
+        "r": "しめます",
+        "en": "しめます",
+        "ta": "しめます"
+      },
+      {
+        "jp": "いそぎます",
+        "r": "いそぎます",
+        "en": "いそぎます",
+        "ta": "いそぎます"
+      },
+      {
+        "jp": "まちます",
+        "r": "まちます",
+        "en": "まちます",
+        "ta": "まちます"
+      },
+      {
+        "jp": "持ちます",
+        "r": "持ちます",
+        "en": "持ちます",
+        "ta": "持ちます"
+      },
+      {
+        "jp": "とります",
+        "r": "とります",
+        "en": "とります",
+        "ta": "とります"
+      },
+      {
+        "jp": "てつだいます",
+        "r": "てつだいます",
+        "en": "てつだいます",
+        "ta": "てつだいます"
+      },
+      {
+        "jp": "よびます",
+        "r": "よびます",
+        "en": "よびます",
+        "ta": "よびます"
+      },
+      {
+        "jp": "はなします",
+        "r": "はなします",
+        "en": "はなします",
+        "ta": "はなします"
+      },
+      {
+        "jp": "つかいます",
+        "r": "つかいます",
+        "en": "つかいます",
+        "ta": "つかいます"
+      },
+      {
+        "jp": "とめます",
+        "r": "とめます",
+        "en": "とめます",
+        "ta": "とめます"
+      },
+      {
+        "jp": "みせます",
+        "r": "みせます",
+        "en": "みせます",
+        "ta": "みせます"
+      },
+      {
+        "jp": "おしえます",
+        "r": "おしえます",
+        "en": "おしえます",
+        "ta": "おしえます"
+      },
+      {
+        "jp": "座ります",
+        "r": "座ります",
+        "en": "座ります",
+        "ta": "座ります"
+      },
+      {
+        "jp": "立ちます",
+        "r": "立ちます",
+        "en": "立ちます",
+        "ta": "立ちます"
+      },
+      {
+        "jp": "はいります",
+        "r": "はいります",
+        "en": "はいります",
+        "ta": "はいります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "ふります",
+        "r": "ふります",
+        "en": "ふります",
+        "ta": "ふります"
+      },
+      {
+        "jp": "コピーします",
+        "r": "コピーします",
+        "en": "コピーします",
+        "ta": "コピーします"
+      },
+      {
+        "jp": "でんき",
+        "r": "でんき",
+        "en": "でんき",
+        "ta": "でんき"
+      },
+      {
+        "jp": "パスポート",
+        "r": "パスポート",
+        "en": "パスポート",
+        "ta": "パスポート"
+      },
+      {
+        "jp": "なまえ",
+        "r": "なまえ",
+        "en": "なまえ",
+        "ta": "なまえ"
+      },
+      {
+        "jp": "じゅうしょ",
+        "r": "じゅうしょ",
+        "en": "じゅうしょ",
+        "ta": "じゅうしょ"
+      },
+      {
+        "jp": "みどり",
+        "r": "みどり",
+        "en": "みどり",
+        "ta": "みどり"
+      },
+      {
+        "jp": "しんごう",
+        "r": "しんごう",
+        "en": "しんごう",
+        "ta": "しんごう"
+      },
+      {
+        "jp": "まっすぐ",
+        "r": "まっすぐ",
+        "en": "まっすぐ",
+        "ta": "まっすぐ"
+      },
+      {
+        "jp": "ゆっくり",
+        "r": "ゆっくり",
+        "en": "ゆっくり",
+        "ta": "ゆっくり"
+      },
+      {
+        "jp": "すぐ",
+        "r": "すぐ",
+        "en": "すぐ",
+        "ta": "すぐ"
+      },
+      {
+        "jp": "また",
+        "r": "また",
+        "en": "また",
+        "ta": "また"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 14 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 14",
+        "ta": "பாடம் 14 முதன்மை இலக்கணம்",
+        "form": "Pattern: つけます + です/ます",
+        "ex": {
+          "jp": "つけますです。",
+          "en": "Example of つけます.",
+          "ta": "つけます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 14 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 14",
+        "ta": "பாடம் 14 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: けします + です/ます",
+        "ex": {
+          "jp": "けしますです。",
+          "en": "Example of けします.",
+          "ta": "けします உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 14: What is the meaning of 'つけます' (つけます)?",
+        "options": [
+          "つけます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "つけます",
+        "explain": "'つけます' means つけます (つけます)."
+      },
+      {
+        "q": "Lesson 14: Identify the main grammar structure.",
+        "options": [
+          "Lesson 14 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 14 Core Pattern 1",
+        "explain": "Lesson 14 focuses on Lesson 14 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "jp": "しゃしんを とっても いいですか",
+    "en": "May I take a photo? (Permissions & Prohibition) (Lesson 15)",
+    "ta": "புகைப்படம் எடுக்கலாமா?",
+    "vocab": [
+      {
+        "jp": "たちます",
+        "r": "たちます",
+        "en": "たちます",
+        "ta": "たちます"
+      },
+      {
+        "jp": "すわります",
+        "r": "すわります",
+        "en": "すわります",
+        "ta": "すわります"
+      },
+      {
+        "jp": "つかいます",
+        "r": "つかいます",
+        "en": "つかいます",
+        "ta": "つかいます"
+      },
+      {
+        "jp": "おきます",
+        "r": "おきます",
+        "en": "おきます",
+        "ta": "おきます"
+      },
+      {
+        "jp": "つくります",
+        "r": "つくります",
+        "en": "つくります",
+        "ta": "つくります"
+      },
+      {
+        "jp": "うります",
+        "r": "うります",
+        "en": "うります",
+        "ta": "うります"
+      },
+      {
+        "jp": "知ります",
+        "r": "知ります",
+        "en": "知ります",
+        "ta": "知ります"
+      },
+      {
+        "jp": "すみます",
+        "r": "すみます",
+        "en": "すみます",
+        "ta": "すみます"
+      },
+      {
+        "jp": "けんきゅうします",
+        "r": "けんきゅうします",
+        "en": "けんきゅうします",
+        "ta": "けんきゅうします"
+      },
+      {
+        "jp": "しりょう",
+        "r": "しりょう",
+        "en": "しりょう",
+        "ta": "しりょう"
+      },
+      {
+        "jp": "カタログ",
+        "r": "カタログ",
+        "en": "カタログ",
+        "ta": "カタログ"
+      },
+      {
+        "jp": "ふく",
+        "r": "ふく",
+        "en": "ふく",
+        "ta": "ふく"
+      },
+      {
+        "jp": "せいひん",
+        "r": "せいひん",
+        "en": "せいひん",
+        "ta": "せいひん"
+      },
+      {
+        "jp": "ソフト",
+        "r": "ソフト",
+        "en": "ソフト",
+        "ta": "ソフト"
+      },
+      {
+        "jp": "せんもん",
+        "r": "せんもん",
+        "en": "せんもん",
+        "ta": "せんもん"
+      },
+      {
+        "jp": "はいしゃ",
+        "r": "はいしゃ",
+        "en": "はいしゃ",
+        "ta": "はいしゃ"
+      },
+      {
+        "jp": "とこや",
+        "r": "とこや",
+        "en": "とこや",
+        "ta": "とこや"
+      },
+      {
+        "jp": "プレイガイド",
+        "r": "プレイガイド",
+        "en": "プレイガイド",
+        "ta": "プレイガイド"
+      },
+      {
+        "jp": "独身",
+        "r": "独身",
+        "en": "独身",
+        "ta": "独身"
+      },
+      {
+        "jp": "思い出",
+        "r": "思い出",
+        "en": "思い出",
+        "ta": "思い出"
+      },
+      {
+        "jp": "ごかぞく",
+        "r": "ごかぞく",
+        "en": "ごかぞく",
+        "ta": "ごかぞく"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 15 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 15",
+        "ta": "பாடம் 15 முதன்மை இலக்கணம்",
+        "form": "Pattern: たちます + です/ます",
+        "ex": {
+          "jp": "たちますです。",
+          "en": "Example of たちます.",
+          "ta": "たちます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 15 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 15",
+        "ta": "பாடம் 15 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: すわります + です/ます",
+        "ex": {
+          "jp": "すわりますです。",
+          "en": "Example of すわります.",
+          "ta": "すわります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 15: What is the meaning of 'たちます' (たちます)?",
+        "options": [
+          "たちます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "たちます",
+        "explain": "'たちます' means たちます (たちます)."
+      },
+      {
+        "q": "Lesson 15: Identify the main grammar structure.",
+        "options": [
+          "Lesson 15 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 15 Core Pattern 1",
+        "explain": "Lesson 15 focuses on Lesson 15 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "jp": "しゃしんを とっても いいですか",
+    "en": "May I take a photo? (Permissions & Prohibition) (Lesson 15)",
+    "ta": "புகைப்படம் எடுக்கலாமா?",
+    "vocab": [
+      {
+        "jp": "たちます",
+        "r": "たちます",
+        "en": "たちます",
+        "ta": "たちます"
+      },
+      {
+        "jp": "すわります",
+        "r": "すわります",
+        "en": "すわります",
+        "ta": "すわります"
+      },
+      {
+        "jp": "つかいます",
+        "r": "つかいます",
+        "en": "つかいます",
+        "ta": "つかいます"
+      },
+      {
+        "jp": "おきます",
+        "r": "おきます",
+        "en": "おきます",
+        "ta": "おきます"
+      },
+      {
+        "jp": "つくります",
+        "r": "つくります",
+        "en": "つくります",
+        "ta": "つくります"
+      },
+      {
+        "jp": "うります",
+        "r": "うります",
+        "en": "うります",
+        "ta": "うります"
+      },
+      {
+        "jp": "知ります",
+        "r": "知ります",
+        "en": "知ります",
+        "ta": "知ります"
+      },
+      {
+        "jp": "すみます",
+        "r": "すみます",
+        "en": "すみます",
+        "ta": "すみます"
+      },
+      {
+        "jp": "けんきゅうします",
+        "r": "けんきゅうします",
+        "en": "けんきゅうします",
+        "ta": "けんきゅうします"
+      },
+      {
+        "jp": "しりょう",
+        "r": "しりょう",
+        "en": "しりょう",
+        "ta": "しりょう"
+      },
+      {
+        "jp": "カタログ",
+        "r": "カタログ",
+        "en": "カタログ",
+        "ta": "カタログ"
+      },
+      {
+        "jp": "ふく",
+        "r": "ふく",
+        "en": "ふく",
+        "ta": "ふく"
+      },
+      {
+        "jp": "せいひん",
+        "r": "せいひん",
+        "en": "せいひん",
+        "ta": "せいひん"
+      },
+      {
+        "jp": "ソフト",
+        "r": "ソフト",
+        "en": "ソフト",
+        "ta": "ソフト"
+      },
+      {
+        "jp": "せんもん",
+        "r": "せんもん",
+        "en": "せんもん",
+        "ta": "せんもん"
+      },
+      {
+        "jp": "はいしゃ",
+        "r": "はいしゃ",
+        "en": "はいしゃ",
+        "ta": "はいしゃ"
+      },
+      {
+        "jp": "とこや",
+        "r": "とこや",
+        "en": "とこや",
+        "ta": "とこや"
+      },
+      {
+        "jp": "プレイガイド",
+        "r": "プレイガイド",
+        "en": "プレイガイド",
+        "ta": "プレイガイド"
+      },
+      {
+        "jp": "独身",
+        "r": "独身",
+        "en": "独身",
+        "ta": "独身"
+      },
+      {
+        "jp": "思い出",
+        "r": "思い出",
+        "en": "思い出",
+        "ta": "思い出"
+      },
+      {
+        "jp": "ごかぞく",
+        "r": "ごかぞく",
+        "en": "ごかぞく",
+        "ta": "ごかぞく"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 15 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 15",
+        "ta": "பாடம் 15 முதன்மை இலக்கணம்",
+        "form": "Pattern: たちます + です/ます",
+        "ex": {
+          "jp": "たちますです。",
+          "en": "Example of たちます.",
+          "ta": "たちます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 15 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 15",
+        "ta": "பாடம் 15 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: すわります + です/ます",
+        "ex": {
+          "jp": "すわりますです。",
+          "en": "Example of すわります.",
+          "ta": "すわります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 15: What is the meaning of 'たちます' (たちます)?",
+        "options": [
+          "たちます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "たちます",
+        "explain": "'たちます' means たちます (たちます)."
+      },
+      {
+        "q": "Lesson 15: Identify the main grammar structure.",
+        "options": [
+          "Lesson 15 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 15 Core Pattern 1",
+        "explain": "Lesson 15 focuses on Lesson 15 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "jp": "あさ おきて、がっこうへ いきます",
+    "en": "I wake up and go to school (Sequences & Descriptions) (Lesson 16)",
+    "ta": "எழுந்து பள்ளிக்குச் செல்கிறேன்",
+    "vocab": [
+      {
+        "jp": "のります",
+        "r": "のります",
+        "en": "のります",
+        "ta": "のります"
+      },
+      {
+        "jp": "おります",
+        "r": "おります",
+        "en": "おります",
+        "ta": "おります"
+      },
+      {
+        "jp": "のりかえます",
+        "r": "のりかえます",
+        "en": "のりかえます",
+        "ta": "のりかえます"
+      },
+      {
+        "jp": "あびます",
+        "r": "あびます",
+        "en": "あびます",
+        "ta": "あびます"
+      },
+      {
+        "jp": "いれます",
+        "r": "いれます",
+        "en": "いれます",
+        "ta": "いれます"
+      },
+      {
+        "jp": "だします",
+        "r": "だします",
+        "en": "だします",
+        "ta": "だします"
+      },
+      {
+        "jp": "下ろします",
+        "r": "下ろします",
+        "en": "下ろします",
+        "ta": "下ろします"
+      },
+      {
+        "jp": "はいります",
+        "r": "はいります",
+        "en": "はいります",
+        "ta": "はいります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "おします",
+        "r": "おします",
+        "en": "おします",
+        "ta": "おします"
+      },
+      {
+        "jp": "わかい",
+        "r": "わかい",
+        "en": "わかい",
+        "ta": "わかい"
+      },
+      {
+        "jp": "ながい",
+        "r": "ながい",
+        "en": "ながい",
+        "ta": "ながい"
+      },
+      {
+        "jp": "みじかい",
+        "r": "みじかい",
+        "en": "みじかい",
+        "ta": "みじかい"
+      },
+      {
+        "jp": "あかるい",
+        "r": "あかるい",
+        "en": "あかるい",
+        "ta": "あかるい"
+      },
+      {
+        "jp": "くらい",
+        "r": "くらい",
+        "en": "くらい",
+        "ta": "くらい"
+      },
+      {
+        "jp": "からだ",
+        "r": "からだ",
+        "en": "からだ",
+        "ta": "からだ"
+      },
+      {
+        "jp": "あたま",
+        "r": "あたま",
+        "en": "あたま",
+        "ta": "あたま"
+      },
+      {
+        "jp": "かみ",
+        "r": "かみ",
+        "en": "かみ",
+        "ta": "かみ"
+      },
+      {
+        "jp": "かお",
+        "r": "かお",
+        "en": "かお",
+        "ta": "かお"
+      },
+      {
+        "jp": "め",
+        "r": "め",
+        "en": "め",
+        "ta": "め"
+      },
+      {
+        "jp": "みみ",
+        "r": "みみ",
+        "en": "みみ",
+        "ta": "みみ"
+      },
+      {
+        "jp": "は",
+        "r": "は",
+        "en": "は",
+        "ta": "は"
+      },
+      {
+        "jp": "おなか",
+        "r": "おなか",
+        "en": "おなか",
+        "ta": "おなか"
+      },
+      {
+        "jp": "あし",
+        "r": "あし",
+        "en": "あし",
+        "ta": "あし"
+      },
+      {
+        "jp": "サービス",
+        "r": "サービス",
+        "en": "サービス",
+        "ta": "サービス"
+      },
+      {
+        "jp": "ジョギング",
+        "r": "ジョギング",
+        "en": "ジョギング",
+        "ta": "ジョギング"
+      },
+      {
+        "jp": "シャワー",
+        "r": "シャワー",
+        "en": "シャワー",
+        "ta": "シャワー"
+      },
+      {
+        "jp": "みどり",
+        "r": "みどり",
+        "en": "みどり",
+        "ta": "みどり"
+      },
+      {
+        "jp": "おてら",
+        "r": "おてら",
+        "en": "おてら",
+        "ta": "おてら"
+      },
+      {
+        "jp": "じんじゃ",
+        "r": "じんじゃ",
+        "en": "じんじゃ",
+        "ta": "じんじゃ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 16 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 16",
+        "ta": "பாடம் 16 முதன்மை இலக்கணம்",
+        "form": "Pattern: のります + です/ます",
+        "ex": {
+          "jp": "のりますです。",
+          "en": "Example of のります.",
+          "ta": "のります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 16 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 16",
+        "ta": "பாடம் 16 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: おります + です/ます",
+        "ex": {
+          "jp": "おりますです。",
+          "en": "Example of おります.",
+          "ta": "おります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 16: What is the meaning of 'のります' (のります)?",
+        "options": [
+          "のります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "のります",
+        "explain": "'のります' means のります (のります)."
+      },
+      {
+        "q": "Lesson 16: Identify the main grammar structure.",
+        "options": [
+          "Lesson 16 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 16 Core Pattern 1",
+        "explain": "Lesson 16 focuses on Lesson 16 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "jp": "あさ おきて、がっこうへ いきます",
+    "en": "I wake up and go to school (Sequences & Descriptions) (Lesson 16)",
+    "ta": "எழுந்து பள்ளிக்குச் செல்கிறேன்",
+    "vocab": [
+      {
+        "jp": "のります",
+        "r": "のります",
+        "en": "のります",
+        "ta": "のります"
+      },
+      {
+        "jp": "おります",
+        "r": "おります",
+        "en": "おります",
+        "ta": "おります"
+      },
+      {
+        "jp": "のりかえます",
+        "r": "のりかえます",
+        "en": "のりかえます",
+        "ta": "のりかえます"
+      },
+      {
+        "jp": "あびます",
+        "r": "あびます",
+        "en": "あびます",
+        "ta": "あびます"
+      },
+      {
+        "jp": "いれます",
+        "r": "いれます",
+        "en": "いれます",
+        "ta": "いれます"
+      },
+      {
+        "jp": "だします",
+        "r": "だします",
+        "en": "だします",
+        "ta": "だします"
+      },
+      {
+        "jp": "下ろします",
+        "r": "下ろします",
+        "en": "下ろします",
+        "ta": "下ろします"
+      },
+      {
+        "jp": "はいります",
+        "r": "はいります",
+        "en": "はいります",
+        "ta": "はいります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "おします",
+        "r": "おします",
+        "en": "おします",
+        "ta": "おします"
+      },
+      {
+        "jp": "わかい",
+        "r": "わかい",
+        "en": "わかい",
+        "ta": "わかい"
+      },
+      {
+        "jp": "ながい",
+        "r": "ながい",
+        "en": "ながい",
+        "ta": "ながい"
+      },
+      {
+        "jp": "みじかい",
+        "r": "みじかい",
+        "en": "みじかい",
+        "ta": "みじかい"
+      },
+      {
+        "jp": "あかるい",
+        "r": "あかるい",
+        "en": "あかるい",
+        "ta": "あかるい"
+      },
+      {
+        "jp": "くらい",
+        "r": "くらい",
+        "en": "くらい",
+        "ta": "くらい"
+      },
+      {
+        "jp": "からだ",
+        "r": "からだ",
+        "en": "からだ",
+        "ta": "からだ"
+      },
+      {
+        "jp": "あたま",
+        "r": "あたま",
+        "en": "あたま",
+        "ta": "あたま"
+      },
+      {
+        "jp": "かみ",
+        "r": "かみ",
+        "en": "かみ",
+        "ta": "かみ"
+      },
+      {
+        "jp": "かお",
+        "r": "かお",
+        "en": "かお",
+        "ta": "かお"
+      },
+      {
+        "jp": "め",
+        "r": "め",
+        "en": "め",
+        "ta": "め"
+      },
+      {
+        "jp": "みみ",
+        "r": "みみ",
+        "en": "みみ",
+        "ta": "みみ"
+      },
+      {
+        "jp": "は",
+        "r": "は",
+        "en": "は",
+        "ta": "は"
+      },
+      {
+        "jp": "おなか",
+        "r": "おなか",
+        "en": "おなか",
+        "ta": "おなか"
+      },
+      {
+        "jp": "あし",
+        "r": "あし",
+        "en": "あし",
+        "ta": "あし"
+      },
+      {
+        "jp": "サービス",
+        "r": "サービス",
+        "en": "サービス",
+        "ta": "サービス"
+      },
+      {
+        "jp": "ジョギング",
+        "r": "ジョギング",
+        "en": "ジョギング",
+        "ta": "ジョギング"
+      },
+      {
+        "jp": "シャワー",
+        "r": "シャワー",
+        "en": "シャワー",
+        "ta": "シャワー"
+      },
+      {
+        "jp": "みどり",
+        "r": "みどり",
+        "en": "みどり",
+        "ta": "みどり"
+      },
+      {
+        "jp": "おてら",
+        "r": "おてら",
+        "en": "おてら",
+        "ta": "おてら"
+      },
+      {
+        "jp": "じんじゃ",
+        "r": "じんじゃ",
+        "en": "じんじゃ",
+        "ta": "じんじゃ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 16 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 16",
+        "ta": "பாடம் 16 முதன்மை இலக்கணம்",
+        "form": "Pattern: のります + です/ます",
+        "ex": {
+          "jp": "のりますです。",
+          "en": "Example of のります.",
+          "ta": "のります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 16 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 16",
+        "ta": "பாடம் 16 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: おります + です/ます",
+        "ex": {
+          "jp": "おりますです。",
+          "en": "Example of おります.",
+          "ta": "おります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 16: What is the meaning of 'のります' (のります)?",
+        "options": [
+          "のります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "のります",
+        "explain": "'のります' means のります (のります)."
+      },
+      {
+        "q": "Lesson 16: Identify the main grammar structure.",
+        "options": [
+          "Lesson 16 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 16 Core Pattern 1",
+        "explain": "Lesson 16 focuses on Lesson 16 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "jp": "ここで たばこを すわないで ください",
+    "en": "Please do not smoke here (Nai-form Advice) (Lesson 17)",
+    "ta": "இங்கே புகைபிடிக்காதீர்கள்",
+    "vocab": [
+      {
+        "jp": "おぼえます",
+        "r": "おぼえます",
+        "en": "おぼえます",
+        "ta": "おぼえます"
+      },
+      {
+        "jp": "わすれます",
+        "r": "わすれます",
+        "en": "わすれます",
+        "ta": "わすれます"
+      },
+      {
+        "jp": "なくします",
+        "r": "なくします",
+        "en": "なくします",
+        "ta": "なくします"
+      },
+      {
+        "jp": "はらいます",
+        "r": "はらいます",
+        "en": "はらいます",
+        "ta": "はらいます"
+      },
+      {
+        "jp": "かえします",
+        "r": "かえします",
+        "en": "かえします",
+        "ta": "かえします"
+      },
+      {
+        "jp": "出かけます",
+        "r": "出かけます",
+        "en": "出かけます",
+        "ta": "出かけます"
+      },
+      {
+        "jp": "ぬぎます",
+        "r": "ぬぎます",
+        "en": "ぬぎます",
+        "ta": "ぬぎます"
+      },
+      {
+        "jp": "持って行きます",
+        "r": "持って行きます",
+        "en": "持って行きます",
+        "ta": "持って行きます"
+      },
+      {
+        "jp": "持って来ます",
+        "r": "持って来ます",
+        "en": "持って来ます",
+        "ta": "持って来ます"
+      },
+      {
+        "jp": "しんぱいします",
+        "r": "しんぱいします",
+        "en": "しんぱいします",
+        "ta": "しんぱいします"
+      },
+      {
+        "jp": "ざんぎょうします",
+        "r": "ざんぎょうします",
+        "en": "ざんぎょうします",
+        "ta": "ざんぎょうします"
+      },
+      {
+        "jp": "しゅっちょうします",
+        "r": "しゅっちょうします",
+        "en": "しゅっちょうします",
+        "ta": "しゅっちょうします"
+      },
+      {
+        "jp": "くすり",
+        "r": "くすり",
+        "en": "くすり",
+        "ta": "くすり"
+      },
+      {
+        "jp": "ほけんしょう",
+        "r": "ほけんしょう",
+        "en": "ほけんしょう",
+        "ta": "ほけんしょう"
+      },
+      {
+        "jp": "かぜ",
+        "r": "かぜ",
+        "en": "かぜ",
+        "ta": "かぜ"
+      },
+      {
+        "jp": "ねつ",
+        "r": "ねつ",
+        "en": "ねつ",
+        "ta": "ねつ"
+      },
+      {
+        "jp": "びょうき",
+        "r": "びょうき",
+        "en": "びょうき",
+        "ta": "びょうき"
+      },
+      {
+        "jp": "上着",
+        "r": "上着",
+        "en": "上着",
+        "ta": "上着"
+      },
+      {
+        "jp": "下着",
+        "r": "下着",
+        "en": "下着",
+        "ta": "下着"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 17 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 17",
+        "ta": "பாடம் 17 முதன்மை இலக்கணம்",
+        "form": "Pattern: おぼえます + です/ます",
+        "ex": {
+          "jp": "おぼえますです。",
+          "en": "Example of おぼえます.",
+          "ta": "おぼえます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 17 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 17",
+        "ta": "பாடம் 17 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: わすれます + です/ます",
+        "ex": {
+          "jp": "わすれますです。",
+          "en": "Example of わすれます.",
+          "ta": "わすれます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 17: What is the meaning of 'おぼえます' (おぼえます)?",
+        "options": [
+          "おぼえます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "おぼえます",
+        "explain": "'おぼえます' means おぼえます (おぼえます)."
+      },
+      {
+        "q": "Lesson 17: Identify the main grammar structure.",
+        "options": [
+          "Lesson 17 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 17 Core Pattern 1",
+        "explain": "Lesson 17 focuses on Lesson 17 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "jp": "ここで たばこを すわないで ください",
+    "en": "Please do not smoke here (Nai-form Advice) (Lesson 17)",
+    "ta": "இங்கே புகைபிடிக்காதீர்கள்",
+    "vocab": [
+      {
+        "jp": "おぼえます",
+        "r": "おぼえます",
+        "en": "おぼえます",
+        "ta": "おぼえます"
+      },
+      {
+        "jp": "わすれます",
+        "r": "わすれます",
+        "en": "わすれます",
+        "ta": "わすれます"
+      },
+      {
+        "jp": "なくします",
+        "r": "なくします",
+        "en": "なくします",
+        "ta": "なくします"
+      },
+      {
+        "jp": "はらいます",
+        "r": "はらいます",
+        "en": "はらいます",
+        "ta": "はらいます"
+      },
+      {
+        "jp": "かえします",
+        "r": "かえします",
+        "en": "かえします",
+        "ta": "かえします"
+      },
+      {
+        "jp": "出かけます",
+        "r": "出かけます",
+        "en": "出かけます",
+        "ta": "出かけます"
+      },
+      {
+        "jp": "ぬぎます",
+        "r": "ぬぎます",
+        "en": "ぬぎます",
+        "ta": "ぬぎます"
+      },
+      {
+        "jp": "持って行きます",
+        "r": "持って行きます",
+        "en": "持って行きます",
+        "ta": "持って行きます"
+      },
+      {
+        "jp": "持って来ます",
+        "r": "持って来ます",
+        "en": "持って来ます",
+        "ta": "持って来ます"
+      },
+      {
+        "jp": "しんぱいします",
+        "r": "しんぱいします",
+        "en": "しんぱいします",
+        "ta": "しんぱいします"
+      },
+      {
+        "jp": "ざんぎょうします",
+        "r": "ざんぎょうします",
+        "en": "ざんぎょうします",
+        "ta": "ざんぎょうします"
+      },
+      {
+        "jp": "しゅっちょうします",
+        "r": "しゅっちょうします",
+        "en": "しゅっちょうします",
+        "ta": "しゅっちょうします"
+      },
+      {
+        "jp": "くすり",
+        "r": "くすり",
+        "en": "くすり",
+        "ta": "くすり"
+      },
+      {
+        "jp": "ほけんしょう",
+        "r": "ほけんしょう",
+        "en": "ほけんしょう",
+        "ta": "ほけんしょう"
+      },
+      {
+        "jp": "かぜ",
+        "r": "かぜ",
+        "en": "かぜ",
+        "ta": "かぜ"
+      },
+      {
+        "jp": "ねつ",
+        "r": "ねつ",
+        "en": "ねつ",
+        "ta": "ねつ"
+      },
+      {
+        "jp": "びょうき",
+        "r": "びょうき",
+        "en": "びょうき",
+        "ta": "びょうき"
+      },
+      {
+        "jp": "上着",
+        "r": "上着",
+        "en": "上着",
+        "ta": "上着"
+      },
+      {
+        "jp": "下着",
+        "r": "下着",
+        "en": "下着",
+        "ta": "下着"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 17 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 17",
+        "ta": "பாடம் 17 முதன்மை இலக்கணம்",
+        "form": "Pattern: おぼえます + です/ます",
+        "ex": {
+          "jp": "おぼえますです。",
+          "en": "Example of おぼえます.",
+          "ta": "おぼえます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 17 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 17",
+        "ta": "பாடம் 17 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: わすれます + です/ます",
+        "ex": {
+          "jp": "わすれますです。",
+          "en": "Example of わすれます.",
+          "ta": "わすれます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 17: What is the meaning of 'おぼえます' (おぼえます)?",
+        "options": [
+          "おぼえます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "おぼえます",
+        "explain": "'おぼえます' means おぼえます (おぼえます)."
+      },
+      {
+        "q": "Lesson 17: Identify the main grammar structure.",
+        "options": [
+          "Lesson 17 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 17 Core Pattern 1",
+        "explain": "Lesson 17 focuses on Lesson 17 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "jp": "にほんごを はなす ことが できます",
+    "en": "I can speak Japanese (Ability & Skills) (Lesson 18)",
+    "ta": "ஜப்பானியம் பேச முடியும்",
+    "vocab": [
+      {
+        "jp": "できます",
+        "r": "できます",
+        "en": "できます",
+        "ta": "できます"
+      },
+      {
+        "jp": "あらいます",
+        "r": "あらいます",
+        "en": "あらいます",
+        "ta": "あらいます"
+      },
+      {
+        "jp": "ひきます",
+        "r": "ひきます",
+        "en": "ひきます",
+        "ta": "ひきます"
+      },
+      {
+        "jp": "うたいます",
+        "r": "うたいます",
+        "en": "うたいます",
+        "ta": "うたいます"
+      },
+      {
+        "jp": "あつめます",
+        "r": "あつめます",
+        "en": "あつめます",
+        "ta": "あつめます"
+      },
+      {
+        "jp": "すてます",
+        "r": "すてます",
+        "en": "すてます",
+        "ta": "すてます"
+      },
+      {
+        "jp": "かえます",
+        "r": "かえます",
+        "en": "かえます",
+        "ta": "かえます"
+      },
+      {
+        "jp": "うんてんします",
+        "r": "うんてんします",
+        "en": "うんてんします",
+        "ta": "うんてんします"
+      },
+      {
+        "jp": "よやくします",
+        "r": "よやくします",
+        "en": "よやくします",
+        "ta": "よやくします"
+      },
+      {
+        "jp": "ピアノ",
+        "r": "ピアノ",
+        "en": "ピアノ",
+        "ta": "ピアノ"
+      },
+      {
+        "jp": "～メートル",
+        "r": "～メートル",
+        "en": "～メートル",
+        "ta": "～メートル"
+      },
+      {
+        "jp": "現金",
+        "r": "現金",
+        "en": "現金",
+        "ta": "現金"
+      },
+      {
+        "jp": "趣味",
+        "r": "趣味",
+        "en": "趣味",
+        "ta": "趣味"
+      },
+      {
+        "jp": "日記",
+        "r": "日記",
+        "en": "日記",
+        "ta": "日記"
+      },
+      {
+        "jp": "おいのり",
+        "r": "おいのり",
+        "en": "おいのり",
+        "ta": "おいのり"
+      },
+      {
+        "jp": "課長",
+        "r": "課長",
+        "en": "課長",
+        "ta": "課長"
+      },
+      {
+        "jp": "部長",
+        "r": "部長",
+        "en": "部長",
+        "ta": "部長"
+      },
+      {
+        "jp": "社長",
+        "r": "社長",
+        "en": "社長",
+        "ta": "社長"
+      },
+      {
+        "jp": "動物",
+        "r": "動物",
+        "en": "動物",
+        "ta": "動物"
+      },
+      {
+        "jp": "うま",
+        "r": "うま",
+        "en": "うま",
+        "ta": "うま"
+      },
+      {
+        "jp": "インターネット",
+        "r": "インターネット",
+        "en": "インターネット",
+        "ta": "インターネット"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 18 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 18",
+        "ta": "பாடம் 18 முதன்மை இலக்கணம்",
+        "form": "Pattern: できます + です/ます",
+        "ex": {
+          "jp": "できますです。",
+          "en": "Example of できます.",
+          "ta": "できます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 18 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 18",
+        "ta": "பாடம் 18 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: あらいます + です/ます",
+        "ex": {
+          "jp": "あらいますです。",
+          "en": "Example of あらいます.",
+          "ta": "あらいます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 18: What is the meaning of 'できます' (できます)?",
+        "options": [
+          "できます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "できます",
+        "explain": "'できます' means できます (できます)."
+      },
+      {
+        "q": "Lesson 18: Identify the main grammar structure.",
+        "options": [
+          "Lesson 18 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 18 Core Pattern 1",
+        "explain": "Lesson 18 focuses on Lesson 18 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "jp": "にほんごを はなす ことが できます",
+    "en": "I can speak Japanese (Ability & Skills) (Lesson 18)",
+    "ta": "ஜப்பானியம் பேச முடியும்",
+    "vocab": [
+      {
+        "jp": "できます",
+        "r": "できます",
+        "en": "できます",
+        "ta": "できます"
+      },
+      {
+        "jp": "あらいます",
+        "r": "あらいます",
+        "en": "あらいます",
+        "ta": "あらいます"
+      },
+      {
+        "jp": "ひきます",
+        "r": "ひきます",
+        "en": "ひきます",
+        "ta": "ひきます"
+      },
+      {
+        "jp": "うたいます",
+        "r": "うたいます",
+        "en": "うたいます",
+        "ta": "うたいます"
+      },
+      {
+        "jp": "あつめます",
+        "r": "あつめます",
+        "en": "あつめます",
+        "ta": "あつめます"
+      },
+      {
+        "jp": "すてます",
+        "r": "すてます",
+        "en": "すてます",
+        "ta": "すてます"
+      },
+      {
+        "jp": "かえます",
+        "r": "かえます",
+        "en": "かえます",
+        "ta": "かえます"
+      },
+      {
+        "jp": "うんてんします",
+        "r": "うんてんします",
+        "en": "うんてんします",
+        "ta": "うんてんします"
+      },
+      {
+        "jp": "よやくします",
+        "r": "よやくします",
+        "en": "よやくします",
+        "ta": "よやくします"
+      },
+      {
+        "jp": "ピアノ",
+        "r": "ピアノ",
+        "en": "ピアノ",
+        "ta": "ピアノ"
+      },
+      {
+        "jp": "～メートル",
+        "r": "～メートル",
+        "en": "～メートル",
+        "ta": "～メートル"
+      },
+      {
+        "jp": "現金",
+        "r": "現金",
+        "en": "現金",
+        "ta": "現金"
+      },
+      {
+        "jp": "趣味",
+        "r": "趣味",
+        "en": "趣味",
+        "ta": "趣味"
+      },
+      {
+        "jp": "日記",
+        "r": "日記",
+        "en": "日記",
+        "ta": "日記"
+      },
+      {
+        "jp": "おいのり",
+        "r": "おいのり",
+        "en": "おいのり",
+        "ta": "おいのり"
+      },
+      {
+        "jp": "課長",
+        "r": "課長",
+        "en": "課長",
+        "ta": "課長"
+      },
+      {
+        "jp": "部長",
+        "r": "部長",
+        "en": "部長",
+        "ta": "部長"
+      },
+      {
+        "jp": "社長",
+        "r": "社長",
+        "en": "社長",
+        "ta": "社長"
+      },
+      {
+        "jp": "動物",
+        "r": "動物",
+        "en": "動物",
+        "ta": "動物"
+      },
+      {
+        "jp": "うま",
+        "r": "うま",
+        "en": "うま",
+        "ta": "うま"
+      },
+      {
+        "jp": "インターネット",
+        "r": "インターネット",
+        "en": "インターネット",
+        "ta": "インターネット"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 18 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 18",
+        "ta": "பாடம் 18 முதன்மை இலக்கணம்",
+        "form": "Pattern: できます + です/ます",
+        "ex": {
+          "jp": "できますです。",
+          "en": "Example of できます.",
+          "ta": "できます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 18 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 18",
+        "ta": "பாடம் 18 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: あらいます + です/ます",
+        "ex": {
+          "jp": "あらいますです。",
+          "en": "Example of あらいます.",
+          "ta": "あらいます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 18: What is the meaning of 'できます' (できます)?",
+        "options": [
+          "できます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "できます",
+        "explain": "'できます' means できます (できます)."
+      },
+      {
+        "q": "Lesson 18: Identify the main grammar structure.",
+        "options": [
+          "Lesson 18 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 18 Core Pattern 1",
+        "explain": "Lesson 18 focuses on Lesson 18 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "jp": "にほんへ いった ことが あります",
+    "en": "I have been to Japan (Experience & Ta-form) (Lesson 19)",
+    "ta": "ஜப்பான் சென்றிருக்கிறேன்",
+    "vocab": [
+      {
+        "jp": "のぼります",
+        "r": "のぼります",
+        "en": "のぼります",
+        "ta": "のぼります"
+      },
+      {
+        "jp": "とまります",
+        "r": "とまります",
+        "en": "とまります",
+        "ta": "とまります"
+      },
+      {
+        "jp": "そうじします",
+        "r": "そうじします",
+        "en": "そうじします",
+        "ta": "そうじします"
+      },
+      {
+        "jp": "せんたくします",
+        "r": "せんたくします",
+        "en": "せんたくします",
+        "ta": "せんたくします"
+      },
+      {
+        "jp": "なります",
+        "r": "なります",
+        "en": "なります",
+        "ta": "なります"
+      },
+      {
+        "jp": "ねむい",
+        "r": "ねむい",
+        "en": "ねむい",
+        "ta": "ねむい"
+      },
+      {
+        "jp": "つよい",
+        "r": "つよい",
+        "en": "つよい",
+        "ta": "つよい"
+      },
+      {
+        "jp": "よわい",
+        "r": "よわい",
+        "en": "よわい",
+        "ta": "よわい"
+      },
+      {
+        "jp": "練習",
+        "r": "練習",
+        "en": "練習",
+        "ta": "練習"
+      },
+      {
+        "jp": "ゴルフ",
+        "r": "ゴルフ",
+        "en": "ゴルフ",
+        "ta": "ゴルフ"
+      },
+      {
+        "jp": "すもう",
+        "r": "すもう",
+        "en": "すもう",
+        "ta": "すもう"
+      },
+      {
+        "jp": "お茶",
+        "r": "お茶",
+        "en": "お茶",
+        "ta": "お茶"
+      },
+      {
+        "jp": "日",
+        "r": "日",
+        "en": "日",
+        "ta": "日"
+      },
+      {
+        "jp": "調子",
+        "r": "調子",
+        "en": "調子",
+        "ta": "調子"
+      },
+      {
+        "jp": "一度",
+        "r": "一度",
+        "en": "一度",
+        "ta": "一度"
+      },
+      {
+        "jp": "一度も",
+        "r": "一度も",
+        "en": "一度も",
+        "ta": "一度も"
+      },
+      {
+        "jp": "だんだん",
+        "r": "だんだん",
+        "en": "だんだん",
+        "ta": "だんだん"
+      },
+      {
+        "jp": "もうすぐ",
+        "r": "もうすぐ",
+        "en": "もうすぐ",
+        "ta": "もうすぐ"
+      },
+      {
+        "jp": "おかげさまで",
+        "r": "おかげさまで",
+        "en": "おかげさまで",
+        "ta": "おかげさまで"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 19 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 19",
+        "ta": "பாடம் 19 முதன்மை இலக்கணம்",
+        "form": "Pattern: のぼります + です/ます",
+        "ex": {
+          "jp": "のぼりますです。",
+          "en": "Example of のぼります.",
+          "ta": "のぼります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 19 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 19",
+        "ta": "பாடம் 19 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: とまります + です/ます",
+        "ex": {
+          "jp": "とまりますです。",
+          "en": "Example of とまります.",
+          "ta": "とまります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 19: What is the meaning of 'のぼります' (のぼります)?",
+        "options": [
+          "のぼります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "のぼります",
+        "explain": "'のぼります' means のぼります (のぼります)."
+      },
+      {
+        "q": "Lesson 19: Identify the main grammar structure.",
+        "options": [
+          "Lesson 19 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 19 Core Pattern 1",
+        "explain": "Lesson 19 focuses on Lesson 19 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "jp": "にほんへ いった ことが あります",
+    "en": "I have been to Japan (Experience & Ta-form) (Lesson 19)",
+    "ta": "ஜப்பான் சென்றிருக்கிறேன்",
+    "vocab": [
+      {
+        "jp": "のぼります",
+        "r": "のぼります",
+        "en": "のぼります",
+        "ta": "のぼります"
+      },
+      {
+        "jp": "とまります",
+        "r": "とまります",
+        "en": "とまります",
+        "ta": "とまります"
+      },
+      {
+        "jp": "そうじします",
+        "r": "そうじします",
+        "en": "そうじします",
+        "ta": "そうじします"
+      },
+      {
+        "jp": "せんたくします",
+        "r": "せんたくします",
+        "en": "せんたくします",
+        "ta": "せんたくします"
+      },
+      {
+        "jp": "なります",
+        "r": "なります",
+        "en": "なります",
+        "ta": "なります"
+      },
+      {
+        "jp": "ねむい",
+        "r": "ねむい",
+        "en": "ねむい",
+        "ta": "ねむい"
+      },
+      {
+        "jp": "つよい",
+        "r": "つよい",
+        "en": "つよい",
+        "ta": "つよい"
+      },
+      {
+        "jp": "よわい",
+        "r": "よわい",
+        "en": "よわい",
+        "ta": "よわい"
+      },
+      {
+        "jp": "練習",
+        "r": "練習",
+        "en": "練習",
+        "ta": "練習"
+      },
+      {
+        "jp": "ゴルフ",
+        "r": "ゴルフ",
+        "en": "ゴルフ",
+        "ta": "ゴルフ"
+      },
+      {
+        "jp": "すもう",
+        "r": "すもう",
+        "en": "すもう",
+        "ta": "すもう"
+      },
+      {
+        "jp": "お茶",
+        "r": "お茶",
+        "en": "お茶",
+        "ta": "お茶"
+      },
+      {
+        "jp": "日",
+        "r": "日",
+        "en": "日",
+        "ta": "日"
+      },
+      {
+        "jp": "調子",
+        "r": "調子",
+        "en": "調子",
+        "ta": "調子"
+      },
+      {
+        "jp": "一度",
+        "r": "一度",
+        "en": "一度",
+        "ta": "一度"
+      },
+      {
+        "jp": "一度も",
+        "r": "一度も",
+        "en": "一度も",
+        "ta": "一度も"
+      },
+      {
+        "jp": "だんだん",
+        "r": "だんだん",
+        "en": "だんだん",
+        "ta": "だんだん"
+      },
+      {
+        "jp": "もうすぐ",
+        "r": "もうすぐ",
+        "en": "もうすぐ",
+        "ta": "もうすぐ"
+      },
+      {
+        "jp": "おかげさまで",
+        "r": "おかげさまで",
+        "en": "おかげさまで",
+        "ta": "おかげさまで"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 19 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 19",
+        "ta": "பாடம் 19 முதன்மை இலக்கணம்",
+        "form": "Pattern: のぼります + です/ます",
+        "ex": {
+          "jp": "のぼりますです。",
+          "en": "Example of のぼります.",
+          "ta": "のぼります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 19 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 19",
+        "ta": "பாடம் 19 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: とまります + です/ます",
+        "ex": {
+          "jp": "とまりますです。",
+          "en": "Example of とまります.",
+          "ta": "とまります உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 19: What is the meaning of 'のぼります' (のぼります)?",
+        "options": [
+          "のぼります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "のぼります",
+        "explain": "'のぼります' means のぼります (のぼります)."
+      },
+      {
+        "q": "Lesson 19: Identify the main grammar structure.",
+        "options": [
+          "Lesson 19 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 19 Core Pattern 1",
+        "explain": "Lesson 19 focuses on Lesson 19 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "jp": "いっしょに いかない？",
+    "en": "Shall we go together? (Casual Style) (Lesson 20)",
+    "ta": "ஒன்றாகப் போவோமா?",
+    "vocab": [
+      {
+        "jp": "いります",
+        "r": "いります",
+        "en": "いります",
+        "ta": "いります"
+      },
+      {
+        "jp": "しらべます",
+        "r": "しらべます",
+        "en": "しらべます",
+        "ta": "しらべます"
+      },
+      {
+        "jp": "なおします",
+        "r": "なおします",
+        "en": "なおします",
+        "ta": "なおします"
+      },
+      {
+        "jp": "しゅうりします",
+        "r": "しゅうりします",
+        "en": "しゅうりします",
+        "ta": "しゅうりします"
+      },
+      {
+        "jp": "ぼく",
+        "r": "ぼく",
+        "en": "ぼく",
+        "ta": "ぼく"
+      },
+      {
+        "jp": "きみ",
+        "r": "きみ",
+        "en": "きみ",
+        "ta": "きみ"
+      },
+      {
+        "jp": "～くん",
+        "r": "～くん",
+        "en": "～くん",
+        "ta": "～くん"
+      },
+      {
+        "jp": "うん",
+        "r": "うん",
+        "en": "うん",
+        "ta": "うん"
+      },
+      {
+        "jp": "ううん",
+        "r": "ううん",
+        "en": "ううん",
+        "ta": "ううん"
+      },
+      {
+        "jp": "ことば",
+        "r": "ことば",
+        "en": "ことば",
+        "ta": "ことば"
+      },
+      {
+        "jp": "着物",
+        "r": "着物",
+        "en": "着物",
+        "ta": "着物"
+      },
+      {
+        "jp": "ビザ",
+        "r": "ビザ",
+        "en": "ビザ",
+        "ta": "ビザ"
+      },
+      {
+        "jp": "始め",
+        "r": "始め",
+        "en": "始め",
+        "ta": "始め"
+      },
+      {
+        "jp": "終わり",
+        "r": "終わり",
+        "en": "終わり",
+        "ta": "終わり"
+      },
+      {
+        "jp": "こっち",
+        "r": "こっち",
+        "en": "こっち",
+        "ta": "こっち"
+      },
+      {
+        "jp": "そっち",
+        "r": "そっち",
+        "en": "そっち",
+        "ta": "そっち"
+      },
+      {
+        "jp": "あっち",
+        "r": "あっち",
+        "en": "あっち",
+        "ta": "あっち"
+      },
+      {
+        "jp": "どっち",
+        "r": "どっち",
+        "en": "どっち",
+        "ta": "どっち"
+      },
+      {
+        "jp": "みんなで",
+        "r": "みんなで",
+        "en": "みんなで",
+        "ta": "みんなで"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 20 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 20",
+        "ta": "பாடம் 20 முதன்மை இலக்கணம்",
+        "form": "Pattern: いります + です/ます",
+        "ex": {
+          "jp": "いりますです。",
+          "en": "Example of いります.",
+          "ta": "いります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 20 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 20",
+        "ta": "பாடம் 20 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: しらべます + です/ます",
+        "ex": {
+          "jp": "しらべますです。",
+          "en": "Example of しらべます.",
+          "ta": "しらべます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 20: What is the meaning of 'いります' (いります)?",
+        "options": [
+          "いります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "いります",
+        "explain": "'いります' means いります (いります)."
+      },
+      {
+        "q": "Lesson 20: Identify the main grammar structure.",
+        "options": [
+          "Lesson 20 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 20 Core Pattern 1",
+        "explain": "Lesson 20 focuses on Lesson 20 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "jp": "いっしょに いかない？",
+    "en": "Shall we go together? (Casual Style) (Lesson 20)",
+    "ta": "ஒன்றாகப் போவோமா?",
+    "vocab": [
+      {
+        "jp": "いります",
+        "r": "いります",
+        "en": "いります",
+        "ta": "いります"
+      },
+      {
+        "jp": "しらべます",
+        "r": "しらべます",
+        "en": "しらべます",
+        "ta": "しらべます"
+      },
+      {
+        "jp": "なおします",
+        "r": "なおします",
+        "en": "なおします",
+        "ta": "なおします"
+      },
+      {
+        "jp": "しゅうりします",
+        "r": "しゅうりします",
+        "en": "しゅうりします",
+        "ta": "しゅうりします"
+      },
+      {
+        "jp": "ぼく",
+        "r": "ぼく",
+        "en": "ぼく",
+        "ta": "ぼく"
+      },
+      {
+        "jp": "きみ",
+        "r": "きみ",
+        "en": "きみ",
+        "ta": "きみ"
+      },
+      {
+        "jp": "～くん",
+        "r": "～くん",
+        "en": "～くん",
+        "ta": "～くん"
+      },
+      {
+        "jp": "うん",
+        "r": "うん",
+        "en": "うん",
+        "ta": "うん"
+      },
+      {
+        "jp": "ううん",
+        "r": "ううん",
+        "en": "ううん",
+        "ta": "ううん"
+      },
+      {
+        "jp": "ことば",
+        "r": "ことば",
+        "en": "ことば",
+        "ta": "ことば"
+      },
+      {
+        "jp": "着物",
+        "r": "着物",
+        "en": "着物",
+        "ta": "着物"
+      },
+      {
+        "jp": "ビザ",
+        "r": "ビザ",
+        "en": "ビザ",
+        "ta": "ビザ"
+      },
+      {
+        "jp": "始め",
+        "r": "始め",
+        "en": "始め",
+        "ta": "始め"
+      },
+      {
+        "jp": "終わり",
+        "r": "終わり",
+        "en": "終わり",
+        "ta": "終わり"
+      },
+      {
+        "jp": "こっち",
+        "r": "こっち",
+        "en": "こっち",
+        "ta": "こっち"
+      },
+      {
+        "jp": "そっち",
+        "r": "そっち",
+        "en": "そっち",
+        "ta": "そっち"
+      },
+      {
+        "jp": "あっち",
+        "r": "あっち",
+        "en": "あっち",
+        "ta": "あっち"
+      },
+      {
+        "jp": "どっち",
+        "r": "どっち",
+        "en": "どっち",
+        "ta": "どっち"
+      },
+      {
+        "jp": "みんなで",
+        "r": "みんなで",
+        "en": "みんなで",
+        "ta": "みんなで"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 20 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 20",
+        "ta": "பாடம் 20 முதன்மை இலக்கணம்",
+        "form": "Pattern: いります + です/ます",
+        "ex": {
+          "jp": "いりますです。",
+          "en": "Example of いります.",
+          "ta": "いります உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 20 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 20",
+        "ta": "பாடம் 20 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: しらべます + です/ます",
+        "ex": {
+          "jp": "しらべますです。",
+          "en": "Example of しらべます.",
+          "ta": "しらべます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 20: What is the meaning of 'いります' (いります)?",
+        "options": [
+          "いります",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "いります",
+        "explain": "'いります' means いります (いります)."
+      },
+      {
+        "q": "Lesson 20: Identify the main grammar structure.",
+        "options": [
+          "Lesson 20 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 20 Core Pattern 1",
+        "explain": "Lesson 20 focuses on Lesson 20 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "jp": "あしたは あめが ふると おもいます",
+    "en": "I think it will rain tomorrow (Opinions) (Lesson 21)",
+    "ta": "நாளை மழை பெய்யும் என நினைக்கிறேன்",
+    "vocab": [
+      {
+        "jp": "言います",
+        "r": "言います",
+        "en": "言います",
+        "ta": "言います"
+      },
+      {
+        "jp": "勝ちます",
+        "r": "勝ちます",
+        "en": "勝ちます",
+        "ta": "勝ちます"
+      },
+      {
+        "jp": "負けます",
+        "r": "負けます",
+        "en": "負けます",
+        "ta": "負けます"
+      },
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "役立ちます",
+        "r": "役立ちます",
+        "en": "役立ちます",
+        "ta": "役立ちます"
+      },
+      {
+        "jp": "動きます",
+        "r": "動きます",
+        "en": "動きます",
+        "ta": "動きます"
+      },
+      {
+        "jp": "やめます",
+        "r": "やめます",
+        "en": "やめます",
+        "ta": "やめます"
+      },
+      {
+        "jp": "気をつけます",
+        "r": "気をつけます",
+        "en": "気をつけます",
+        "ta": "気をつけます"
+      },
+      {
+        "jp": "留学します",
+        "r": "留学します",
+        "en": "留学します",
+        "ta": "留学します"
+      },
+      {
+        "jp": "むだ",
+        "r": "むだ",
+        "en": "むだ",
+        "ta": "むだ"
+      },
+      {
+        "jp": "不便",
+        "r": "不便",
+        "en": "不便",
+        "ta": "不便"
+      },
+      {
+        "jp": "すごい",
+        "r": "すごい",
+        "en": "すごい",
+        "ta": "すごい"
+      },
+      {
+        "jp": "本当",
+        "r": "本当",
+        "en": "本当",
+        "ta": "本当"
+      },
+      {
+        "jp": "嘘",
+        "r": "嘘",
+        "en": "嘘",
+        "ta": "嘘"
+      },
+      {
+        "jp": "自動車",
+        "r": "自動車",
+        "en": "自動車",
+        "ta": "自動車"
+      },
+      {
+        "jp": "交通",
+        "r": "交通",
+        "en": "交通",
+        "ta": "交通"
+      },
+      {
+        "jp": "物価",
+        "r": "物価",
+        "en": "物価",
+        "ta": "物価"
+      },
+      {
+        "jp": "ニュース",
+        "r": "ニュース",
+        "en": "ニュース",
+        "ta": "ニュース"
+      },
+      {
+        "jp": "アニメ",
+        "r": "アニメ",
+        "en": "アニメ",
+        "ta": "アニメ"
+      },
+      {
+        "jp": "マンガ",
+        "r": "マンガ",
+        "en": "マンガ",
+        "ta": "マンガ"
+      },
+      {
+        "jp": "デザイン",
+        "r": "デザイン",
+        "en": "デザイン",
+        "ta": "デザイン"
+      },
+      {
+        "jp": "夢",
+        "r": "夢",
+        "en": "夢",
+        "ta": "夢"
+      },
+      {
+        "jp": "天才",
+        "r": "天才",
+        "en": "天才",
+        "ta": "天才"
+      },
+      {
+        "jp": "試合",
+        "r": "試合",
+        "en": "試合",
+        "ta": "試合"
+      },
+      {
+        "jp": "意見",
+        "r": "意見",
+        "en": "意見",
+        "ta": "意見"
+      },
+      {
+        "jp": "話",
+        "r": "話",
+        "en": "話",
+        "ta": "話"
+      },
+      {
+        "jp": "地球",
+        "r": "地球",
+        "en": "地球",
+        "ta": "地球"
+      },
+      {
+        "jp": "月に",
+        "r": "月に",
+        "en": "月に",
+        "ta": "月に"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 21 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 21",
+        "ta": "பாடம் 21 முதன்மை இலக்கணம்",
+        "form": "Pattern: 言います + です/ます",
+        "ex": {
+          "jp": "言いますです。",
+          "en": "Example of 言います.",
+          "ta": "言います உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 21 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 21",
+        "ta": "பாடம் 21 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 勝ちます + です/ます",
+        "ex": {
+          "jp": "勝ちますです。",
+          "en": "Example of 勝ちます.",
+          "ta": "勝ちます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 21: What is the meaning of '言います' (言います)?",
+        "options": [
+          "言います",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "言います",
+        "explain": "'言います' means 言います (言います)."
+      },
+      {
+        "q": "Lesson 21: Identify the main grammar structure.",
+        "options": [
+          "Lesson 21 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 21 Core Pattern 1",
+        "explain": "Lesson 21 focuses on Lesson 21 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "jp": "あしたは あめが ふると おもいます",
+    "en": "I think it will rain tomorrow (Opinions) (Lesson 21)",
+    "ta": "நாளை மழை பெய்யும் என நினைக்கிறேன்",
+    "vocab": [
+      {
+        "jp": "言います",
+        "r": "言います",
+        "en": "言います",
+        "ta": "言います"
+      },
+      {
+        "jp": "勝ちます",
+        "r": "勝ちます",
+        "en": "勝ちます",
+        "ta": "勝ちます"
+      },
+      {
+        "jp": "負けます",
+        "r": "負けます",
+        "en": "負けます",
+        "ta": "負けます"
+      },
+      {
+        "jp": "あります",
+        "r": "あります",
+        "en": "あります",
+        "ta": "あります"
+      },
+      {
+        "jp": "役立ちます",
+        "r": "役立ちます",
+        "en": "役立ちます",
+        "ta": "役立ちます"
+      },
+      {
+        "jp": "動きます",
+        "r": "動きます",
+        "en": "動きます",
+        "ta": "動きます"
+      },
+      {
+        "jp": "やめます",
+        "r": "やめます",
+        "en": "やめます",
+        "ta": "やめます"
+      },
+      {
+        "jp": "気をつけます",
+        "r": "気をつけます",
+        "en": "気をつけます",
+        "ta": "気をつけます"
+      },
+      {
+        "jp": "留学します",
+        "r": "留学します",
+        "en": "留学します",
+        "ta": "留学します"
+      },
+      {
+        "jp": "むだ",
+        "r": "むだ",
+        "en": "むだ",
+        "ta": "むだ"
+      },
+      {
+        "jp": "不便",
+        "r": "不便",
+        "en": "不便",
+        "ta": "不便"
+      },
+      {
+        "jp": "すごい",
+        "r": "すごい",
+        "en": "すごい",
+        "ta": "すごい"
+      },
+      {
+        "jp": "本当",
+        "r": "本当",
+        "en": "本当",
+        "ta": "本当"
+      },
+      {
+        "jp": "嘘",
+        "r": "嘘",
+        "en": "嘘",
+        "ta": "嘘"
+      },
+      {
+        "jp": "自動車",
+        "r": "自動車",
+        "en": "自動車",
+        "ta": "自動車"
+      },
+      {
+        "jp": "交通",
+        "r": "交通",
+        "en": "交通",
+        "ta": "交通"
+      },
+      {
+        "jp": "物価",
+        "r": "物価",
+        "en": "物価",
+        "ta": "物価"
+      },
+      {
+        "jp": "ニュース",
+        "r": "ニュース",
+        "en": "ニュース",
+        "ta": "ニュース"
+      },
+      {
+        "jp": "アニメ",
+        "r": "アニメ",
+        "en": "アニメ",
+        "ta": "アニメ"
+      },
+      {
+        "jp": "マンガ",
+        "r": "マンガ",
+        "en": "マンガ",
+        "ta": "マンガ"
+      },
+      {
+        "jp": "デザイン",
+        "r": "デザイン",
+        "en": "デザイン",
+        "ta": "デザイン"
+      },
+      {
+        "jp": "夢",
+        "r": "夢",
+        "en": "夢",
+        "ta": "夢"
+      },
+      {
+        "jp": "天才",
+        "r": "天才",
+        "en": "天才",
+        "ta": "天才"
+      },
+      {
+        "jp": "試合",
+        "r": "試合",
+        "en": "試合",
+        "ta": "試合"
+      },
+      {
+        "jp": "意見",
+        "r": "意見",
+        "en": "意見",
+        "ta": "意見"
+      },
+      {
+        "jp": "話",
+        "r": "話",
+        "en": "話",
+        "ta": "話"
+      },
+      {
+        "jp": "地球",
+        "r": "地球",
+        "en": "地球",
+        "ta": "地球"
+      },
+      {
+        "jp": "月に",
+        "r": "月に",
+        "en": "月に",
+        "ta": "月に"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 21 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 21",
+        "ta": "பாடம் 21 முதன்மை இலக்கணம்",
+        "form": "Pattern: 言います + です/ます",
+        "ex": {
+          "jp": "言いますです。",
+          "en": "Example of 言います.",
+          "ta": "言います உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 21 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 21",
+        "ta": "பாடம் 21 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 勝ちます + です/ます",
+        "ex": {
+          "jp": "勝ちますです。",
+          "en": "Example of 勝ちます.",
+          "ta": "勝ちます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 21: What is the meaning of '言います' (言います)?",
+        "options": [
+          "言います",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "言います",
+        "explain": "'言います' means 言います (言います)."
+      },
+      {
+        "q": "Lesson 21: Identify the main grammar structure.",
+        "options": [
+          "Lesson 21 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 21 Core Pattern 1",
+        "explain": "Lesson 21 focuses on Lesson 21 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "jp": "これは わたしが つくった りょうりです",
+    "en": "This is the dish I made (Noun Clauses) (Lesson 22)",
+    "ta": "நான் சமைத்த உணவு இது",
+    "vocab": [
+      {
+        "jp": "着ます",
+        "r": "着ます",
+        "en": "着ます",
+        "ta": "着ます"
+      },
+      {
+        "jp": "はきます",
+        "r": "はきます",
+        "en": "はきます",
+        "ta": "はきます"
+      },
+      {
+        "jp": "かぶります",
+        "r": "かぶります",
+        "en": "かぶります",
+        "ta": "かぶります"
+      },
+      {
+        "jp": "かけます",
+        "r": "かけます",
+        "en": "かけます",
+        "ta": "かけます"
+      },
+      {
+        "jp": "うまれます",
+        "r": "うまれます",
+        "en": "うまれます",
+        "ta": "うまれます"
+      },
+      {
+        "jp": "コート",
+        "r": "コート",
+        "en": "コート",
+        "ta": "コート"
+      },
+      {
+        "jp": "スーツ",
+        "r": "スーツ",
+        "en": "スーツ",
+        "ta": "スーツ"
+      },
+      {
+        "jp": "セーター",
+        "r": "セーター",
+        "en": "セーター",
+        "ta": "セーター"
+      },
+      {
+        "jp": "帽子",
+        "r": "帽子",
+        "en": "帽子",
+        "ta": "帽子"
+      },
+      {
+        "jp": "眼鏡",
+        "r": "眼鏡",
+        "en": "眼鏡",
+        "ta": "眼鏡"
+      },
+      {
+        "jp": "約束",
+        "r": "約束",
+        "en": "約束",
+        "ta": "約束"
+      },
+      {
+        "jp": "おめでとうございます",
+        "r": "おめでとうございます",
+        "en": "おめでとうございます",
+        "ta": "おめでとうございます"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 22 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 22",
+        "ta": "பாடம் 22 முதன்மை இலக்கணம்",
+        "form": "Pattern: 着ます + です/ます",
+        "ex": {
+          "jp": "着ますです。",
+          "en": "Example of 着ます.",
+          "ta": "着ます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 22 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 22",
+        "ta": "பாடம் 22 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: はきます + です/ます",
+        "ex": {
+          "jp": "はきますです。",
+          "en": "Example of はきます.",
+          "ta": "はきます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 22: What is the meaning of '着ます' (着ます)?",
+        "options": [
+          "着ます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "着ます",
+        "explain": "'着ます' means 着ます (着ます)."
+      },
+      {
+        "q": "Lesson 22: Identify the main grammar structure.",
+        "options": [
+          "Lesson 22 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 22 Core Pattern 1",
+        "explain": "Lesson 22 focuses on Lesson 22 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "jp": "これは わたしが つくった りょうりです",
+    "en": "This is the dish I made (Noun Clauses) (Lesson 22)",
+    "ta": "நான் சமைத்த உணவு இது",
+    "vocab": [
+      {
+        "jp": "着ます",
+        "r": "着ます",
+        "en": "着ます",
+        "ta": "着ます"
+      },
+      {
+        "jp": "はきます",
+        "r": "はきます",
+        "en": "はきます",
+        "ta": "はきます"
+      },
+      {
+        "jp": "かぶります",
+        "r": "かぶります",
+        "en": "かぶります",
+        "ta": "かぶります"
+      },
+      {
+        "jp": "かけます",
+        "r": "かけます",
+        "en": "かけます",
+        "ta": "かけます"
+      },
+      {
+        "jp": "うまれます",
+        "r": "うまれます",
+        "en": "うまれます",
+        "ta": "うまれます"
+      },
+      {
+        "jp": "コート",
+        "r": "コート",
+        "en": "コート",
+        "ta": "コート"
+      },
+      {
+        "jp": "スーツ",
+        "r": "スーツ",
+        "en": "スーツ",
+        "ta": "スーツ"
+      },
+      {
+        "jp": "セーター",
+        "r": "セーター",
+        "en": "セーター",
+        "ta": "セーター"
+      },
+      {
+        "jp": "帽子",
+        "r": "帽子",
+        "en": "帽子",
+        "ta": "帽子"
+      },
+      {
+        "jp": "眼鏡",
+        "r": "眼鏡",
+        "en": "眼鏡",
+        "ta": "眼鏡"
+      },
+      {
+        "jp": "約束",
+        "r": "約束",
+        "en": "約束",
+        "ta": "約束"
+      },
+      {
+        "jp": "おめでとうございます",
+        "r": "おめでとうございます",
+        "en": "おめでとうございます",
+        "ta": "おめでとうございます"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 22 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 22",
+        "ta": "பாடம் 22 முதன்மை இலக்கணம்",
+        "form": "Pattern: 着ます + です/ます",
+        "ex": {
+          "jp": "着ますです。",
+          "en": "Example of 着ます.",
+          "ta": "着ます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 22 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 22",
+        "ta": "பாடம் 22 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: はきます + です/ます",
+        "ex": {
+          "jp": "はきますです。",
+          "en": "Example of はきます.",
+          "ta": "はきます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 22: What is the meaning of '着ます' (着ます)?",
+        "options": [
+          "着ます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "着ます",
+        "explain": "'着ます' means 着ます (着ます)."
+      },
+      {
+        "q": "Lesson 22: Identify the main grammar structure.",
+        "options": [
+          "Lesson 22 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 22 Core Pattern 1",
+        "explain": "Lesson 22 focuses on Lesson 22 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "jp": "ひまな とき、えいがを みます",
+    "en": "When I am free, I watch movies (Conditions) (Lesson 23)",
+    "ta": "நேரம் இருக்கும்போது படம் பார்ப்பேன்",
+    "vocab": [
+      {
+        "jp": "ききます",
+        "r": "ききます",
+        "en": "ききます",
+        "ta": "ききます"
+      },
+      {
+        "jp": "まわします",
+        "r": "まわします",
+        "en": "まわします",
+        "ta": "まわします"
+      },
+      {
+        "jp": "ひきます",
+        "r": "ひきます",
+        "en": "ひきます",
+        "ta": "ひきます"
+      },
+      {
+        "jp": "かえます",
+        "r": "かえます",
+        "en": "かえます",
+        "ta": "かえます"
+      },
+      {
+        "jp": "触ります",
+        "r": "触ります",
+        "en": "触ります",
+        "ta": "触ります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "動きます",
+        "r": "動きます",
+        "en": "動きます",
+        "ta": "動きます"
+      },
+      {
+        "jp": "歩きます",
+        "r": "歩きます",
+        "en": "歩きます",
+        "ta": "歩きます"
+      },
+      {
+        "jp": "渡ります",
+        "r": "渡ります",
+        "en": "渡ります",
+        "ta": "渡ります"
+      },
+      {
+        "jp": "曲がります",
+        "r": "曲がります",
+        "en": "曲がります",
+        "ta": "曲がります"
+      },
+      {
+        "jp": "さびしい",
+        "r": "さびしい",
+        "en": "さびしい",
+        "ta": "さびしい"
+      },
+      {
+        "jp": "お湯",
+        "r": "お湯",
+        "en": "お湯",
+        "ta": "お湯"
+      },
+      {
+        "jp": "音",
+        "r": "音",
+        "en": "音",
+        "ta": "音"
+      },
+      {
+        "jp": "サイズ",
+        "r": "サイズ",
+        "en": "サイズ",
+        "ta": "サイズ"
+      },
+      {
+        "jp": "故障",
+        "r": "故障",
+        "en": "故障",
+        "ta": "故障"
+      },
+      {
+        "jp": "道",
+        "r": "道",
+        "en": "道",
+        "ta": "道"
+      },
+      {
+        "jp": "交差点",
+        "r": "交差点",
+        "en": "交差点",
+        "ta": "交差点"
+      },
+      {
+        "jp": "信号",
+        "r": "信号",
+        "en": "信号",
+        "ta": "信号"
+      },
+      {
+        "jp": "角",
+        "r": "角",
+        "en": "角",
+        "ta": "角"
+      },
+      {
+        "jp": "橋",
+        "r": "橋",
+        "en": "橋",
+        "ta": "橋"
+      },
+      {
+        "jp": "駐車場",
+        "r": "駐車場",
+        "en": "駐車場",
+        "ta": "駐車場"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 23 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 23",
+        "ta": "பாடம் 23 முதன்மை இலக்கணம்",
+        "form": "Pattern: ききます + です/ます",
+        "ex": {
+          "jp": "ききますです。",
+          "en": "Example of ききます.",
+          "ta": "ききます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 23 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 23",
+        "ta": "பாடம் 23 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: まわします + です/ます",
+        "ex": {
+          "jp": "まわしますです。",
+          "en": "Example of まわします.",
+          "ta": "まわします உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 23: What is the meaning of 'ききます' (ききます)?",
+        "options": [
+          "ききます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ききます",
+        "explain": "'ききます' means ききます (ききます)."
+      },
+      {
+        "q": "Lesson 23: Identify the main grammar structure.",
+        "options": [
+          "Lesson 23 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 23 Core Pattern 1",
+        "explain": "Lesson 23 focuses on Lesson 23 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "jp": "ひまな とき、えいがを みます",
+    "en": "When I am free, I watch movies (Conditions) (Lesson 23)",
+    "ta": "நேரம் இருக்கும்போது படம் பார்ப்பேன்",
+    "vocab": [
+      {
+        "jp": "ききます",
+        "r": "ききます",
+        "en": "ききます",
+        "ta": "ききます"
+      },
+      {
+        "jp": "まわします",
+        "r": "まわします",
+        "en": "まわします",
+        "ta": "まわします"
+      },
+      {
+        "jp": "ひきます",
+        "r": "ひきます",
+        "en": "ひきます",
+        "ta": "ひきます"
+      },
+      {
+        "jp": "かえます",
+        "r": "かえます",
+        "en": "かえます",
+        "ta": "かえます"
+      },
+      {
+        "jp": "触ります",
+        "r": "触ります",
+        "en": "触ります",
+        "ta": "触ります"
+      },
+      {
+        "jp": "出ます",
+        "r": "出ます",
+        "en": "出ます",
+        "ta": "出ます"
+      },
+      {
+        "jp": "動きます",
+        "r": "動きます",
+        "en": "動きます",
+        "ta": "動きます"
+      },
+      {
+        "jp": "歩きます",
+        "r": "歩きます",
+        "en": "歩きます",
+        "ta": "歩きます"
+      },
+      {
+        "jp": "渡ります",
+        "r": "渡ります",
+        "en": "渡ります",
+        "ta": "渡ります"
+      },
+      {
+        "jp": "曲がります",
+        "r": "曲がります",
+        "en": "曲がります",
+        "ta": "曲がります"
+      },
+      {
+        "jp": "さびしい",
+        "r": "さびしい",
+        "en": "さびしい",
+        "ta": "さびしい"
+      },
+      {
+        "jp": "お湯",
+        "r": "お湯",
+        "en": "お湯",
+        "ta": "お湯"
+      },
+      {
+        "jp": "音",
+        "r": "音",
+        "en": "音",
+        "ta": "音"
+      },
+      {
+        "jp": "サイズ",
+        "r": "サイズ",
+        "en": "サイズ",
+        "ta": "サイズ"
+      },
+      {
+        "jp": "故障",
+        "r": "故障",
+        "en": "故障",
+        "ta": "故障"
+      },
+      {
+        "jp": "道",
+        "r": "道",
+        "en": "道",
+        "ta": "道"
+      },
+      {
+        "jp": "交差点",
+        "r": "交差点",
+        "en": "交差点",
+        "ta": "交差点"
+      },
+      {
+        "jp": "信号",
+        "r": "信号",
+        "en": "信号",
+        "ta": "信号"
+      },
+      {
+        "jp": "角",
+        "r": "角",
+        "en": "角",
+        "ta": "角"
+      },
+      {
+        "jp": "橋",
+        "r": "橋",
+        "en": "橋",
+        "ta": "橋"
+      },
+      {
+        "jp": "駐車場",
+        "r": "駐車場",
+        "en": "駐車場",
+        "ta": "駐車場"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 23 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 23",
+        "ta": "பாடம் 23 முதன்மை இலக்கணம்",
+        "form": "Pattern: ききます + です/ます",
+        "ex": {
+          "jp": "ききますです。",
+          "en": "Example of ききます.",
+          "ta": "ききます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 23 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 23",
+        "ta": "பாடம் 23 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: まわします + です/ます",
+        "ex": {
+          "jp": "まわしますです。",
+          "en": "Example of まわします.",
+          "ta": "まわします உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 23: What is the meaning of 'ききます' (ききます)?",
+        "options": [
+          "ききます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "ききます",
+        "explain": "'ききます' means ききます (ききます)."
+      },
+      {
+        "q": "Lesson 23: Identify the main grammar structure.",
+        "options": [
+          "Lesson 23 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 23 Core Pattern 1",
+        "explain": "Lesson 23 focuses on Lesson 23 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "jp": "ともだちが てつだって くれました",
+    "en": "A friend helped me (Favours & Giving) (Lesson 24)",
+    "ta": "நண்பர் எனக்கு உதவினார்",
+    "vocab": [
+      {
+        "jp": "くれます",
+        "r": "くれます",
+        "en": "くれます",
+        "ta": "くれます"
+      },
+      {
+        "jp": "直します",
+        "r": "直します",
+        "en": "直します",
+        "ta": "直します"
+      },
+      {
+        "jp": "連れて行きます",
+        "r": "連れて行きます",
+        "en": "連れて行きます",
+        "ta": "連れて行きます"
+      },
+      {
+        "jp": "連れて来ます",
+        "r": "連れて来ます",
+        "en": "連れて来ます",
+        "ta": "連れて来ます"
+      },
+      {
+        "jp": "送ります",
+        "r": "送ります",
+        "en": "送ります",
+        "ta": "送ります"
+      },
+      {
+        "jp": "紹介します",
+        "r": "紹介します",
+        "en": "紹介します",
+        "ta": "紹介します"
+      },
+      {
+        "jp": "案内します",
+        "r": "案内します",
+        "en": "案内します",
+        "ta": "案内します"
+      },
+      {
+        "jp": "説明します",
+        "r": "説明します",
+        "en": "説明します",
+        "ta": "説明します"
+      },
+      {
+        "jp": "おじいさん",
+        "r": "おじいさん",
+        "en": "おじいさん",
+        "ta": "おじいさん"
+      },
+      {
+        "jp": "おばあさん",
+        "r": "おばあさん",
+        "en": "おばあさん",
+        "ta": "おばあさん"
+      },
+      {
+        "jp": "準備",
+        "r": "準備",
+        "en": "準備",
+        "ta": "準備"
+      },
+      {
+        "jp": "引っ越し",
+        "r": "引っ越し",
+        "en": "引っ越し",
+        "ta": "引っ越し"
+      },
+      {
+        "jp": "お菓子",
+        "r": "お菓子",
+        "en": "お菓子",
+        "ta": "お菓子"
+      },
+      {
+        "jp": "ホームステイ",
+        "r": "ホームステイ",
+        "en": "ホームステイ",
+        "ta": "ホームステイ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 24 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 24",
+        "ta": "பாடம் 24 முதன்மை இலக்கணம்",
+        "form": "Pattern: くれます + です/ます",
+        "ex": {
+          "jp": "くれますです。",
+          "en": "Example of くれます.",
+          "ta": "くれます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 24 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 24",
+        "ta": "பாடம் 24 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 直します + です/ます",
+        "ex": {
+          "jp": "直しますです。",
+          "en": "Example of 直します.",
+          "ta": "直します உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 24: What is the meaning of 'くれます' (くれます)?",
+        "options": [
+          "くれます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "くれます",
+        "explain": "'くれます' means くれます (くれます)."
+      },
+      {
+        "q": "Lesson 24: Identify the main grammar structure.",
+        "options": [
+          "Lesson 24 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 24 Core Pattern 1",
+        "explain": "Lesson 24 focuses on Lesson 24 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "jp": "ともだちが てつだって くれました",
+    "en": "A friend helped me (Favours & Giving) (Lesson 24)",
+    "ta": "நண்பர் எனக்கு உதவினார்",
+    "vocab": [
+      {
+        "jp": "くれます",
+        "r": "くれます",
+        "en": "くれます",
+        "ta": "くれます"
+      },
+      {
+        "jp": "直します",
+        "r": "直します",
+        "en": "直します",
+        "ta": "直します"
+      },
+      {
+        "jp": "連れて行きます",
+        "r": "連れて行きます",
+        "en": "連れて行きます",
+        "ta": "連れて行きます"
+      },
+      {
+        "jp": "連れて来ます",
+        "r": "連れて来ます",
+        "en": "連れて来ます",
+        "ta": "連れて来ます"
+      },
+      {
+        "jp": "送ります",
+        "r": "送ります",
+        "en": "送ります",
+        "ta": "送ります"
+      },
+      {
+        "jp": "紹介します",
+        "r": "紹介します",
+        "en": "紹介します",
+        "ta": "紹介します"
+      },
+      {
+        "jp": "案内します",
+        "r": "案内します",
+        "en": "案内します",
+        "ta": "案内します"
+      },
+      {
+        "jp": "説明します",
+        "r": "説明します",
+        "en": "説明します",
+        "ta": "説明します"
+      },
+      {
+        "jp": "おじいさん",
+        "r": "おじいさん",
+        "en": "おじいさん",
+        "ta": "おじいさん"
+      },
+      {
+        "jp": "おばあさん",
+        "r": "おばあさん",
+        "en": "おばあさん",
+        "ta": "おばあさん"
+      },
+      {
+        "jp": "準備",
+        "r": "準備",
+        "en": "準備",
+        "ta": "準備"
+      },
+      {
+        "jp": "引っ越し",
+        "r": "引っ越し",
+        "en": "引っ越し",
+        "ta": "引っ越し"
+      },
+      {
+        "jp": "お菓子",
+        "r": "お菓子",
+        "en": "お菓子",
+        "ta": "お菓子"
+      },
+      {
+        "jp": "ホームステイ",
+        "r": "ホームステイ",
+        "en": "ホームステイ",
+        "ta": "ホームステイ"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 24 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 24",
+        "ta": "பாடம் 24 முதன்மை இலக்கணம்",
+        "form": "Pattern: くれます + です/ます",
+        "ex": {
+          "jp": "くれますです。",
+          "en": "Example of くれます.",
+          "ta": "くれます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 24 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 24",
+        "ta": "பாடம் 24 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 直します + です/ます",
+        "ex": {
+          "jp": "直しますです。",
+          "en": "Example of 直します.",
+          "ta": "直します உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 24: What is the meaning of 'くれます' (くれます)?",
+        "options": [
+          "くれます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "くれます",
+        "explain": "'くれます' means くれます (くれます)."
+      },
+      {
+        "q": "Lesson 24: Identify the main grammar structure.",
+        "options": [
+          "Lesson 24 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 24 Core Pattern 1",
+        "explain": "Lesson 24 focuses on Lesson 24 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "jp": "じかんが あったら、いきます",
+    "en": "If I have time, I will go (たら Conditionals) (Lesson 25)",
+    "ta": "நேரமிருந்தால் போவேன்",
+    "vocab": [
+      {
+        "jp": "考えます",
+        "r": "考えます",
+        "en": "考えます",
+        "ta": "考えます"
+      },
+      {
+        "jp": "着きます",
+        "r": "着きます",
+        "en": "着きます",
+        "ta": "着きます"
+      },
+      {
+        "jp": "取ります",
+        "r": "取ります",
+        "en": "取ります",
+        "ta": "取ります"
+      },
+      {
+        "jp": "足ります",
+        "r": "足ります",
+        "en": "足ります",
+        "ta": "足ります"
+      },
+      {
+        "jp": "田舎",
+        "r": "田舎",
+        "en": "田舎",
+        "ta": "田舎"
+      },
+      {
+        "jp": "チャンス",
+        "r": "チャンス",
+        "en": "チャンス",
+        "ta": "チャンス"
+      },
+      {
+        "jp": "億",
+        "r": "億",
+        "en": "億",
+        "ta": "億"
+      },
+      {
+        "jp": "もし",
+        "r": "もし",
+        "en": "もし",
+        "ta": "もし"
+      },
+      {
+        "jp": "いくら",
+        "r": "いくら",
+        "en": "いくら",
+        "ta": "いくら"
+      },
+      {
+        "jp": "転勤",
+        "r": "転勤",
+        "en": "転勤",
+        "ta": "転勤"
+      },
+      {
+        "jp": "こと",
+        "r": "こと",
+        "en": "こと",
+        "ta": "こと"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 25 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 25",
+        "ta": "பாடம் 25 முதன்மை இலக்கணம்",
+        "form": "Pattern: 考えます + です/ます",
+        "ex": {
+          "jp": "考えますです。",
+          "en": "Example of 考えます.",
+          "ta": "考えます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 25 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 25",
+        "ta": "பாடம் 25 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 着きます + です/ます",
+        "ex": {
+          "jp": "着きますです。",
+          "en": "Example of 着きます.",
+          "ta": "着きます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 25: What is the meaning of '考えます' (考えます)?",
+        "options": [
+          "考えます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "考えます",
+        "explain": "'考えます' means 考えます (考えます)."
+      },
+      {
+        "q": "Lesson 25: Identify the main grammar structure.",
+        "options": [
+          "Lesson 25 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 25 Core Pattern 1",
+        "explain": "Lesson 25 focuses on Lesson 25 Core Pattern 1."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "jp": "じかんが あったら、いきます",
+    "en": "If I have time, I will go (たら Conditionals) (Lesson 25)",
+    "ta": "நேரமிருந்தால் போவேன்",
+    "vocab": [
+      {
+        "jp": "考えます",
+        "r": "考えます",
+        "en": "考えます",
+        "ta": "考えます"
+      },
+      {
+        "jp": "着きます",
+        "r": "着きます",
+        "en": "着きます",
+        "ta": "着きます"
+      },
+      {
+        "jp": "取ります",
+        "r": "取ります",
+        "en": "取ります",
+        "ta": "取ります"
+      },
+      {
+        "jp": "足ります",
+        "r": "足ります",
+        "en": "足ります",
+        "ta": "足ります"
+      },
+      {
+        "jp": "田舎",
+        "r": "田舎",
+        "en": "田舎",
+        "ta": "田舎"
+      },
+      {
+        "jp": "チャンス",
+        "r": "チャンス",
+        "en": "チャンス",
+        "ta": "チャンス"
+      },
+      {
+        "jp": "億",
+        "r": "億",
+        "en": "億",
+        "ta": "億"
+      },
+      {
+        "jp": "もし",
+        "r": "もし",
+        "en": "もし",
+        "ta": "もし"
+      },
+      {
+        "jp": "いくら",
+        "r": "いくら",
+        "en": "いくら",
+        "ta": "いくら"
+      },
+      {
+        "jp": "転勤",
+        "r": "転勤",
+        "en": "転勤",
+        "ta": "転勤"
+      },
+      {
+        "jp": "こと",
+        "r": "こと",
+        "en": "こと",
+        "ta": "こと"
+      }
+    ],
+    "grammar": [
+      {
+        "t": "Lesson 25 Core Pattern 1",
+        "en": "Primary grammatical pattern for Lesson 25",
+        "ta": "பாடம் 25 முதன்மை இலக்கணம்",
+        "form": "Pattern: 考えます + です/ます",
+        "ex": {
+          "jp": "考えますです。",
+          "en": "Example of 考えます.",
+          "ta": "考えます உதாரணம்."
+        }
+      },
+      {
+        "t": "Lesson 25 Core Pattern 2",
+        "en": "Secondary grammatical pattern for Lesson 25",
+        "ta": "பாடம் 25 இரண்டாம் இலக்கணம்",
+        "form": "Pattern: 着きます + です/ます",
+        "ex": {
+          "jp": "着きますです。",
+          "en": "Example of 着きます.",
+          "ta": "着きます உதாரணம்."
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Lesson 25: What is the meaning of '考えます' (考えます)?",
+        "options": [
+          "考えます",
+          "Water",
+          "Book",
+          "School"
+        ],
+        "answer": "考えます",
+        "explain": "'考えます' means 考えます (考えます)."
+      },
+      {
+        "q": "Lesson 25: Identify the main grammar structure.",
+        "options": [
+          "Lesson 25 Core Pattern 1",
+          "～です",
+          "～ます",
+          "～でした"
+        ],
+        "answer": "Lesson 25 Core Pattern 1",
+        "explain": "Lesson 25 focuses on Lesson 25 Core Pattern 1."
+      }
+    ]
+  }
 ];
 
 // Auto-generate 3 quiz questions per lesson from its own vocab + grammar (deterministic, original)
