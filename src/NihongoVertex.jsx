@@ -810,8 +810,6 @@ function LessonList({lessons, progress, goTo}){
 
 
 function LevelLessonHub({level, goTo}){
-  const syllabus = LEVEL_SYLLABUS[level];
-  
   // Filter lessons belonging to the selected level
   const levelLessons = BEGINNER_II_LESSONS.filter(lesson => {
     if (level === "N4") return lesson.id >= 26 && lesson.id <= 50;
