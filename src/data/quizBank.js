@@ -1,4 +1,6 @@
-export const quizBank = {
+import { JLPT_CURRICULUM } from "./curriculum.js";
+
+const staticQuizBank = {
   N5: [
     {
       id: "n5_q1",
@@ -17,28 +19,28 @@ export const quizBank = {
     {
       id: "n5_q3",
       type: "vocab",
-      question: "What is the meaning of 'ほん' (hon)?",
-      options: ["Water", "Desk", "Teacher", "Book"],
-      answer: "Book",
+      question: "What is the meaning of 'ほん' (hon)? / 'ほん' என்பதன் பொருள் என்ன?",
+      options: ["Water / தண்ணீர்", "Desk / மேசை", "Teacher / ஆசிரியர்", "Book / புத்தகம்"],
+      answer: "Book / புத்தகம்",
     },
     {
       id: "n5_q4",
       type: "vocab",
-      question: "Which Japanese word means 'umbrella'?",
+      question: "Which Japanese word means 'umbrella' (குடை)?",
       options: ["かさ (kasa)", "つくえ (tsukue)", "ほん (hon)", "せんせい (sensei)"],
       answer: "かさ (kasa)",
     },
     {
       id: "n5_q5",
       type: "grammar",
-      question: "Complete the sentence: 'これは ほん ______。' (This is a book.)",
+      question: "Complete the sentence: 'これは ほん ______。' (This is a book / இது ஒரு புத்தகம்.)",
       options: ["です", "か", "は", "に"],
       answer: "です",
     },
     {
       id: "n5_q6",
       type: "grammar",
-      question: "Which particle indicates ownership/possession? (e.g. 'My umbrella')",
+      question: "Which particle indicates possession? (e.g. 'My umbrella' / உடைமை குறியீடு)",
       options: ["は (wa)", "を (o)", "の (no)", "が (ga)"],
       answer: "の (no)",
     },
@@ -66,7 +68,7 @@ export const quizBank = {
     {
       id: "n5_q10",
       type: "grammar",
-      question: "Complete the sentence: 'がっこう ______ いきます。' (I go to school.)",
+      question: "Complete the sentence: 'がっこう ______ いきます。' (I go to school / பள்ளிக்குச் செல்கிறேன்.)",
       options: ["を (o)", "へ (e)", "が (ga)", "は (wa)"],
       answer: "へ (e)",
     }
@@ -89,7 +91,7 @@ export const quizBank = {
     {
       id: "n4_q3",
       type: "grammar",
-      question: "Complete the conditional form: 'あめが ______ たら、いきません。' (If it rains, I won't go.)",
+      question: "Complete the conditional form: 'あめが ______ たら、いきません。' (If it rains...)",
       options: ["ふり", "ふる", "ふっ", "ふら"],
       answer: "ふっ",
     },
@@ -157,3 +159,29 @@ export const quizBank = {
     }
   ]
 };
+
+// Helper function to generate dynamic questions from Minna No Nihongo curriculum modules (Lessons 1-25 and above)
+export function getLevelQuizBank(level = "N5") {
+  const staticSet = staticQuizBank[level] || staticQuizBank.N5;
+  const levelCurriculum = JLPT_CURRICULUM[level];
+  if (!levelCurriculum || !levelCurriculum.modules) return staticSet;
+
+  const dynamicQuestions = [];
+  levelCurriculum.modules.forEach((mod, idx) => {
+    if (mod.grammar && mod.grammar.length > 0) {
+      const mainGrammar = mod.grammar[0];
+      dynamicQuestions.push({
+        id: `dyn_${level}_g_${idx}`,
+        type: "grammar",
+        question: `Lesson ${idx+1} [${mod.title} / ${mod.ta}]: Identify the main pattern for "${mainGrammar}"`,
+        options: [mainGrammar, "～てから", "～たら", "～ば"],
+        answer: mainGrammar
+      });
+    }
+  });
+
+  return [...staticSet, ...dynamicQuestions];
+}
+
+export const quizBank = staticQuizBank;
+
