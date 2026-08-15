@@ -28,6 +28,9 @@ const n5 = [
 [10,"Existence & Position","猫がいます","இருப்பு மற்றும் இடநிலை",["あります・います","Nは場所にあります","Nがいます","position words"],["furniture","animals","locations"],"Describe where living and non-living things exist."],
 [11,"Numbers, Counters & Quantity","いくつありますか","எண்கள் மற்றும் அளவுகள்",["counters","quantity + あります","duration","frequency"],["items","people","time spans"],"Count common objects and describe quantities and duration."],
 [12,"Past & Comparison","昨日はどうでしたか","கடந்த காலம் மற்றும் ஒப்பீடு",["past です","past adjectives","より","一番"],["experiences","weather","preferences"],"Describe past states and make simple comparisons."],
+].map((x)=>makeModule(`N5-M${x[0]}`,"N5",x[1],x[2],x[3],x[4],x[5],x[6],x[0]));
+
+const n4 = [
 [13,"Wants & Purpose","何がほしいですか","விருப்பம் மற்றும் நோக்கம்",["Nがほしいです","Vます-stem + たいです","Nをください","purpose に行きます"],["shopping","plans","needs"],"Express wants, desires and purposes for going somewhere."],
 [14,"Te-form Foundations","手伝ってください","て-form அடிப்படை",["て-form","～てください","～ています","～てもいいですか"],["requests","ongoing actions","classroom actions"],"Form and use the て-form for requests and ongoing actions."],
 [15,"Permission & Prohibition","ここで写真を撮ってもいいですか","அனுமதி மற்றும் தடை",["～てもいいです","～てはいけません","～ています"],["rules","public places","activities"],"Ask for permission and state rules or prohibitions."],
@@ -41,9 +44,7 @@ const n5 = [
 [23,"When & Conditions","暇なとき、映画を見ます","நேரம் மற்றும் நிபந்தனை",["とき","と","～前に","～あとで"],["events","timing","instructions"],"Explain when actions happen and connect conditions with と."],
 [24,"Giving Help & Receiving Actions","手伝ってくれました","உதவி மற்றும் செயல் பெறுதல்",["Vてあげます","Vてもらいます","Vてくれます"],["help","favours","relationships"],"Describe helpful actions and who benefits from them."],
 [25,"Conditional たら & Review","時間があったら行きます","たら நிபந்தனை மற்றும் மீளாய்வு",["～たら","～ても","もし","subordinate clauses"],["plans","conditions","review"],"Express conditions, concessions and combine N5 grammar in conversation."]
-].map((x)=>makeModule(`N5-M${x[0]}`,"N5",x[1],x[2],x[3],x[4],x[5],x[6],x[0]));
-
-const n4 = [
+,
 [26,"Explanations & Background","どうしたんですか","விளக்கம் மற்றும் பின்னணி",["～んです","～んですが","どうしたんですか","どうして"],["problems","reasons","requests"],"Explain situations and ask for contextual information politely."],
 [27,"Potential & Capability","日本語が話せます","சாத்தியம் மற்றும் திறன்",["potential form","見えます・聞こえます","できます"],["abilities","facilities","skills"],"Express ability, possibility and what can be seen or heard."],
 [28,"Parallel Actions & Examples","音楽を聞きながら勉強します","ஒரே நேர செயல்கள் மற்றும் உதாரணங்கள்",["ながら","たり～たり","し～し"],["study","leisure","reasons"],"Connect simultaneous actions and list representative examples."],
@@ -56,19 +57,6 @@ const n4 = [
 [35,"Ba-condition & If","安ければ買います","ば நிபந்தனை",["～ば","～なら","～なければ"],["choices","conditions","shopping"],"Use ば and related conditional patterns for decisions."],
 [36,"ように Purpose & Change","忘れないようにします","ように நோக்கம்",["～ように","～ようになります","～ようにします"],["habits","goals","changes"],"Describe goals, habits and gradual changes in ability or state."],
 [37,"Passive Voice","先生にほめられました","passive voice",["passive form","indirect passive","by-agent に"],["school","work","incidents"],"Describe events from the affected person's perspective."],
-[38,"Nominalization","日本語を勉強するのは楽しいです","வினை பெயராக்கம்",["Vのは","Vのが","Vのを"],["activities","preferences","skills"],"Turn actions into noun-like ideas for evaluation and focus."],
-[39,"Causes & Results","雨なので出かけません","காரணம் மற்றும் விளைவு",["ので","のに","それで","だから"],["causes","results","complaints"],"Explain causes, results and unexpected contrast."],
-[40,"Reported Information","田中さんは来ると言っていました","மறைமுக தகவல்",["と言っていました","そうです (hearsay)","～によると"],["news","messages","plans"],"Report what others said or what you heard."],
-[41,"Giving & Receiving in Relationships","手伝っていただきました","மரியாதையான கொடுத்தல்/பெறுதல்",["～ていただく","～てくださる","～てやる"],["favours","workplace","family"],"Express favours and benefits with appropriate viewpoint and politeness."],
-[42,"Purpose & Benefit","健康のために運動します","நோக்கம் மற்றும் பயன்",["～ために","～のに","必要です"],["health","study","goals"],"State purposes, needs and useful means."],
-[43,"Appearance & Change","雪が降りそうです","தோற்றம் மற்றும் மாற்றம்",["～そうです (appearance)","～ようです","～みたいです"],["weather","appearance","impressions"],"Describe apparent conditions and impressions."],
-[44,"Causative Introduction","子どもに野菜を食べさせます","செய்ய வைப்பது",["causative","～させる","～させてください"],["school","work","family"],"Express making or allowing someone to do something."],
-[45,"Formal Requests & Conditions","資料を見せていただけませんか","மரியாதையான கோரிக்கைகள்",["～ていただけませんか","～ばいいですか","～たらどうですか"],["service","work","advice"],"Make polite requests and ask for recommendations."],
-[46,"Advanced Time & Completion","会議が終わったところです","முடிவு மற்றும் நேர நிலை",["ところです","～ばかりです","～はずです"],["work","events","expectations"],"Express timing, recent completion and reasonable expectation."],
-[47,"Hearsay & Evidence","天気予報によると","தகவல் ஆதாரம்",["そうです (hearsay)","ようです","～によると"],["reports","weather","media"],"Separate direct observation, inference and reported information."],
-[48,"Causative-Passive & Responsibility","忙しくさせられました","காரண-பாசிவ்",["causative-passive","～させられる","responsibility"],["work","school","obligation"],"Understand being made to do something and describe burdens."],
-[49,"Respectful Speech","社長がお見えになります","மரியாதை மொழி",["honorific verbs","お～になります","special honorifics"],["workplace","customers","formal meetings"],"Use common honorific patterns in service and workplace contexts."],
-[50,"Polite Speech & Elementary Review","お元気でいらっしゃいますか","மரியாதை மற்றும் N4 மீளாய்வு",["humble patterns","polite requests","review of N4 forms"],["formal communication","appointments","review"],"Consolidate Minna Elementary II patterns and prepare for N4-style testing."]
 ].map((x)=>makeModule(`N4-M${x[0]}`,"N4",x[1],x[2],x[3],x[4],x[5],x[6],x[0]));
 
 const advanced = {
@@ -143,8 +131,8 @@ N1:[
 const makeAdvanced = (level) => advanced[level].map((x)=>makeModule(`${level}-M${x[0]}`,level,x[1],x[2],`${level} · ${x[1]}`,x[3],x[4],`Build ${level} competence through original notes, drills and exam-style practice.`));
 
 export const JLPT_CURRICULUM = {
-  N5: { title:"JLPT N5", source:"Minna no Nihongo Shokyu I alignment", modules:n5, exam:{sections:["Vocabulary/Grammar","Reading","Listening"], quizPolicy:"Original questions aligned to lesson objectives."}},
-  N4: { title:"JLPT N4", source:"Minna no Nihongo Shokyu II alignment", modules:n4, exam:{sections:["Language Knowledge","Reading","Listening"], quizPolicy:"Original questions aligned to lesson objectives."}},
+  N5: { title:"JLPT N5", source:"Minna no Nihongo Book 1-1 alignment (Lessons 1–12)", modules:n5, exam:{sections:["Vocabulary/Grammar","Reading","Listening"], quizPolicy:"Original questions aligned to lesson objectives."}},
+  N4: { title:"JLPT N4", source:"Minna no Nihongo Book 1-2 alignment (Lessons 13–25)", modules:n4, exam:{sections:["Language Knowledge","Reading","Listening"], quizPolicy:"Original questions aligned to lesson objectives."}},
   N3: { title:"JLPT N3", source:"NihongoVertex advanced bridge using N4 foundations + JLPT skill domains", modules:makeAdvanced("N3"), exam:{sections:["Language Knowledge","Reading","Listening"], quizPolicy:"Original N3-style practice."}},
   N2: { title:"JLPT N2", source:"NihongoVertex advanced curriculum using N3 foundations + JLPT skill domains", modules:makeAdvanced("N2"), exam:{sections:["Language Knowledge + Reading","Listening"], quizPolicy:"Original N2-style practice."}},
   N1: { title:"JLPT N1", source:"NihongoVertex advanced curriculum using N2 foundations + JLPT skill domains", modules:makeAdvanced("N1"), exam:{sections:["Language Knowledge + Reading","Listening"], quizPolicy:"Original N1-style practice."}}

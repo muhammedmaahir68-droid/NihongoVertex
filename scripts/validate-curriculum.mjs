@@ -1,5 +1,5 @@
 import { JLPT_CURRICULUM } from '../src/data/curriculum.js';
-const expected={N5:25,N4:25,N3:20,N2:20,N1:20};
+const expected={N5:12,N4:25,N3:20,N2:20,N1:20};
 let ok=true;
 console.log('==================================================');
 console.log('NIHONGOVERTEX CURRICULUM VALIDATION');

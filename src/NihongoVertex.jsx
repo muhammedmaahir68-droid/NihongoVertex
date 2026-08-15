@@ -6211,12 +6211,24 @@ function LevelDetail({level, otherLevels, goTo}){
 }
 
 // ---------------- Lesson List ----------------
-function LessonList({lessons, progress, goTo}){
+function LessonList({lessons, progress, goTo, level = "N5"}){
+  const filteredLessons = level === "N5" 
+    ? lessons.filter(l => l.id <= 12)
+    : level === "N4" 
+      ? lessons.filter(l => l.id >= 13 && l.id <= 25)
+      : lessons;
+
+  const headerSubtitle = level === "N5" 
+    ? "N5 Lessons (Minna no Nihongo Book 1-1: Lessons 1–12)" 
+    : level === "N4" 
+      ? "N4 Lessons (Minna no Nihongo Book 1-2: Lessons 13–25)" 
+      : `${level} Lessons`;
+
   return (
     <div className="space-y-4 pb-24 md:pb-6">
-      <h2 className="text-2xl font-bold text-stone-900">学習 <span className="text-stone-400 text-base font-normal">N5 Lessons (based on Minna no Nihongo 1–25)</span></h2>
+      <h2 className="text-2xl font-bold text-stone-900">学習 <span className="text-stone-400 text-base font-normal">{headerSubtitle}</span></h2>
       <div className="grid sm:grid-cols-2 gap-3">
-        {lessons.map(l=>{
+        {filteredLessons.map(l=>{
           const done = progress.completedLessons[l.id];
           return (
             <button key={l.id} onClick={()=>goTo("lesson", l.id)} className="text-left">
@@ -7510,7 +7522,7 @@ export default function NihongoVertex(){
 
         <main className="flex-1 p-4 md:p-8 pt-20 lg:pt-8 max-w-5xl mx-auto w-full">
           {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel} onChangeExam={changeExam}/>}
-          {screen==="lessons" && (activeLevel==="N5" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/> : <ExamModuleList level={activeLevel} goTo={goTo}/>)}
+          {screen==="lessons" && (activeLevel==="N5" || activeLevel==="N4" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo} level={activeLevel}/> : <ExamModuleList level={activeLevel} goTo={goTo}/>)}
           {screen==="characters" && <CharacterLab onGainXP={addXP}/>}
           {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
           {screen==="moduleLesson" && <ModuleLesson module={currentModule} goTo={goTo}/>}
