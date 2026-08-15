@@ -1,9 +1,4 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import Syllabus from "./components/Syllabus";
-import KanaExplorer from "./components/KanaExplorer";
-import KanjiDictionary from "./components/KanjiDictionary";
-import QuizEngine from "./components/QuizEngine";
-import { OBJECT_FIRST_SCENES } from "./data/objectFirstScenes";
 import { BookOpen, Home as HomeIcon, Layers, PenTool, Headphones, ListChecks, ClipboardCheck, AlertCircle, TrendingUp, Settings, Menu, X, Flame, Star, ChevronRight, ChevronLeft, Flag, Clock, CheckCircle2, XCircle, Play, Pause, RotateCcw, Award, Lock, Volume2, PenLine, Search, Sparkles, Bot, MessageCircle, CalendarCheck, Target, Briefcase, Send, Trophy, Bell, UserRound, Check, Zap } from "lucide-react";
 
 // ===== Data (N5: sourced from user-uploaded Minna no Nihongo I translation/grammar notes; N4-N1: sample from public JLPT references) =====
@@ -422,76 +417,6 @@ LESSONS.forEach(l => { l.quiz = buildQuiz(l); });
 
 
 // ---- N4 / N3 / N2 / N1 sample architecture (external reference sources, expandable) ----
-// Original N4/N3/N2/N1 preparation materials. Tamil (TA) and English (EN) glosses are original.
-const BEGINNER_II_LESSONS = [
-  {id:26,pattern:"～んですが",ex:"週末、いっしょに 図書館へ 行きませんか。",en:"I would like to invite you to the library this weekend.",ta:"இந்த வார இறுதியில் நூலகத்திற்கு வர விரும்புகிறீர்களா?",q:"Which phrase makes an invitation softer?",options:["～んですが","～ません","～ないで"],answer:"～んですが"},
-  {id:27,pattern:"可能形",ex:"妹は 自転車に 乗れます。",en:"My younger sister can ride a bicycle.",ta:"என் தங்கை மிதிவண்டி ஓட்ட முடியும்.",q:"What does 乗れます express?",options:["ability","prohibition","past experience"],answer:"ability"},
-  {id:28,pattern:"～ながら",ex:"音楽を 聞きながら 日本語を 勉強します。",en:"I study Japanese while listening to music.",ta:"இசை கேட்கும்போது ஜப்பானியம் படிக்கிறேன்.",q:"What happens with ～ながら?",options:["two actions happen together","an action is forbidden","an action is completed"],answer:"two actions happen together"},
-  {id:29,pattern:"自動詞・他動詞",ex:"窓が 開きました。田中さんが 窓を 開けました。",en:"The window opened. Mr Tanaka opened the window.",ta:"ஜன்னல் திறந்தது. தனகா சான் ஜன்னலைத் திறந்தார்.",q:"Which sentence has a person intentionally doing the action?",options:["田中さんが 窓を 開けました。","窓が 開きました。","Both are passive."],answer:"田中さんが 窓を 開けました。"},
-  {id:30,pattern:"～てあります",ex:"会議の資料は 机の上に 置いてあります。",en:"The meeting papers have been placed on the desk.",ta:"கூட்டக் காகிதங்கள் மேசையின் மேல் வைக்கப்பட்டுள்ளன.",q:"What does ～てあります emphasize?",options:["a prepared resulting state","a future plan","a comparison"],answer:"a prepared resulting state"},
-  {id:31,pattern:"意向形",ex:"来月、日本語の試験を 受けようと 思っています。",en:"I am thinking of taking a Japanese test next month.",ta:"அடுத்த மாதம் ஜப்பானியத் தேர்வு எழுத நினைக்கிறேன்.",q:"～ようと 思っています shows…",options:["an intention","a command","a past result"],answer:"an intention"},
-  {id:32,pattern:"～たほうがいい",ex:"疲れているなら、今夜は 早く 寝たほうが いいです。",en:"If you are tired, you should sleep early tonight.",ta:"சோர்வாக இருந்தால் இன்று சீக்கிரம் தூங்குவது நல்லது.",q:"This pattern is used for…",options:["advice","a noun description","counting objects"],answer:"advice"},
-  {id:33,pattern:"命令・禁止",ex:"危ないですから、この線を 越えるな。",en:"It is dangerous, so do not cross this line.",ta:"ஆபத்தானது; இந்த கோட்டைக் கடக்காதே.",q:"Where should you be especially careful with command forms?",options:["notices and urgent instructions","casual self-introductions","dates"],answer:"notices and urgent instructions"},
-  {id:34,pattern:"～と 言っていました",ex:"先生は 来週 小テストが あると 言っていました。",en:"The teacher said that there will be a quiz next week.",ta:"அடுத்த வாரம் சிறு தேர்வு இருக்கும் என்று ஆசிரியர் கூறினார்.",q:"What does と introduce here?",options:["a quotation","a destination","a tool"],answer:"a quotation"},
-  {id:35,pattern:"～ば",ex:"時間が あれば、この記事を 読んでください。",en:"If you have time, please read this article.",ta:"நேரம் இருந்தால் இந்தக் கட்டுரையைப் படியுங்கள்.",q:"～ば is a form for…",options:["a condition","a request only","a completed action"],answer:"a condition"},
-  {id:36,pattern:"～ために",ex:"健康のために、毎朝 30分 歩いています。",en:"For my health, I walk for 30 minutes every morning.",ta:"உடல்நலத்திற்காக தினமும் காலை 30 நிமிடம் நடக்கிறேன்.",q:"～ために gives…",options:["purpose or benefit","a quoted opinion","a prohibition"],answer:"purpose or benefit"},
-  {id:37,pattern:"受身形",ex:"私は 雨に 降られて、かばんが ぬれました。",en:"I got caught in the rain, and my bag became wet.",ta:"மழையில் சிக்கி என் பை நனைந்தது.",q:"Passive forms can describe…",options:["an experience received by someone","only future plans","only quantities"],answer:"an experience received by someone"},
-  {id:38,pattern:"～のは／のが",ex:"毎日 漢字を 書くのは 大切です。",en:"Writing kanji every day is important.",ta:"தினமும் காஞ்சி எழுதுவது முக்கியம்.",q:"What does の do in this sentence?",options:["turns an action into a topic","marks a location","makes a command"],answer:"turns an action into a topic"},
-  {id:39,pattern:"使役形",ex:"先生は 学生に もう一度 文を 読ませました。",en:"The teacher made the student read the sentence once more.",ta:"ஆசிரியர் மாணவரை வாக்கியத்தை மீண்டும் படிக்கச் செய்தார்.",q:"Causative form expresses…",options:["making or letting someone act","a comparison","a simple past action"],answer:"making or letting someone act"},
-  {id:40,pattern:"～か どうか",ex:"電車が 遅れるかどうか、アプリで 調べます。",en:"I will check in the app whether the train will be late.",ta:"ரயில் தாமதமாகுமா என்று செயலியில் பார்க்கிறேன்.",q:"～かどうか means…",options:["whether or not","because","until"],answer:"whether or not"},
-  {id:41,pattern:"～ていただけますか",ex:"この申込書を 見ていただけますか。",en:"Could you please look at this application form?",ta:"இந்த விண்ணப்பப் படிவத்தைப் பார்த்துத் தர முடியுமா?",q:"This expression is a polite…",options:["request","prohibition","counter"],answer:"request"},
-  {id:42,pattern:"～に 行く",ex:"週末、友だちと 映画を 見に 行きます。",en:"I am going with a friend to watch a movie this weekend.",ta:"வார இறுதியில் நண்பருடன் திரைப்படம் பார்க்கப் போகிறேன்.",q:"The に indicates…",options:["the purpose of movement","a comparison","a completed state"],answer:"the purpose of movement"},
-  {id:43,pattern:"～そうです",ex:"このスープは 辛そうですが、おいしそうです。",en:"This soup looks spicy, but it also looks delicious.",ta:"இந்த சூப் காரமாகத் தெரிகிறது, ஆனால் சுவையாகவும் தெரிகிறது.",q:"～そうです here is based on…",options:["appearance","a direct quotation","a command"],answer:"appearance"},
-  {id:44,pattern:"～すぎる",ex:"この部屋は 少し 暑すぎます。",en:"This room is a little too hot.",ta:"இந்த அறை கொஞ்சம் அதிகமாக சூடாக உள்ளது.",q:"～すぎる means…",options:["too much / excessively","not enough","only once"],answer:"too much / excessively"},
-  {id:45,pattern:"～場合は",ex:"分からない場合は、先生に 質問してください。",en:"If you do not understand, please ask the teacher.",ta:"புரியாத நிலையில் ஆசிரியரிடம் கேளுங்கள்.",q:"場合 is useful in…",options:["formal conditional guidance","food ordering only","past-tense stories only"],answer:"formal conditional guidance"},
-  {id:46,pattern:"～ところです",ex:"今から 宿題を 始めるところです。",en:"I am just about to start my homework.",ta:"இப்போது தான் வீட்டுப்பாடம் தொடங்கப் போகிறேன்.",q:"～ところです can show…",options:["a stage of an action","a comparison","a counter"],answer:"a stage of an action"},
-  {id:47,pattern:"尊敬語",ex:"部長は ただ今 会議室に いらっしゃいます。",en:"The department manager is currently in the meeting room.",ta:"துறை மேலாளர் இப்போது கூட்ட அறையில் இருக்கிறார்.",q:"Honorific Japanese raises the status of…",options:["the other person or subject","yourself only","an object count"],answer:"the other person or subject"},
-  {id:48,pattern:"謙譲語",ex:"私が 駅まで ご案内します。",en:"I will guide you to the station.",ta:"நான் உங்களை நிலையத்திற்கு வழிகாட்டுகிறேன்.",q:"Humble Japanese lowers the speaker to…",options:["show respect to the listener","give an order","describe weather"],answer:"show respect to the listener"},
-  {id:49,pattern:"お～します",ex:"こちらで お名前を 確認します。",en:"I will confirm your name here.",ta:"இங்கே உங்கள் பெயரை உறுதிப்படுத்துகிறேன்.",q:"This is commonly used in…",options:["polite service communication","informal slang","children's games"],answer:"polite service communication"},
-  {id:50,pattern:"総合復習",ex:"予定を 説明してから、相手の 質問に 丁寧に 答えましょう。",en:"After explaining the plan, let us answer the other person's questions politely.",ta:"திட்டத்தை விளக்கிய பின் மற்றவரின் கேள்விகளுக்கு மரியாதையாக பதிலளிப்போம்.",q:"The final lesson asks you to…",options:["combine grammar in practical communication","memorize one isolated word","avoid listening practice"],answer:"combine grammar in practical communication"},
-
-  // ================= JLPT N3 Lessons (51-65) =================
-  {id:51,pattern:"～ようになる",ex:"毎日練習すれば、日本語が話せるようになります。",en:"If you practice every day, you will become able to speak Japanese.",ta:"தினமும் பயிற்சி செய்தால், உங்களால் ஜப்பானியம் பேச முடியும்.",q:"What does 〜ようになる indicate?",options:["a gradual change in ability","an immediate command","a past regret"],answer:"a gradual change in ability"},
-  {id:52,pattern:"～まま",ex:"靴を履いたまま、部屋に入らないでください。",en:"Please do not enter the room with your shoes still on.",ta:"காலணிகளை அணிந்தவாறே அறைக்குள் நுழைய வேண்டாம்.",q:"What state does 〜まま describe?",options:["leaving a state unchanged","completing an action","prohibiting a movement"],answer:"leaving a state unchanged"},
-  {id:53,pattern:"～ばかり",ex:"彼は毎日ゲームをしてばかりいます。",en:"He does nothing but play games every day.",ta:"அவன் தினமும் விளையாட்டு விளையாடிக் கொண்டே இருக்கிறான்.",q:"What does 〜ばかり express?",options:["only / nothing but","a recommendation","a possibility"],answer:"only / nothing but"},
-  {id:54,pattern:"～代わりに",ex:"山田先生の代わりに、新しい先生が来ました。",en:"Instead of Teacher Yamada, a new teacher came.",ta:"ஆசிரியர் யமதாவுக்குப் பதிலாக, புதிய ஆசிரியர் வந்தார்.",q:"What does 〜代わりに mean?",options:["instead of / in place of","because of","in addition to"],answer:"instead of / in place of"},
-  {id:55,pattern:"～はずだ",ex:"彼は昨日たくさん勉強したから、今日の試験は合格するはずです。",en:"Since he studied a lot yesterday, he should pass today's exam.",ta:"நேற்று அவன் நிறைய படித்ததால், இன்றைய தேர்வில் தேர்ச்சி பெற வேண்டும்.",q:"What does 〜はずです express?",options:["a strong expectation / probability","an advice","a command"],answer:"a strong expectation / probability"},
-  {id:56,pattern:"～うちに",ex:"若いうちに、いろいろな国へ行ってみたいです。",en:"While I am young, I want to visit various countries.",ta:"இளமையாக இருக்கும்போதே, பல்வேறு நாடுகளுக்குச் செல்ல விரும்புகிறேன்.",q:"What is the function of 〜うちに?",options:["while in a certain state","after completing everything","because of a reason"],answer:"while in a certain state"},
-  {id:57,pattern:"～わけではない",ex:"日本人がみんなアニメが好きなわけではありません。",en:"It doesn't mean that all Japanese people like anime.",ta:"ஜப்பானியர்கள் அனைவரும் அனிமேவை விரும்புவதாக அர்த்தமல்ல.",q:"What does 〜わけではない express?",options:["partial negation / not necessarily","absolute negation","strong assertion"],answer:"partial negation / not necessarily"},
-  {id:58,pattern:"～さえ",ex:"ひらがなさえ書ければ、この授業を受けられます。",en:"If you can at least write hiragana, you can take this class.",ta:"ஹிரகானா மட்டும் எழுத முடிந்தால், நீங்கள் இந்த வகுப்பில் சேரலாம்.",q:"What does 〜さえ highlight?",options:["the minimum requirement / even","a past action","a future promise"],answer:"the minimum requirement / even"},
-  {id:59,pattern:"～たとたん",ex:"家に帰ったとたん、雨が降り出しました。",en:"As soon as I got home, it started to rain.",ta:"வீட்டிற்கு வந்தவுடன் மழை பெய்யத் தொடங்கியது.",q:"When does the second action happen in 〜たとたん?",options:["immediately after the first","before the first","much later"],answer:"immediately after the first"},
-  {id:60,pattern:"～たびに",ex:"この写真を見るたびに、故郷を思い出します。",en:"Every time I look at this picture, I remember my hometown.",ta:"இந்த புகைப்படத்தை பார்க்கும் போதெல்லாம், என் சொந்த ஊர் நினைவுக்கு வருகிறது.",q:"What does 〜たびに mean?",options:["whenever / every time","rarely","never"],answer:"whenever / every time"},
-  {id:61,pattern:"～最中に",ex:"スピーチの最中に、停電が起こりました。",en:"In the middle of the speech, a power outage occurred.",ta:"பேச்சின் நடுவில் மின்தடை ஏற்பட்டது.",q:"What does 〜最中に indicate?",options:["in the middle of an action","at the end of an action","before starting"],answer:"in the middle of an action"},
-  {id:62,pattern:"～を中心に",ex:"この大学は留学生を中心にして、国際交流を行っています。",en:"This university conducts international exchanges, centering around foreign students.",ta:"இந்த பல்கலைக்கழகம் வெளிநாட்டு மாணவர்களை மையமாகக் கொண்டு சர்வதேச பரிமாற்றங்களை நடத்துகிறது.",q:"What does 〜を中心に mean?",options:["centered around","excluding","instead of"],answer:"centered around"},
-  {id:63,pattern:"～わけにはいかない",ex:"明日は大切な試験があるので、休むわけにはいきません。",en:"Since there is an important exam tomorrow, I cannot afford to take a day off.",ta:"நாளை முக்கியமான தேர்வு இருப்பதால், என்னால் விடுப்பு எடுக்க முடியாது.",q:"What does 〜わけにはいかない indicate?",options:["cannot do due to social/moral reasons","cannot do due to physical ability","forbidden by law"],answer:"cannot do due to social/moral reasons"},
-  {id:64,pattern:"～に関して",ex:"新しい計画に関して、意見を聞かせてください。",en:"Please let me hear your opinion regarding the new plan.",ta:"புதிய திட்டம் குறித்து உங்கள் கருத்தைக் கூறுங்கள்.",q:"What does 〜に関して mean?",options:["regarding / about","contrary to","in addition to"],answer:"regarding / about"},
-  {id:65,pattern:"～に対して",ex:"昨日とは対照的に、今日は風に対してとても寒いです。",en:"In contrast to yesterday, it is very cold against the wind today.",ta:"நேற்றுடன் ஒப்பிடுகையில், இன்று காற்றுக்கு எதிராக மிகவும் குளிரาก இருக்கிறது.",q:"What does 〜に対して indicate?",options:["towards / in contrast to","because of","after doing"],answer:"towards / in contrast to"},
-
-  // ================= JLPT N2 Lessons (66-75) =================
-  {id:66,pattern:"～にもかかわらず",ex:"雨が激しく降っているにもかかわらず、多くの人が集まりました。",en:"Despite the heavy rain, many people gathered.",ta:"கடும் மழை பெய்தபோதிலும், ஏராளமானோர் திரண்டனர்.",q:"What does 〜にもかかわらず mean?",options:["despite / regardless of","because of","only when"],answer:"despite / regardless of"},
-  {id:67,pattern:"～ものの",ex:"日本に来たものの、日本語がなかなか上手になりません。",en:"Although I came to Japan, my Japanese is not improving easily.",ta:"ஜப்பான் வந்தபோதிலும், எனது ஜப்பானிய மொழி எளிதில் மேம்படவில்லை.",q:"What is the nuance of 〜ものの?",options:["although / even though","because / since","in order to"],answer:"although / even though"},
-  {id:68,pattern:"～つつ",ex:"体に悪いと知りつつ、タバコがやめられません。",en:"While knowing it is bad for the body, I cannot quit smoking.",ta:"உடலுக்கு கெடுதல் என்று தெரிந்தும் என்னால் புகையிலை பழக்கத்தை கைவிட முடியவில்லை.",q:"What does 〜つつ mean in this context?",options:["while / although","because","after"],answer:"while / although"},
-  {id:69,pattern:"～からといって",ex:"日本に住んでいるからといって、日本語が話せるとは限りません。",en:"Just because you live in Japan doesn't mean you can speak Japanese.",ta:"நீங்கள் ஜப்பானில் வசிப்பதால் ஜப்பானிய மொழி பேச முடியும் என்று அர்த்தமல்ல.",q:"What does 〜からといって indicate?",options:["just because","unless","only after"],answer:"just because"},
-  {id:70,pattern:"～ぬきで",ex:"冗談ぬきで、真剣に私たちの将来について考えましょう。",en:"Jokes aside, let's think seriously about our future.",ta:"விளையாட்டைத் தவிர்த்து, நமது எதிர்காலத்தைப் பற்றி தீவிரமாக யோசிப்போம்.",q:"What does 〜ぬきで mean?",options:["without / leaving out","including","because of"],answer:"without / leaving out"},
-  {id:71,pattern:"～に相違ない",ex:"これだけの証拠がある以上、彼が犯人に相違ない。",en:"As long as there is this much evidence, he must be the culprit.",ta:"இந்த அளவிற்கு ஆதாரம் இருக்கும் வரை அவன்தான் குற்றவாளியாக இருக்க வேண்டும்.",q:"What does 〜に相違ない mean?",options:["without doubt / must be","impossible to be","might be"],answer:"without doubt / must be"},
-  {id:72,pattern:"～得る／得ない",ex:"それは十分に起こり得る事態です。",en:"That is a situation that could fully happen.",ta:"அது முற்றிலும் நடக்கக்கூடிய ஒரு சூழ்நிலை தான்.",q:"What does 〜得る (eru/uru) express?",options:["capability / possibility","prohibition","obligation"],answer:"capability / possibility"},
-  {id:73,pattern:"～おそれがある",ex:"この台風は上陸するおそれがあります。",en:"There is a danger that this typhoon will make landfall.",ta:"இந்த சூறாவளி கரையை கடக்க கூடும் என்ற அபாயம் உள்ளது.",q:"What does 〜おそれがある mean?",options:["danger / risk of","hope of","guarantee of"],answer:"danger / risk of"},
-  {id:74,pattern:"～を契機に",ex:"病気を契機にして、タバコをやめました。",en:"Taking my illness as an opportunity, I quit smoking.",ta:"எனது நோயை ஒரு வாய்ப்பாகக் கொண்டு, நான் புகைப்பிடிப்பதை நிறுத்தியுள்ளேன்.",q:"What does 〜を契機に mean?",options:["as a turning point / opportunity","regardless of","before doing"],answer:"as a turning point / opportunity"},
-  {id:75,pattern:"～のもとで",ex:"厳しい指導のもとで、練習に励んでいます。",en:"Under strict guidance, we are working hard on our practice.",ta:"கடுமையான வழிகாட்டுதலின் கீழ், நாங்கள் எங்கள் பயிற்சியில் கடினமாக உழைத்து வருகிறோம்.",q:"What does 〜のもとで mean?",options:["under / guided by","above","instead of"],answer:"under / guided by"},
-
-  // ================= JLPT N1 Lessons (76-85) =================
-  {id:76,pattern:"～ではあるまいし",ex:"子供ではあるまいし、泣くのはやめなさい。",en:"It's not as if you are a child, stop crying.",ta:"நீ ஒன்றும் குழந்தை இல்லை, அழுவதை நிறுத்து.",q:"What does 〜ではあるまいし mean?",options:["it's not as if / you are not","because you are","if you were"],answer:"it's not as if / you are not"},
-  {id:77,pattern:"～べからず",ex:"ここにゴミを捨てるべからず。",en:"Do not throw trash here. (formal prohibition)",ta:"இங்கு குப்பை கொட்டக் கூடாது.",q:"Where do you typically see 〜べからず?",options:["public notices and signs","casual texts","polite customer service"],answer:"public notices and signs"},
-  {id:78,pattern:"～ごとき",ex:"私ごとき未熟者に、このような大役は務まりません。",en:"An inexperienced person like me cannot handle such a big role.",ta:"என்னை போன்ற அனுபவமில்லாத ஒருவரால் இவ்வளவு பெரிய பொறுப்பை ஏற்க முடியாது.",q:"What is the nuance of 〜ごとき?",options:["like / as if (often humble/deprecating)","exactly the same","superior to"],answer:"like / as if (often humble/deprecating)"},
-  {id:79,pattern:"～にかたくない",ex:"彼の落胆ぶりは、察するにかたくない。",en:"It is not difficult to imagine his disappointment.",ta:"அவரது ஏமாற்றத்தை கற்பனை செய்வது கடினம் அல்ல.",q:"What does 〜にかたくない mean?",options:["not difficult to (do)","impossible to do","unnecessary to do"],answer:"not difficult to (do)"},
-  {id:80,pattern:"～極まりない",ex:"失礼極まりない態度に、腹が立ちました。",en:"I was angry at his extremely rude attitude.",ta:"அவரது மிகுந்த முரட்டுத்தனமான அணுகுமுறையால் நான் கோபமடைந்தேன்.",q:"What does 〜極まりない mean?",options:["extremely / limitlessly","not very","neutral"],answer:"extremely / limitlessly"},
-  {id:81,pattern:"～を限りに",ex:"今日を限りに、この店は閉店します。",en:"Closing today, this shop will be closed forever.",ta:"இன்றோடு இந்த கடை நிரந்தரமாக மூடப்படும்.",q:"What does 〜を限りに mean?",options:["starting from / as the last","sometimes","never"],answer:"starting from / as the last"},
-  {id:82,pattern:"～ともなると",ex:"社長ともなると、責任が非常に重くなります。",en:"Once you become president, the responsibility becomes extremely heavy.",ta:"தலைவரானவுடன் பொறுப்பு மிகவும் கனமாகிவிடுகிறது.",q:"What does 〜ともなると indicate?",options:["once a certain level is reached","if it is cheap","before starting"],answer:"once a certain level is reached"},
-  {id:83,pattern:"～ずにはすまない",ex:"これだけ迷惑をかけたのだから、謝らずにはすまない。",en:"Since I caused this much trouble, I cannot help but apologize.",ta:"இந்த அளவிற்கு தொல்லை கொடுத்ததால் நான் மன்னிப்பு கேட்காமல் இருக்க முடியாது.",q:"What does 〜ずにはすまない express?",options:["must do / cannot help but do","don't need to do","should not do"],answer:"must do / cannot help but do"},
-  {id:84,pattern:"～すら",ex:"自分の名前すら書けないほど、彼は疲れていました。",en:"He was so tired that he couldn't even write his own name.",ta:"அவன் தன் பெயரை கூட எழுத முடியாத அளவிற்கு சோர்வாக இருந்தான்.",q:"What does 〜すら mean?",options:["even","except","only"],answer:"even"},
-  {id:85,pattern:"～をおいてほかにない",ex:"この仕事を任せられるのは、あなたをおいてほかにいない。",en:"There is no one else but you who can be entrusted with this job.",ta:"உன்னைத் தவிர வேறு யாருக்கும் இந்த வேலையை ஒப்படைக்க முடியாது.",q:"What does 〜をおいてほかにない express?",options:["no other than / uniquely qualified","not including","anyone is fine"],answer:"no other than / uniquely qualified"}
-];
-
 const OTHER_LEVELS = {
  N4: {
   desc:"Elementary+. Builds on N5 with te-form applications, conditionals, potential form, giving/receiving verbs.",
@@ -620,22 +545,22 @@ function Card({children, className=""}){
 }
 
 // ---------------- Home / Dashboard ----------------
-function Home({progress, lessons, goTo, activeLevel="N5", onChangeGoal}){
+function Home({progress, lessons, goTo}){
   const completedCount = Object.keys(progress.completedLessons).length;
   const totalLessons = lessons.length;
   const pct = Math.round((completedCount/totalLessons)*100);
   const nextLesson = lessons.find(l => !progress.completedLessons[l.id]) || lessons[0];
 
-  return (<>
-    <div className="home-dashboard space-y-6 pb-24 md:pb-6">
-      <button type="button" onClick={onChangeGoal} className="inline-flex items-center gap-2 rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm font-semibold text-sky-800 shadow-sm hover:bg-sky-50"><ChevronLeft size={17}/> Back</button>
-      <div className="home-hero relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
+  return (
+      <AITutor level={"N5"} module="Dashboard" compact={true}/>
+    <div className="space-y-6 pb-24 md:pb-6">
+      <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
         <div className="absolute -right-10 -top-10 w-52 h-52 rounded-full bg-red-700/20 blur-2xl"/>
         <div className="absolute right-6 top-6 w-3 h-3 rounded-full bg-red-600"/>
         <p className="text-red-400 text-xs tracking-[0.3em] uppercase mb-3">Nihongo Vertex</p>
         <h1 className="text-3xl md:text-5xl font-bold mb-2" lang="ja">日本語を、試験に強い力へ。</h1>
         <p className="text-stone-300 max-w-xl mb-1">Master Japanese from your first hiragana to JLPT N1 — studied through தமிழ் · English · 日本語.</p>
-        <button onClick={()=>activeLevel==="N5"?goTo("lessons"):goTo("levelDetail",activeLevel)} className="mt-6 inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
+        <button onClick={()=>goTo("lessons")} className="mt-6 inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
           Continue Learning <ChevronRight size={18}/>
         </button>
       </div>
@@ -643,7 +568,7 @@ function Home({progress, lessons, goTo, activeLevel="N5", onChangeGoal}){
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1">Current Level</div>
-          <div className="text-2xl font-bold text-stone-900">{activeLevel}</div>
+          <div className="text-2xl font-bold text-stone-900">N5</div>
         </Card>
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1 flex items-center gap-1"><Flame size={14} className="text-red-600"/> Streak</div>
@@ -654,14 +579,14 @@ function Home({progress, lessons, goTo, activeLevel="N5", onChangeGoal}){
           <div className="text-2xl font-bold text-stone-900">{progress.xp}</div>
         </Card>
         <Card className="p-5">
-          <div className="text-stone-500 text-xs mb-1">{activeLevel} Progress</div>
+          <div className="text-stone-500 text-xs mb-1">N5 Progress</div>
           <div className="text-2xl font-bold text-stone-900">{pct}%</div>
         </Card>
       </div>
 
       <Card className="p-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-stone-900">{activeLevel} Lesson Progress</h3>
+          <h3 className="font-semibold text-stone-900">N5 Lesson Progress</h3>
           <span className="text-sm text-stone-500">{completedCount} / {totalLessons} lessons</span>
         </div>
         <ProgressBar pct={pct}/>
@@ -696,53 +621,39 @@ function Home({progress, lessons, goTo, activeLevel="N5", onChangeGoal}){
         </Card>
       </div>
     </div>
-  </>);
+  );
 }
 
 // ---------------- Level Selector ----------------
-function LevelSelector({progress, goTo, otherLevels, activeLevel, onSelectLevel}){
+function LevelSelector({progress, lessons, goTo, otherLevels}){
+  const completedCount = Object.keys(progress.completedLessons).length;
+  const pct = Math.round((completedCount/lessons.length)*100);
   return (
     <div className="space-y-4 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">レベル選択 <span className="text-stone-400 text-base font-normal">Level Selector</span></h2>
       <div className="grid md:grid-cols-2 gap-4">
         {LEVELS.map(lv=>{
-          const isActive = lv === activeLevel;
+          const active = lv === "N5";
           const labels = {N5:"Beginner · ஆரம்பநிலை", N4:"Elementary · தொடக்கநிலை", N3:"Intermediate · இடைநிலை", N2:"Upper Intermediate · மேல்நிலை", N1:"Advanced · மேம்பட்ட நிலை"};
-          
-          let levelLessons = [];
-          if (lv === "N5") {
-            levelLessons = Array.from({length: 25}, (_, i) => ({id: i + 1}));
-          } else if (lv === "N4") {
-            levelLessons = BEGINNER_II_LESSONS.filter(l => l.id >= 26 && l.id <= 50);
-          } else if (lv === "N3") {
-            levelLessons = BEGINNER_II_LESSONS.filter(l => l.id >= 51 && l.id <= 65);
-          } else if (lv === "N2") {
-            levelLessons = BEGINNER_II_LESSONS.filter(l => l.id >= 66 && l.id <= 75);
-          } else if (lv === "N1") {
-            levelLessons = BEGINNER_II_LESSONS.filter(l => l.id >= 76 && l.id <= 85);
-          }
-          
-          const completedCount = levelLessons.filter(l => progress.completedLessons[l.id]).length;
-          const totalLessons = levelLessons.length;
-          const pct = totalLessons > 0 ? Math.round((completedCount/totalLessons)*100) : 0;
-
           return (
-            <Card key={lv} className={`p-6 ${isActive ? "border-red-400 bg-red-50/20" : ""}`}>
+            <Card key={lv} className={`p-6 ${!active && "opacity-80"}`}>
               <div className="flex items-center justify-between mb-2">
                 <div className="text-2xl font-bold text-stone-900">{lv}</div>
-                {isActive && <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-100 text-red-800">Current Goal</span>}
+                {!active && <Lock size={16} className="text-stone-400"/>}
               </div>
               <div className="text-sm text-stone-500 mb-4">{labels[lv]}</div>
-              <ProgressBar pct={pct}/>
-              <div className="text-xs text-stone-500 mt-2 mb-4">{pct}% complete · {completedCount}/{totalLessons} lessons</div>
-              <div className="flex gap-2">
-                <button onClick={()=>onSelectLevel(lv)} className={`flex-1 rounded-xl py-2.5 font-medium text-sm ${isActive ? "bg-red-700 text-white" : "bg-stone-900 text-white hover:bg-stone-800"}`}>
-                  {isActive ? "Study Now" : "Set as Target"}
-                </button>
-                <button onClick={()=>goTo("levelDetail", lv)} className="border border-stone-300 text-stone-700 rounded-xl px-3 py-2.5 font-medium text-sm hover:bg-stone-50">
-                  Syllabus
-                </button>
-              </div>
+              {active ? (
+                <>
+                  <ProgressBar pct={pct}/>
+                  <div className="text-xs text-stone-500 mt-2 mb-4">{pct}% complete · {completedCount}/{lessons.length} lessons</div>
+                  <button onClick={()=>goTo("lessons")} className="w-full bg-stone-900 text-white rounded-xl py-2.5 font-medium">Study N5</button>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs text-stone-500 mb-4">{otherLevels[lv].desc}</p>
+                  <button onClick={()=>goTo("levelDetail", lv)} className="w-full border border-stone-300 text-stone-700 rounded-xl py-2.5 font-medium">Preview sample grammar</button>
+                </>
+              )}
             </Card>
           );
         })}
@@ -754,25 +665,23 @@ function LevelSelector({progress, goTo, otherLevels, activeLevel, onSelectLevel}
 function LevelDetail({level, otherLevels, goTo}){
   const data = otherLevels[level];
   return (
+      <AITutor level={level} module="Grammar" compact={false}/>
     <div className="space-y-4 pb-24 md:pb-6">
       <button onClick={()=>goTo("levels")} className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-800"><ChevronLeft size={16}/> Back to levels</button>
-      <h2 className="text-2xl font-bold text-stone-900">{level} <span className="text-stone-400 text-base font-normal">Syllabus Overview</span></h2>
-      <Card className="p-5">
-        <h3 className="font-semibold text-stone-800 mb-2">Course Description</h3>
-        <p className="text-stone-600 text-sm leading-relaxed">{data.desc}</p>
+      <h2 className="text-2xl font-bold text-stone-900">{level} <span className="text-stone-400 text-base font-normal">Sample syllabus (external reference)</span></h2>
+      <Card className="p-5 bg-amber-50 border-amber-200 text-amber-800 text-sm">
+        This {level} content is a sample set curated from public JLPT study references, not from your uploaded Minna no Nihongo notes. Full {level} lesson tracks (like N5) can be expanded next.
       </Card>
-      
-      <h3 className="font-semibold text-stone-800 mt-6 mb-2">Featured Grammar Patterns</h3>
+      <p className="text-stone-600">{data.desc}</p>
       <div className="space-y-3">
         {data.sampleGrammar.map((g,i)=>(
           <Card key={i} className="p-5">
-            <JapaneseReading jp={g.t} className="mb-1 text-lg font-bold" />
-            <div className="text-sm text-stone-600 mb-2">{g.en}</div>
-            <div className="text-xs text-stone-400 mb-2 font-mono bg-stone-50 p-1.5 rounded inline-block">Formation: {g.form}</div>
-            <div className="bg-stone-50 rounded-xl p-4 border border-stone-100">
-              <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Example Sentence</div>
-              <JapaneseReading jp={g.ex.jp} className="mb-1 text-base font-medium" />
-              <div className="text-sm text-stone-600">{g.ex.en}</div>
+            <JapaneseReading jp={g.t} className="mb-1" />
+            <div className="text-sm text-stone-500 mb-2">{g.en}</div>
+            <div className="text-xs text-stone-400 mb-2">Formation: {g.form}</div>
+            <div className="bg-stone-50 rounded-lg p-3">
+              <JapaneseReading jp={g.ex.jp} className="mb-1" />
+              <div className="text-sm text-stone-500">{g.ex.en}</div>
             </div>
           </Card>
         ))}
@@ -783,8 +692,8 @@ function LevelDetail({level, otherLevels, goTo}){
 
 // ---------------- Lesson List ----------------
 function LessonList({lessons, progress, goTo}){
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module="Vocabulary" compact={true}/>
     <div className="space-y-4 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">学習 <span className="text-stone-400 text-base font-normal">N5 Lessons (based on Minna no Nihongo 1–25)</span></h2>
       <div className="grid sm:grid-cols-2 gap-3">
@@ -804,106 +713,10 @@ function LessonList({lessons, progress, goTo}){
         })}
       </div>
     </div>
-  </>);
-}
-
-
-
-function LevelLessonHub({level, goTo}){
-  // Filter lessons belonging to the selected level
-  const levelLessons = BEGINNER_II_LESSONS.filter(lesson => {
-    if (level === "N4") return lesson.id >= 26 && lesson.id <= 50;
-    if (level === "N3") return lesson.id >= 51 && lesson.id <= 65;
-    if (level === "N2") return lesson.id >= 66 && lesson.id <= 75;
-    if (level === "N1") return lesson.id >= 76 && lesson.id <= 85;
-    return false;
-  });
-
-  return <div className="space-y-5 pb-24 md:pb-6">
-    <div><div className="text-xs uppercase tracking-[.2em] text-sky-700">Selected exam</div><h2 className="text-2xl font-bold text-stone-900 mt-1">{level} learning path</h2><p className="text-stone-600 mt-1">This is your {level}-specific syllabus, vocabulary focus, kanji focus, and skill plan.</p></div>
-    <LevelSyllabus level={level} goTo={goTo}/>
-    <Card className="p-5">
-      <div className="font-bold text-stone-900">{level} original study lessons</div>
-      <p className="text-sm text-stone-600 mt-1">Open any lesson to study an original explanation, listen, answer practice, and write a sentence.</p>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">
-        {levelLessons.map(lesson => (
-          <button key={lesson.id} onClick={()=>goTo("minnaII",lesson.id)} className="rounded-xl border border-stone-200 p-3 text-left hover:border-sky-400 hover:bg-sky-50">
-            <div className="font-semibold text-stone-800">Lesson {lesson.id}</div>
-            <div className="text-xs text-stone-500 mt-1" lang="ja">{lesson.pattern}</div>
-          </button>
-        ))}
-      </div>
-    </Card>
-  </div>;
-}
-
-function BeginnerIILesson({lesson, goTo}){
-  const [selected,setSelected] = useState(null);
-  const [writing,setWriting] = useState("");
-  if(!lesson) return <div className="text-stone-600">This study lesson could not be found.</div>;
-  const correct = selected === lesson.answer;
-  return <div className="space-y-5 pb-24 md:pb-6">
-    <button onClick={()=>goTo("lessons")} className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-800"><ChevronLeft size={16}/> All lessons</button>
-    <div className="rounded-3xl bg-gradient-to-br from-sky-900 to-indigo-800 text-white p-6 md:p-8">
-      <div className="text-xs uppercase tracking-[.2em] text-sky-200">JLPT Lesson Course · Original preparation</div>
-      <h2 className="text-3xl font-bold mt-2">Lesson {lesson.id}</h2>
-      <div className="text-xl mt-4" lang="ja">{lesson.pattern}</div>
-      <p className="text-sky-100 mt-2">Study the meaning, listen, practise, and write your own response.</p>
-    </div>
-    <Card className="p-5">
-      <div className="text-xs uppercase tracking-widest font-semibold text-sky-700">Original example</div>
-      <JapaneseReading jp={lesson.ex} className="mt-3"/>
-      <p className="text-stone-700 mt-3">{lesson.en}</p>
-      <p className="text-red-700/70 text-sm mt-1" lang="ta">{lesson.ta}</p>
-      <button onClick={()=>speakJapanese(lesson.ex)} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-stone-900 px-4 py-2.5 text-white"><Volume2 size={16}/> Listen and repeat</button>
-    </Card>
-    <Card className="p-5">
-      <div className="font-semibold text-stone-900">Quick practice</div>
-      <p className="text-sm text-stone-600 mt-1">{lesson.q}</p>
-      <div className="grid sm:grid-cols-3 gap-2 mt-4">
-        {lesson.options.map(option => <button key={option} onClick={()=>setSelected(option)} className={`rounded-xl border px-3 py-3 text-left text-sm ${selected === option ? (option === lesson.answer ? "border-green-500 bg-green-50 text-green-800" : "border-red-400 bg-red-50 text-red-800") : "border-stone-200 hover:border-sky-400"}`}>{option}</button>)}
-      </div>
-      {selected && <div className={`mt-4 rounded-xl p-3 text-sm ${correct ? "bg-green-50 text-green-800" : "bg-amber-50 text-amber-900"}`}>{correct ? "Correct — excellent work." : `Try again. Review ${lesson.pattern} and choose the best answer.`}</div>}
-    </Card>
-    <Card className="p-5">
-      <div className="font-semibold text-stone-900">Write your own sentence</div>
-      <p className="text-sm text-stone-600 mt-1">Use <b lang="ja">{lesson.pattern}</b> to make one original Japanese sentence. Your draft stays in this lesson while you practise.</p>
-      <textarea value={writing} onChange={event=>setWriting(event.target.value)} rows={4} placeholder="日本語で文を書いてください…" className="mt-4 w-full rounded-xl border border-stone-200 p-3 outline-none focus:border-sky-500" lang="ja"/>
-      <div className="mt-2 text-xs text-stone-500">{writing.trim() ? `${Array.from(writing.trim()).length} characters written` : "Start with a short sentence."}</div>
-    </Card>
-  </div>;
-}
-
-function LevelOnboarding({onChoose}){
-  return (
-    <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4">
-      <Card className="max-w-xl w-full p-8 md:p-12 text-center space-y-6 bg-white shadow-xl rounded-3xl border border-stone-200">
-        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto text-red-600 text-3xl">🎌</div>
-        <div>
-          <h1 className="text-3xl font-black text-stone-900 tracking-tight">NihongoVertex</h1>
-          <p className="text-stone-600 mt-2 text-base">Select your current Japanese Language Proficiency Test (JLPT) level to start your customized training curriculum.</p>
-        </div>
-        <div className="grid gap-3 text-left">
-          {[
-            {level: "N5", title: "Beginner (ஆரம்பநிலை)", desc: "Hiragana, Katakana, basic Kanji (80 words), and simple survival communication."},
-            {level: "N4", title: "Elementary (தொடக்கநிலை)", desc: "Basic conversations, basic grammar (te-form, potential, passive), and 80 kanji."},
-            {level: "N3", title: "Intermediate (இடைநிலை)", desc: "Everyday situations, complex grammar, reading comprehension passages, and 100 kanji."},
-            {level: "N2", title: "Upper-Intermediate (மேல்நிலை)", desc: "Social conversations, business Japanese, formal registers, and 100 kanji."},
-            {level: "N1", title: "Advanced (மேம்பட்ட நிலை)", desc: "Academic texts, news articles, literary vocabulary, and 100 kanji."}
-          ].map(l => (
-            <button key={l.level} onClick={()=>onChoose(l.level)} className="group flex items-start gap-4 p-4 rounded-2xl border border-stone-200 hover:border-red-400 hover:bg-red-50/10 text-left transition-all">
-              <div className="text-xl font-bold bg-stone-100 group-hover:bg-red-100 group-hover:text-red-700 px-3 py-1.5 rounded-xl text-stone-700 transition-colors">{l.level}</div>
-              <div>
-                <div className="font-semibold text-stone-800 group-hover:text-red-950 transition-colors">{l.title}</div>
-                <div className="text-xs text-stone-500 mt-0.5">{l.desc}</div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </Card>
-    </div>
   );
 }
+
+
 // ---------------- Japanese reading + Character Lab ----------------
 // Beginner-friendly romaji. The UI intentionally shows Japanese first and
 // an English-letter reading directly underneath it so a learner never has
@@ -1038,33 +851,6 @@ function WritingPad({character}){
   );
 }
 
-function ObjectFirstScene({scene}){
-  const [replay,setReplay]=useState(0);
-  if(!scene) return null;
-  const delay=(ms)=>({animationDelay:`${ms}ms`});
-  return <div className="shape-mnemonic object-first-scene" key={replay}>
-    <div className="shape-caption"><b>{scene.character} · {scene.romaji}</b> — a <b>{scene.object}</b> becomes the character</div>
-    <svg className="object-first-svg" viewBox="0 0 240 150" role="img" aria-label={`${scene.character}: ${scene.object} transforms into the character`}>
-      <g className="object-lines">
-        {scene.transformationPaths.map((path,index)=><path key={path.id} d={path.from} className="object-first-line" style={delay(index*120)}>
-          <animate attributeName="d" dur={`${scene.timing.loopMs}ms`} repeatCount="indefinite" values={`${path.from};${path.from};${path.to};${path.to}`} keyTimes="0;0.27;0.55;1"/>
-        </path>)}
-      </g>
-    </svg>
-    <div className="scene-controls"><span>object → connected lines → character</span><button type="button" onClick={()=>setReplay(value=>value+1)}>Replay</button></div>
-  </div>;
-}
-
-function ShapeMnemonic({character,romaji,meaning,mnemonic}){
-  const scene=OBJECT_FIRST_SCENES[character];
-  if(scene) return <ObjectFirstScene scene={scene}/>;
-  return <Card className="p-6">
-    <div className="font-semibold mb-3">🎯 Memory trick</div>
-    <div className="text-stone-700 font-medium mb-2">{meaning || mnemonic}</div>
-    <p className="text-sm text-stone-500">Look at the shape, say <b>{romaji}</b> three times, connect it to the object, then write it without looking.</p>
-  </Card>;
-}
-
 function CharacterLab(){
   const [script,setScript]=useState("hiragana");
   const [idx,setIdx]=useState(0);
@@ -1075,8 +861,8 @@ function CharacterLab(){
   const char=item[0], reading=item[1].split(" / ")[0], romaji=script==="kanji"?item[2]:item[1];
   const filtered=list.filter(x=>(x[0]+" "+x[1]+" "+x[2]+" "+(x[3]||"")).toLowerCase().includes(query.toLowerCase()));
   function chooseChar(c){ const i=list.findIndex(x=>x[0]===c); if(i>=0){setIdx(i); setQuery("");} }
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module="Characters" compact={false}/>
     <div className="space-y-5 pb-24 md:pb-6">
       <div>
         <div className="text-xs text-red-700 font-semibold tracking-widest uppercase">Character Lab</div>
@@ -1118,7 +904,18 @@ function CharacterLab(){
           <button onClick={()=>speakJapanese(char)} className="mt-4 inline-flex items-center gap-2 bg-stone-900 text-white px-5 py-2.5 rounded-xl"><Volume2 size={17}/> Hear pronunciation</button>
           <div className="mt-4 text-xs text-stone-400">Say it aloud: <b>{romaji}</b></div>
         </Card>
-        {mode==="practice" ? <WritingPad character={char}/> : <ShapeMnemonic character={char} romaji={romaji} meaning={item[3]} mnemonic={item[3]}/>}
+        {mode==="practice" ? <WritingPad character={char}/> : (
+          <Card className="p-6">
+            <div className="font-semibold mb-3">🎯 Memory trick</div>
+            <div className="text-5xl mb-3">{script==="kanji"?item[4]:item[2]}</div>
+            <div className="text-stone-700 font-medium mb-2">{script==="kanji"?item[3]:item[3]}</div>
+            <p className="text-sm text-stone-500">Look at the shape, say <b>{romaji}</b> three times, connect it to the object, then write it without looking.</p>
+            <div className="mt-5 p-4 rounded-xl bg-stone-50">
+              <div className="text-xs uppercase tracking-wide text-stone-400 mb-1">3-step memory loop</div>
+              <div className="text-sm">👀 See → 🔊 Say → ✍️ Write → 🔁 Repeat</div>
+            </div>
+          </Card>
+        )}
       </div>
       <Card className="p-5">
         <div className="flex items-center justify-between mb-3">
@@ -1129,7 +926,7 @@ function CharacterLab(){
         <div className="text-sm text-red-700 mt-1">{romaji}</div>
       </Card>
     </div>
-  </>);
+  );
 }
 
 
@@ -1250,8 +1047,8 @@ function ListeningPractice({items=[]}){
   const [idx,setIdx]=useState(0);
   const [show,setShow]=useState(false);
   const item=items[idx]||{};
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module="Listening" compact={false}/>
     <Card className="p-5">
       <div className="text-xs uppercase tracking-widest text-red-700 font-semibold">🎧 Listening</div>
       <div className="font-semibold mt-1 mb-4">Listen first. Do not read. Then reveal the answer.</div>
@@ -1270,7 +1067,7 @@ function ListeningPractice({items=[]}){
       </div>
       <button onClick={()=>{setIdx(i=>(i+1)%Math.max(items.length,1));setShow(false)}} className="mt-4 w-full border border-stone-200 rounded-xl py-2.5">Next listening →</button>
     </Card>
-  </>);
+  );
 }
 
 
@@ -1278,8 +1075,8 @@ function ListeningPractice({items=[]}){
 function QuickRevision({lesson, compact=false}){
   const grammar = lesson.grammar || [];
   const vocab = lesson.vocab || [];
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module="Quick Revision" compact={false}/>
     <Card className={`${compact ? "p-4" : "p-6"} bg-amber-50/60 border-amber-200`}>
       <div className="flex items-center justify-between gap-3 mb-3">
         <div>
@@ -1316,7 +1113,7 @@ function QuickRevision({lesson, compact=false}){
         </div>
       </div>
     </Card>
-  </>);
+  );
 }
 
 function LevelCompletionNotes({level="N5", lessons, progress, goTo}){
@@ -1324,8 +1121,8 @@ function LevelCompletionNotes({level="N5", lessons, progress, goTo}){
   const vocab = lessons.flatMap(l=>l.vocab || []);
   const grammar = lessons.flatMap(l=>l.grammar || []);
   const pct = Math.round((done.length/Math.max(lessons.length,1))*100);
-  return (<>
-      
+  return (
+      <AITutor level={level} module="Level Review" compact={false}/>
     <div className="space-y-5 pb-24 md:pb-6">
       <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-7 md:p-10">
         <div className="text-red-400 text-xs tracking-[0.25em] uppercase">Level Complete</div>
@@ -1389,7 +1186,7 @@ function LevelCompletionNotes({level="N5", lessons, progress, goTo}){
         <button onClick={()=>goTo("lessons")} className="border border-stone-300 rounded-xl px-5 py-2.5">Review Lessons</button>
       </div>
     </div>
-  </>);
+  );
 }
 
 function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
@@ -1412,8 +1209,8 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
     else {setFinished(true); const finalScore=score+(selected===q.answer?1:0); onComplete(lesson.id,finalScore,lesson.quiz.length);}
   }
   useEffect(()=>{setStage(0);setQuizIdx(0);setSelected(null);setScore(0);setFinished(false)},[lesson.id]);
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module={stages[stage] || "Lesson"} lesson={lesson} compact={true}/>
     <div className="space-y-5 pb-24 md:pb-6">
       <button onClick={()=>goTo("lessons")} className="flex items-center gap-1 text-sm text-stone-500"><ChevronLeft size={16}/> All lessons</button>
       <div>
@@ -1470,7 +1267,7 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
         </div>
       </Card>}
     </div>
-  </>);
+  );
 }
 
 
@@ -1503,8 +1300,8 @@ function ProgressDashboard({progress, lessons}){
   const avgScore = completedCount ? Math.round(Object.values(progress.completedLessons).reduce((a,c)=>a+(c.score/c.total),0)/completedCount*100) : 0;
   const mockBest = progress.mockAttempts.length ? Math.max(...progress.mockAttempts.map(m=>Math.round(m.score/m.total*100))) : null;
 
-  return (<>
-      
+  return (
+      <AITutor level={"N5"} module="Progress" compact={true}/>
     <div className="space-y-6 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">進捗 <span className="text-stone-400 text-base font-normal">Progress</span></h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1536,173 +1333,54 @@ function ProgressDashboard({progress, lessons}){
         </Card>
       )}
     </div>
-  </>);
+  );
 }
 
 // ---------------- Mock Exam ----------------
-function buildMockExam(allQuiz, allVocab, lessons, level = "N5"){
+function buildMockExam(allQuiz, allVocab, lessons){
+  // Vocabulary section (8 questions)
   const vocabQ = shuffleArr(allQuiz).slice(0,8).map(q=>({...q, section:"vocab"}));
+  // Grammar + Reading section (8 questions) - pull remaining quiz + 2 constructed reading Qs
   const grammarQ = shuffleArr(allQuiz.filter(q=>!vocabQ.includes(q))).slice(0,6).map(q=>({...q, section:"grammar"}));
-  
-  const readingPassagesPool = {
-    N5: [
-      {
-        passage: "わたしは まいあさ 7じに おきます。7じはんに あさごはんを たべます。それから 8じに がっこうへ いきます。がっこうは 9じから 3じまでです。",
-        passageEn: "I get up at 7 every morning. I eat breakfast at 7:30. Then I go to school at 8. School is from 9 to 3.",
-        q:"がっこうは なんじから ですか。 (What time does school start?)",
-        qta:"பள்ளி எத்தனை மணிக்கு தொடங்குகிறது?",
-        options:["7じ","7じはん","8じ","9じ"], answer:"9じ",
-        explain:"The passage states がっこうは 9じから 3じまでです (school is from 9 to 3)."
-      },
-      {
-        passage: "きのう デパートで シャツを かいました。シャツは 3,000えんでした。たかかったですが、いい シャツですから、かいました。",
-        passageEn: "Yesterday I bought a shirt at the department store. The shirt was 3,000 yen. It was expensive, but I bought it because it's a good shirt.",
-        q:"シャツは いくらでしたか。 (How much was the shirt?)",
-        qta:"சட்டையின் விலை என்ன?",
-        options:["300えん","3,000えん","30,000えん","3えん"], answer:"3,000えん",
-        explain:"シャツは 3,000えんでした = The shirt was 3,000 yen."
-      }
-    ],
-    N4: [
-      {
-        passage: "あしたは 雨が 降ったら、美術館へ 行きます。もし 晴れたら、近くの 公園で お花見を します。",
-        passageEn: "If it rains tomorrow, we will go to the art museum. If it is sunny, we will do flower viewing at a nearby park.",
-        q: "雨が 降ったら、どこへ 行きますか。 (Where will they go if it rains?)",
-        qta: "மழை பெய்தால் எங்கு போவார்கள்?",
-        options: ["美術館", "公園", "駅", "図書館"], answer: "美術館",
-        explain: "The passage states: 雨が 降ったら、美術館へ 行きます (If it rains, we will go to the art museum)."
-      },
-      {
-        passage: "私は 音楽を 聞きながら 日本語を 勉強します。そのほうが 漢字や 文法を よく 覚えられるからです。",
-        passageEn: "I study Japanese while listening to music. This is because I can memorize Kanji and grammar better that way.",
-        q: "どうして 音楽を 聞きますか。 (Why do they listen to music?)",
-        qta: "அவர் ஏன் இசை கேட்கிறார்?",
-        options: ["よく 覚えられるから", "音楽が 好きだから", "部屋が 静かだから", "友達と 話すため"], answer: "よく 覚えられるから",
-        explain: "The text says: そのほうが よく 覚えられるからです (Because I can memorize better that way)."
-      }
-    ],
-    N3: [
-      {
-        passage: "健康のために、毎日５キロ走るようになりました。最初は大変でしたが、体力がついてきて、今は楽しく走っています。",
-        passageEn: "For my health, I have become able to run 5km every day. It was tough at first, but as my stamina built up, I enjoy running now.",
-        q: "最近どうして走っていますか。 (Why are they running recently?)",
-        qta: "அவர் ஏன் சமீபத்தில் ஓடுகிறார்?",
-        options: ["健康のため", "友達に誘われたから", "大会に出るため", "走るのが好きだから"], answer: "健康のため",
-        explain: "The text explicitly starts with: 健康のために (For health)."
-      },
-      {
-        passage: "プラスチックごみを減らすために、買い物にはマイバッグを持って行くべきです。レジ袋を使ってばかりいるのは良くありません。",
-        passageEn: "To reduce plastic waste, we should bring our own shopping bag when shopping. Doing nothing but using plastic bags is not good.",
-        q: "力者が良いと考えている行動は何ですか。 (What action does the author think is good?)",
-        qta: "ஆசிரியர் எது நல்ல செயல் என்று நினைக்கிறார்?",
-        options: ["マイバッグを持って行くこと", "レジ袋をたくさんもらうこと", "買い物を控えること", "ゴミを燃やすこと"], answer: "マイバッグを持って行くこと",
-        explain: "The author recommends: マイバッグを持って行くべきです (We should bring our own bags)."
-      }
-    ],
-    N2: [
-      {
-        passage: "スマートフォンの普及によって、私たちの生活は格段に便利になった。しかし、その一方で、対面でのコミュニケーションが減少し、社会的なつながりが希薄になっているにもかかわらず、人々は画面から目を離しようとしない。",
-        passageEn: "With the spread of smartphones, our lives have become significantly more convenient. However, on the other hand, face-to-face communication is decreasing, and despite social connections weakening, people refuse to take their eyes off the screen.",
-        q: "スマートフォンの普及による問題点として述べられていることは何か。 (What is stated as a problem due to the spread of smartphones?)",
-        qta: "ஸ்மார்ட்போன் பரவலால் ஏற்படும் பிரச்சனை என்ன?",
-        options: ["対面コミュニケーションの減少", "スマホの価格高騰", "生活が不便になること", "電波状況の悪化"], answer: "対面コミュニケーションの減少",
-        explain: "The text states that face-to-face communication is decreasing: 対面でのコミュニケーションが減少."
-      },
-      {
-        passage: "地球温暖化対策は、個人の努力に依存するぬきで、国際的な厳しい枠組みのもとで進める必要がある。そうでなければ、近い将来取り返しのつかない事態になり得る。",
-        passageEn: "Global warming countermeasures need to be promoted under a strict international framework, without depending solely on individual efforts. Otherwise, it could lead to an irreversible situation in the near future.",
-        q: "著者が必要だと主張している対策は何か。 (What measure does the author claim is necessary?)",
-        qta: "ஆசிரியர் கூறும் தேவையான நடவடிக்கை என்ன?",
-        options: ["国際的な厳しい枠組みのもとでの推進", "個人の努力にのみ頼ること", "温暖化対策の中止", "新しいエネルギーの開発"], answer: "国際的な厳しい枠組みのもとでの推進",
-        explain: "The text states: 国際的な厳しい枠組みのもとで進める必要がある (Need to promote under a strict international framework)."
-      }
-    ],
-    N1: [
-      {
-        passage: "学問的な探究において、安易な妥協は極まりない害毒をもたらす。単なる多数派の意見に同調することは、思考の放棄にほかならない。真理の把握は、絶えざる試行錯誤と葛藤の先にあるのであり、それをおいてほかに道はない。",
-        passageEn: "In academic inquiry, easy compromise brings limitlessly toxic harm. Aligning simply with majority opinion is nothing but the abandonment of thought. The grasp of truth lies beyond continuous trial-and-error and conflict; there is no other way but that.",
-        q: "筆者の学問的探究に対する見解として最も適切なものはどれか。 (Which is the most appropriate view of the author on academic inquiry?)",
-        qta: "ஆசிரியரின் கல்வி ஆராய்ச்சி பற்றிய கருத்து என்ன?",
-        options: ["絶えざる試行錯誤と葛藤が必要である", "多数派の意見に従うべきである", "安易な妥協が時に必要である", "思考を放棄して従事するべきである"], answer: "絶えざる試行錯誤と葛藤が必要である",
-        explain: "The text concludes that truth is found beyond trial-and-error and conflict: 絶えざる試行錯誤と葛藤の先にある."
-      },
-      {
-        passage: "現代の表現活動において、古典的な表現や雅言は過去の遺物とみなされがちである。しかし、言葉の持つ厳かな威厳や繊細なニュアンスは、安易な口語表現すら凌駕する力を持っている。これを忘れるべからず。",
-        passageEn: "In modern expressive activities, classical expressions and elegant language tend to be regarded as relics of the past. However, the solemn dignity and delicate nuance of words possess power that surpasses even simple colloquial expressions. We must not forget this.",
-        q: "文章で最も主張されていることは何か。 (What is most strongly asserted in the text?)",
-        qta: "கட்டுரையில் கூறப்படும் முக்கிய கருத்து என்ன?",
-        options: ["言葉の持つ威厳やニュアンスの重要性", "古典表現の完全な廃止", "口語表現のみを使用すること", "外国語の積極的な導入"], answer: "言葉の持つ威厳やニュアンスの重要性",
-        explain: "The author argues that the solemn dignity and delicate nuance of words have power that surpasses simple colloquial expressions."
-      }
-    ]
-  };
-
-  const listeningPool = {
-    N5: [
-      {situation:"At a restaurant", situationJp:"レストランで", transcript:"すみません、メニューを ください。／はい、どうぞ。／わたしは カレーライスを おねがいします。",
-       q:"何を たべますか。 (What will they eat?)", qta:"அவர்கள் என்ன சாப்பிடுவார்கள்?",
-       options:["すし","カレーライス","ラーメン","うどん"], answer:"カレーライス",
-       explain:"わたしは カレーライスを おねがいします = I'd like curry rice, please."},
-      {situation:"At the station", situationJp:"えきで", transcript:"つぎの でんしゃは 何じですか。／つぎの でんしゃは 10じ15ふんです。",
-       q:"つぎの でんしゃは 何じですか。 (What time is the next train?)", qta:"அடுத்த ரயில் எத்தனை மணிக்கு?",
-       options:["10じ","10じ15ふん","10じ50ふん","11じ"], answer:"10じ15ふん",
-       explain:"つぎの でんしゃは 10じ15ふんです = The next train is at 10:15."},
-      {situation:"At home", situationJp:"いえで", transcript:"あしたは あめですから、かさを もって いって ください。",
-       q:"あした 何を もって いきますか。 (What should you bring tomorrow?)", qta:"நாளை என்ன கொண்டு செல்ல வேண்டும்?",
-       options:["ぼうし","かさ","くつ","かばん"], answer:"かさ",
-       explain:"かさを もって いって ください = Please bring an umbrella."},
-      {situation:"At school", situationJp:"がっこうで", transcript:"しゅくだいは あした じゅぎょうの まえに だして ください。",
-       q:"しゅくだいは いつ だしますか。 (When should you submit the homework?)", qta:"வீட்டுப்பாடத்தை எப்போது சமர்ப்பிக்க வேண்டும்?",
-       options:["きょう","あした じゅぎょうの まえに","あした じゅぎょうの あとで","らいしゅう"], answer:"あした じゅぎょうの まえに",
-       explain:"あした じゅぎょうの まえに だして ください = Please submit it before tomorrow's class."}
-    ],
-    N4: [
-      {situation:"At the train station", situationJp:"駅で", transcript:"次の東京行きの電車は、３番線から出ます。２番線ではありませんので、ご注意ください。",
-       q: "東京行きの電車は何番線から出ますか。 (Which platform does the Tokyo-bound train leave from?)", qta: "தோக்கியோ செல்லும் ரயில் எந்த மேடையில் இருந்து புறப்படும்?",
-       options: ["２番線", "３番線", "４番線", "１番線"], answer: "３番線",
-       explain: "The text says: 次の東京行きの電車は、３番線から出ます (leaves from platform 3)."},
-      {situation:"At the office", situationJp:"会社で", transcript:"田中さん、明日の会議は３時からになりました。２時ではありません。",
-       q: "明日の会議は何時からですか。 (What time is the meeting tomorrow?)", qta: "நாளை கூட்டம் எத்தனை மணிக்கு?",
-       options: ["２時", "３時", "４時", "５時"], answer: "３時",
-       explain: "The speaker states: 明日の会議は３時からになりました (from 3 o'clock)."}
-    ],
-    N3: [
-      {situation:"At a company", situationJp:"会社で", transcript:"明日のプレゼンの準備なんですが、資料の印刷は終わりましたか？／はい、終わりました。今はスライドの最終確認をしているところです。",
-       q: "二人は今何をしていますか。 (What are the two doing now?)", qta: "இருவரும் இப்போது என்ன செய்து கொண்டிருக்கிறார்கள்?",
-       options: ["スライドの最終確認", "資料の印刷", "会議室の片付け", "プレゼンテーションの発表"], answer: "スライドの最終確認",
-       explain: "The response says: 今はスライドの最終確認をしているところです (Currently doing final check of the slides)."},
-      {situation:"At the clinic", situationJp:"クリニックで", transcript:"この薬は食後に飲んでください。また、飲んだ後は眠くなることがありますので、運転は避けてください。",
-       q: "薬を飲んだ後に何をしてはいけませんか。 (What must you not do after taking the medicine?)", qta: "மருந்து சாப்பிட்ட பிறகு என்ன செய்யக் கூடாது?",
-       options: ["車の運転", "食事", "睡眠", "仕事"], answer: "車の運転",
-       explain: "The doctor warns: 運転は避けてください (Avoid driving)."}
-    ],
-    N2: [
-      {situation:"At a lecture hall", situationJp:"講義室で", transcript:"近年、少子高齢化が進み、労働力不足が深刻化しています。これに伴い、定年の延長や外国人労働者の受け入れ拡大が必要不可欠となっています。",
-       q: "労働力不足に伴って必要とされていることは何ですか。 (What is needed along with the labor shortage?)", qta: "தொழிலாளர் பற்றாக்குறையையொட்டி தேவைப்படும் நடவடிக்கை என்ன?",
-       options: ["定年の延長や外国人労働者の受け入れ拡大", "出生率 of 低下防止対策", "国内消費の削減", "ロボットの全面導入"], answer: "定年の延長や外国人労働者の受け入れ拡大",
-       explain: "The speaker states: 定年の延長や外国人労働者の受け入れ拡大が必要不可欠となっています."},
-      {situation:"At the news desk", situationJp:"ニュースで", transcript:"大型の台風１５号は、明日午前中に強い勢力を維持したまま上陸するおそれがあります。土砂災害や河川の氾濫に厳重に警戒してください。",
-       q: "ニュースは何について警戒を呼びかけていますか。 (What is the news calling for vigilance against?)", qta: "செய்திகளில் எதைப் பற்றி எச்சரிக்கை விடுக்கப்படுகிறது?",
-       options: ["土砂災害や河川の氾濫", "地震の発生", "気温の急激な低下", "電波障害の発生"], answer: "土砂災害や河川の氾濫",
-       explain: "The announcer calls for: 土砂災害や河川の氾濫に厳重に警戒してください."}
-    ],
-    N1: [
-      {situation:"Academic Symposium", situationJp:"シンポジウムで", transcript:"人工知能の急速な進歩は、社会に多大な恩恵をもたらす一方で、倫理的な懸念を呼び起こさずにはおきません。技術革新のスピードに法整備が追いつかない現状においては、研究者個人の高い道徳観が極めて重要となります。",
-       q: "現状において研究者に何が求められていますか。 (What is required of researchers in the current situation?)", qta: "தற்போதைய சூழ்நிலையில் ஆராய்ச்சியாளர்களிடம் இருந்து என்ன எதிர்பார்க்கப்படுகிறது?",
-       options: ["高い道徳観", "技術革新の加速", "法整備の完全な停止", "資金の確保"], answer: "高い道徳観",
-       explain: "The speaker asserts: 研究者個人の高い道徳観が極めて重要となります."},
-      {situation:"Business Briefing", situationJp:"ビジネス説明会で", transcript:"今回の組織改編を契機に、意思決定プロセスの迅速化を図り、多様化する顧客ニーズに臨機応変に対応できる体制を構築してまいります。",
-       q: "組織改編の主な目的は何ですか。 (What is the main purpose of the organizational restructuring?)", qta: "அமைப்பு மாற்றத்தின் முக்கிய நோக்கம் என்ன?",
-       options: ["迅速な意思決定と臨機応変な対応体制の構築", "人員の削減とコストカット", "新しい製品ラインナップの発表", "オフィスの移転"], answer: "迅速な意思決定と臨機応変な対応体制 of 構築",
-       explain: "The speaker states the purpose is: 意思決定プロセスの迅速化を図り、多様化する顧客ニーズに臨機応変に対応できる体制を構築してまいります."}
-    ]
-  };
-
-  const readingPassages = readingPassagesPool[level] || readingPassagesPool["N5"];
+  const readingPassages = [
+    {
+      passage: "わたしは まいあさ 7じに おきます。7じはんに あさごはんを たべます。それから 8じに がっこうへ いきます。がっこうは 9じから 3じまでです。",
+      passageEn: "I get up at 7 every morning. I eat breakfast at 7:30. Then I go to school at 8. School is from 9 to 3.",
+      q:"がっこうは なんじから ですか。 (What time does school start?)",
+      qta:"பள்ளி எத்தனை மணிக்கு தொடங்குகிறது?",
+      options:["7じ","7じはん","8じ","9じ"], answer:"9じ",
+      explain:"The passage states がっこうは 9じから 3じまでです (school is from 9 to 3)."
+    },
+    {
+      passage: "きのう デパートで シャツを かいました。シャツは 3,000えんでした。たかかったですが、いい シャツですから、かいました。",
+      passageEn: "Yesterday I bought a shirt at the department store. The shirt was 3,000 yen. It was expensive, but I bought it because it's a good shirt.",
+      q:"シャツは いくらでしたか。 (How much was the shirt?)",
+      qta:"சட்டையின் விலை என்ன?",
+      options:["300えん","3,000えん","30,000えん","3えん"], answer:"3,000えん",
+      explain:"シャツは 3,000えんでした = The shirt was 3,000 yen."
+    },
+  ];
   const readingQ = readingPassages.map((r,i)=>({q:r.q, qta:r.qta, options:r.options, answer:r.answer, explain:r.explain, passage:r.passage, passageEn:r.passageEn, section:"reading", id:"read"+i}));
 
-  const listeningPassages = listeningPool[level] || listeningPool["N5"];
-  const listeningQ = listeningPassages.map((l,i)=>({...l, section:"listening", id:"listen"+i}));
+  // Listening section (4 questions) - text-based simulation with transcript reveal
+  const listeningQ = [
+    {situation:"At a restaurant", situationJp:"レストランで", transcript:"すみません、メニューを ください。／はい、どうぞ。／わたしは カレーライスを おねがいします。",
+     q:"何を たべますか。 (What will they eat?)", qta:"அவர்கள் என்ன சாப்பிடுவார்கள்?",
+     options:["すし","カレーライス","ラーメン","うどん"], answer:"カレーライス",
+     explain:"わたしは カレーライスを おねがいします = I'd like curry rice, please."},
+    {situation:"At the station", situationJp:"えきで", transcript:"つぎの でんしゃは 何じですか。／つぎの でんしゃは 10じ15ふんです。",
+     q:"つぎの でんしゃは 何じですか。 (What time is the next train?)", qta:"அடுத்த ரயில் எத்தனை மணிக்கு?",
+     options:["10じ","10じ15ふん","10じ50ふん","11じ"], answer:"10じ15ふん",
+     explain:"つぎの でんしゃは 10じ15ふんです = The next train is at 10:15."},
+    {situation:"At home", situationJp:"いえで", transcript:"あしたは あめですから、かさを もって いって ください。",
+     q:"あした 何を もって いきますか。 (What should you bring tomorrow?)", qta:"நாளை என்ன கொண்டு செல்ல வேண்டும்?",
+     options:["ぼうし","かさ","くつ","かばん"], answer:"かさ",
+     explain:"かさを もって いって ください = Please bring an umbrella."},
+    {situation:"At school", situationJp:"がっこうで", transcript:"しゅくだいは あした じゅぎょうの まえに だして ください。",
+     q:"しゅくだいは いつ だしますか。 (When should you submit the homework?)", qta:"வீட்டுப்பாடத்தை எப்போது சமர்ப்பிக்க வேண்டும்?",
+     options:["きょう","あした じゅぎょうの まえに","あした じゅぎょうの あとで","らいしゅう"], answer:"あした じゅぎょうの まえに",
+     explain:"あした じゅぎょうの まえに だして ください = Please submit it before tomorrow's class."},
+  ].map((l,i)=>({...l, section:"listening", id:"listen"+i}));
 
   return { vocab: vocabQ, grammar: [...grammarQ, ...readingQ], listening: listeningQ };
 }
@@ -1714,12 +1392,13 @@ const MOCK_SECTIONS = [
   {key:"listening", label:"Listening", labelJp:"聴解", minutes:30},
 ];
 
-function MockExamIntro({onStart, goTo, level = "N5"}){
+function MockExamIntro({onStart, goTo}){
   return (
+      <AITutor level={"N5"} module="Mock Exam" compact={false}/>
     <div className="space-y-6 max-w-2xl pb-24 md:pb-6">
-      <h2 className="text-2xl font-bold text-stone-900">模擬試験 <span className="text-stone-400 text-base font-normal">JLPT {level} Mock Exam</span></h2>
+      <h2 className="text-2xl font-bold text-stone-900">模擬試験 <span className="text-stone-400 text-base font-normal">JLPT N5 Mock Exam</span></h2>
       <Card className="p-6">
-        <p className="text-stone-600 mb-4">This simulates the official {level} section structure and timing. Questions are original practice material inspired by JLPT formats — not real JLPT questions.</p>
+        <p className="text-stone-600 mb-4">This simulates the official N5 section structure and timing. Questions are original practice material inspired by JLPT formats — not real JLPT questions.</p>
         <div className="space-y-2 mb-6">
           {MOCK_SECTIONS.map(s=>(
             <div key={s.key} className="flex items-center justify-between text-sm border-b border-stone-100 py-2 last:border-0">
@@ -1731,7 +1410,7 @@ function MockExamIntro({onStart, goTo, level = "N5"}){
         <div className="bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-lg p-3 mb-6">
           Your final score is a <b>practice estimate</b> only and does not reproduce the official scaled JLPT score.
         </div>
-        <button onClick={onStart} className="w-full bg-red-700 hover:bg-red-600 text-white font-semibold py-3 rounded-xl">🎌 Start JLPT {level} Mock Test</button>
+        <button onClick={onStart} className="w-full bg-red-700 hover:bg-red-600 text-white font-semibold py-3 rounded-xl">🎌 Start JLPT N5 Mock Test</button>
       </Card>
     </div>
   );
@@ -1797,7 +1476,7 @@ function MockExamRunner({exam, onFinish}){
   };
 
   return (<>
-      
+      <AITutor level={"N5"} module="Mock Exam" compact={true}/>
     <div className="fixed inset-0 bg-stone-50 z-40 overflow-y-auto">
       <div className="max-w-3xl mx-auto p-4 md:p-8 pb-32">
         <div className="flex items-center justify-between mb-4">
@@ -2182,72 +1861,24 @@ export default function NihongoVertex(){
   const [param, setParam] = useState(null);
   const [mockExamData, setMockExamData] = useState(null);
   const [mockResult, setMockResult] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(()=>typeof window!=="undefined" && window.innerWidth>=768);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mistakes, setMistakes] = useState([]);
   const [activeLevel, setActiveLevel] = useState(()=>{try{return localStorage.getItem("nv-active-level")||"N5";}catch(e){return "N5";}});
-  const [hasChosenLevel, setHasChosenLevel] = useState(()=>{try{return localStorage.getItem("nv-level-chosen")==="true";}catch(e){return false;}});
   useEffect(()=>{try{localStorage.setItem("nv-active-level",activeLevel);}catch(e){}},[activeLevel]);
   const { progress, completeLesson, recordMock, loaded } = useProgress();
-  const currentBeginnerIILesson = param && BEGINNER_II_LESSONS.find(l=>l.id===param);
 
   function goTo(scr, p=null){
-    if(scr==="levelDetail"){
-      const selectedLevel = typeof p==="string" ? p : (p?.code||"N5");
-      setActiveLevel(LEVELS.includes(selectedLevel) ? selectedLevel : "N5");
-      if(selectedLevel === "N5"){ scr="lessons"; p=null; }
-    }
+    if(scr==="levelDetail"){ setActiveLevel(typeof p==="string"?p:(p?.code||"N5")); }
     setScreen(scr); setParam(p); setSidebarOpen(false);
     window.scrollTo(0,0);
-  }
-
-  function changeExamGoal(){
-    try{localStorage.removeItem("nv-level-chosen");}catch(e){}
-    setSidebarOpen(false);
-    setHasChosenLevel(false);
-    window.scrollTo(0,0);
-  }
-
-  function selectStudyLevel(level){
-    const selectedLevel = LEVELS.includes(level) ? level : "N5";
-    setActiveLevel(selectedLevel);
-    try{localStorage.setItem("nv-active-level",selectedLevel);}catch(e){}
-    goTo(selectedLevel === "N5" ? "lessons" : "levelDetail", selectedLevel);
   }
 
   function handleLessonComplete(lessonId, score, total){
     completeLesson(lessonId, score, total);
   }
 
-    function startMock(){
-    let levelQuiz = [];
-    let levelVocab = [];
-    let levelLessonsList = [];
-
-    if (activeLevel === "N5") {
-      levelQuiz = ALL_N5_QUIZ;
-      levelVocab = ALL_N5_VOCAB;
-      levelLessonsList = LESSONS;
-    } else {
-      levelLessonsList = BEGINNER_II_LESSONS.filter(l => {
-        if (activeLevel === "N4") return l.id >= 26 && l.id <= 50;
-        if (activeLevel === "N3") return l.id >= 51 && l.id <= 65;
-        if (activeLevel === "N2") return l.id >= 66 && l.id <= 75;
-        if (activeLevel === "N1") return l.id >= 76 && l.id <= 85;
-        return false;
-      });
-      // Each advanced lesson supplies its own original checkpoint question.
-      // Build the level's mock-question pool directly from those lessons.
-      levelQuiz = levelLessonsList.map(lesson => ({
-        q: lesson.q,
-        qta: "",
-        options: lesson.options,
-        answer: lesson.answer,
-        explain: lesson.en,
-      }));
-      levelVocab = levelLessonsList.map(l => ({ jp: l.pattern, en: l.en, ta: l.ta }));
-    }
-
-    setMockExamData(buildMockExam(levelQuiz, levelVocab, levelLessonsList, activeLevel));
+  function startMock(){
+    setMockExamData(buildMockExam(ALL_N5_QUIZ, ALL_N5_VOCAB, LESSONS));
     goTo("mockRun");
   }
   function finishMock(result){
@@ -2262,10 +1893,6 @@ export default function NihongoVertex(){
     return <div className="min-h-screen flex items-center justify-center text-stone-400">Loading...</div>;
   }
 
-  if(!hasChosenLevel){
-    return <LevelOnboarding onChoose={(level)=>{setActiveLevel(level);try{localStorage.setItem("nv-level-chosen","true");}catch(e){}setHasChosenLevel(true);}}/>;
-  }
-
   if(screen === "mockRun" && mockExamData){
     return <MockExamRunner exam={mockExamData} onFinish={finishMock} />;
   }
@@ -2273,24 +1900,26 @@ export default function NihongoVertex(){
   return (
     <div className="min-h-screen bg-stone-50 font-sans" style={{fontFamily:"'Noto Sans JP','Noto Sans Tamil',ui-sans-serif,system-ui"}}>
       <div className="flex">
-        {/* Desktop sidebar: compact rail by default, expandable as in the reference UI. */}
-        <aside className={`app-sidebar hidden md:flex md:flex-col shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0 ${sidebarOpen ? "sidebar-expanded" : "sidebar-collapsed"}`}>
-          <div className="sidebar-brand p-4 border-b border-stone-100">
-            <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 rounded-full bg-red-600"/><span className="sidebar-label font-bold text-stone-900 tracking-tight">Nihongo Vertex</span></div>
-            <button type="button" className="sidebar-menu-button" onClick={()=>setSidebarOpen(value=>!value)} aria-label={sidebarOpen ? "Collapse navigation" : "Expand navigation"} aria-expanded={sidebarOpen}>{sidebarOpen ? <X size={19}/> : <Menu size={19}/>}</button>
+        {/* Desktop sidebar */}
+        <aside className="hidden md:flex md:flex-col w-64 shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0">
+          <div className="p-6 border-b border-stone-100">
+            <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-600"/>
+              <span className="font-bold text-stone-900 tracking-tight">Nihongo Vertex</span>
+            </div>
           </div>
           <nav className="flex-1 p-3 space-y-1">
             {NAV.map(n=>{
               const Icon = n.icon;
-              const active = screen===n.key || (n.key==="lessons" && (screen==="lesson" || screen==="minnaII")) || (n.key==="levels" && screen==="levelDetail") || (n.key==="mock" && (screen==="mockResult"));
+              const active = screen===n.key || (n.key==="lessons" && screen==="lesson") || (n.key==="levels" && screen==="levelDetail") || (n.key==="mock" && (screen==="mockResult"));
               return (
-                <button key={n.key} title={`${n.jp} · ${n.en}`} onClick={()=>goTo(n.key)} className={`sidebar-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-red-50 text-red-700 font-medium" : "text-stone-600 hover:bg-stone-50"}`}>
-                  <Icon size={18}/><span className="sidebar-label" lang="ja">{n.jp}</span><span className="sidebar-label text-stone-400 text-xs">{n.en}</span>
+                <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-red-50 text-red-700 font-medium" : "text-stone-600 hover:bg-stone-50"}`}>
+                  <Icon size={18}/> <span lang="ja">{n.jp}</span><span className="text-stone-400 text-xs">{n.en}</span>
                 </button>
               );
             })}
           </nav>
-          <div className="sidebar-label p-4 border-t border-stone-100 text-xs text-stone-400">
+          <div className="p-4 border-t border-stone-100 text-xs text-stone-400">
             Practice questions are original learning materials inspired by JLPT formats and are not official JLPT questions.
           </div>
         </aside>
@@ -2298,7 +1927,6 @@ export default function NihongoVertex(){
         {/* Mobile top bar */}
         <div className="md:hidden fixed top-0 inset-x-0 z-30 bg-white border-b border-stone-200 flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
-            <button type="button" className="mobile-menu-button" onClick={()=>setSidebarOpen(true)} aria-label="Open navigation"><Menu size={21}/></button>
             <div className="w-2 h-2 rounded-full bg-red-600"/>
             <span className="font-bold text-stone-900">Nihongo Vertex</span>
           </div>
@@ -2308,28 +1936,17 @@ export default function NihongoVertex(){
           </div>
         </div>
 
-        <div className={`mobile-nav-layer md:hidden ${sidebarOpen ? "is-open" : ""}`} aria-hidden={!sidebarOpen}>
-          <button type="button" className="mobile-nav-backdrop" onClick={()=>setSidebarOpen(false)} aria-label="Close navigation"/>
-          <aside className="mobile-nav-drawer" aria-label="Mobile navigation">
-            <div className="flex items-center justify-between p-5 border-b border-stone-100"><div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-red-600"/><b>Nihongo Vertex</b></div><button type="button" className="mobile-menu-button" onClick={()=>setSidebarOpen(false)} aria-label="Close navigation"><X size={21}/></button></div>
-            <nav className="p-3 space-y-1">{NAV.map(n=>{const Icon=n.icon;const active=screen===n.key || (n.key==="lessons"&&(screen==="lesson"||screen==="minnaII")) || (n.key==="levels"&&screen==="levelDetail");return <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm ${active?"bg-red-50 text-red-700 font-medium":"text-stone-600"}`}><Icon size={19}/><span lang="ja">{n.jp}</span><span className="text-stone-400 text-xs">{n.en}</span></button>})}</nav>
-          </aside>
-        </div>
-
-        <main className="app-main flex-1 p-4 md:p-6 lg:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
-          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel} onChangeGoal={changeExamGoal}/>}
-          {screen==="lessons" && (activeLevel === "N5" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/> : <LevelLessonHub level={activeLevel} goTo={goTo}/>)}
+        <main className="flex-1 p-4 md:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
+          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo}/>}
+          {screen==="lessons" && <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/>}
           {screen==="characters" && <CharacterLab/>}
-          {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}
-          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
-          {screen==="minnaII" && <BeginnerIILesson lesson={currentBeginnerIILesson} goTo={goTo}/>}
-          {screen==="levels" && <LevelSelector progress={progress} goTo={goTo} otherLevels={OTHER_LEVELS} activeLevel={activeLevel} onSelectLevel={selectStudyLevel}/>}
-          {screen==="levelDetail" && <LevelDetail level={param || activeLevel} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
+          {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
+          {screen==="levels" && <LevelSelector progress={progress} lessons={LESSONS} goTo={goTo} otherLevels={OTHER_LEVELS}/>}
+          {screen==="levelDetail" && <LevelDetail level={param} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
           {screen==="mistakes" && <MistakeBook mistakes={mistakes}/>}
-          {screen==="mock" && <MockExamIntro level={activeLevel} onStart={startMock} goTo={goTo}/>}
+          {screen==="mock" && <MockExamIntro onStart={startMock} goTo={goTo}/>}
           {screen==="mockResult" && mockResult && <MockExamResult result={mockResult} goTo={goTo}/>}
           {screen==="progress" && <ProgressDashboard progress={progress} lessons={LESSONS}/>}
-          {screen==="aiHub" && <AIMentorHub level={activeLevel} progress={progress} goTo={goTo}/>}
         </main>
       </div>
 
