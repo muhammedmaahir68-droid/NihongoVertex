@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jlpt-db-secret
+type: Opaque
+stringData:
+  POSTGRES_DB: jlpt_syllabus
+  POSTGRES_USER: jlpt_admin
+  POSTGRES_PASSWORD: change_me_in_prod   # replace or use a sealed-secret / external-secrets in real prod
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jlpt-db-pvc
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+# ConfigMap holds the schema + seed SQL so the init container can run it.
+# For files this size, `kubectl create configmap jlpt-sql --from-file=./sql`
+# is easier than pasting content inline here.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jlpt-sql
+  annotations:
+    note: "Populate via: kubectl create configmap jlpt-sql --from-file=../sql/"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jlpt-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jlpt-db
+  template:
+    metadata:
+      labels:
+        app: jlpt-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: jlpt-db-secret
+          volumeMounts:
+            - name: jlpt-db-storage
+              mountPath: /var/lib/postgresql/data
+            # The official Postgres image auto-runs every .sql file in this
+            # folder, in filename order, ONLY on first init (empty PVC).
+            - name: sql-files
+              mountPath: /docker-entrypoint-initdb.d
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "jlpt_admin"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: jlpt-db-storage
+          persistentVolumeClaim:
+            claimName: jlpt-db-pvc
+        - name: sql-files
+          configMap:
+            name: jlpt-sql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jlpt-db
+spec:
+  selector:
+    app: jlpt-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

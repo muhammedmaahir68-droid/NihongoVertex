@@ -1,0 +1,7 @@
+import { HIRAGANA_MNEMONIC_SCENES, KATAKANA_MNEMONIC_SCENES, KANJI_MNEMONIC_SCENES, ALL_MNEMONIC_SCENES, mnemonicCoverage } from './completeMnemonicScenes.js';
+
+export const OBJECT_FIRST_SCENES = ALL_MNEMONIC_SCENES;
+export const BASIC_HIRAGANA_SCENES = HIRAGANA_MNEMONIC_SCENES;
+export const KATAKANA_SCENES = KATAKANA_MNEMONIC_SCENES;
+export const KANJI_SCENES = KANJI_MNEMONIC_SCENES;
+export const objectFirstCoverage = mnemonicCoverage;

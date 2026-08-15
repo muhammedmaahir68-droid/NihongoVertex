@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { BookOpen, Home as HomeIcon, Layers, PenTool, Headphones, ListChecks, ClipboardCheck, AlertCircle, TrendingUp, Settings, Menu, X, Flame, Star, ChevronRight, ChevronLeft, Flag, Clock, CheckCircle2, XCircle, Play, Pause, RotateCcw, Award, Lock, Volume2, PenLine, Search, Sparkles, Bot, MessageCircle, CalendarCheck, Target, Briefcase, Send, Trophy, Bell, UserRound, Check, Zap } from "lucide-react";
+import CharacterLabEngine from "./components/character-engine/CharacterLabEngine.jsx";
+import { JLPT_CURRICULUM, CURRICULUM_STATS } from "./data/curriculum.js";
 
 // ===== Data (N5: sourced from user-uploaded Minna no Nihongo I translation/grammar notes; N4-N1: sample from public JLPT references) =====
 // Nihongo Vertex — N5 curriculum data
@@ -524,9 +526,9 @@ function TriLabel({jp, en, ta, size="base"}){
   const sizes = { sm:"text-sm", base:"text-base", lg:"text-xl", xl:"text-3xl" };
   return (
     <div>
-      <div className={`font-semibold text-stone-900 ${sizes[size]}`} lang="ja">{jp}</div>
+      <div className={`font-semibold ${sizes[size]} jp-word`} lang="ja">{Array.from(jp).map((char,i)=><span className={`jp-glyph jp-glyph-${i%5}`} key={`${char}-${i}`}>{char}</span>)}</div>
       <div className="text-red-700 text-xs font-medium mt-0.5">🔤 {toRomaji(jp)}</div>
-      <div className="text-stone-500 text-sm">{en}</div>
+      <div className="jp-meaning text-sm">{en}</div>
       {ta && <div className="text-red-700/70 text-sm" lang="ta">{ta}</div>}
     </div>
   );
@@ -544,31 +546,54 @@ function Card({children, className=""}){
   return <div className={`bg-white border border-stone-200 rounded-2xl shadow-sm ${className}`}>{children}</div>;
 }
 
+function LevelOnboarding({onChoose}){
+  const meta={
+    N5:["Beginner","Build your Japanese foundation"], N4:["Elementary","Strengthen everyday Japanese"],
+    N3:["Intermediate","Bridge to confident reading and listening"], N2:["Upper intermediate","Prepare for advanced academic and work Japanese"],
+    N1:["Advanced","Master nuanced, professional Japanese"]
+  };
+  return <div className="min-h-screen bg-stone-50 flex items-center justify-center p-5">
+    <div className="w-full max-w-5xl">
+      <div className="text-center mb-10"><div className="inline-flex items-center gap-2 text-red-700 font-bold text-sm mb-4"><span className="w-2.5 h-2.5 rounded-full bg-red-600"/> NIHONGO VERTEX</div><h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight">Choose your JLPT goal</h1><p className="text-stone-500 mt-3 text-lg">Select the exam level you are preparing for. Every path is available from day one.</p></div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {LEVELS.map((level,i)=>{const [stage,description]=meta[level]; const Icon=[BookOpen,Layers,TrendingUp,Award,Trophy][i]; return <button key={level} onClick={()=>onChoose(level)} className="level-choice text-left p-6 rounded-2xl border border-stone-200 bg-white shadow-sm hover:border-red-300 hover:-translate-y-1"><div className="w-11 h-11 rounded-xl bg-red-50 text-red-700 flex items-center justify-center mb-6"><Icon size={22}/></div><div className="flex items-baseline justify-between"><h2 className="text-3xl font-bold text-stone-900">{level}</h2><ChevronRight className="text-red-600" size={20}/></div><div className="text-sm font-semibold text-red-700 mt-2">{stage}</div><p className="text-sm text-stone-500 mt-2 leading-6">{description}</p><div className="mt-6 text-sm font-bold text-stone-900">Choose {level} →</div></button>})}
+      </div>
+    </div>
+  </div>;
+}
+
 // ---------------- Home / Dashboard ----------------
-function Home({progress, lessons, goTo}){
+function Home({progress, lessons, goTo, activeLevel="N5", onChangeExam}){
   const completedCount = Object.keys(progress.completedLessons).length;
   const totalLessons = lessons.length;
   const pct = Math.round((completedCount/totalLessons)*100);
   const nextLesson = lessons.find(l => !progress.completedLessons[l.id]) || lessons[0];
 
   return (
-      <AITutor level={"N5"} module="Dashboard" compact={true}/>
     <div className="space-y-6 pb-24 md:pb-6">
+      <button onClick={onChangeExam} className="inline-flex items-center gap-2 text-sm font-semibold text-sky-800 hover:text-sky-950">
+        <ChevronLeft size={18}/> Back to JLPT exam selection
+      </button>
       <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-8 md:p-12">
         <div className="absolute -right-10 -top-10 w-52 h-52 rounded-full bg-red-700/20 blur-2xl"/>
         <div className="absolute right-6 top-6 w-3 h-3 rounded-full bg-red-600"/>
         <p className="text-red-400 text-xs tracking-[0.3em] uppercase mb-3">Nihongo Vertex</p>
         <h1 className="text-3xl md:text-5xl font-bold mb-2" lang="ja">日本語を、試験に強い力へ。</h1>
         <p className="text-stone-300 max-w-xl mb-1">Master Japanese from your first hiragana to JLPT N1 — studied through தமிழ் · English · 日本語.</p>
-        <button onClick={()=>goTo("lessons")} className="mt-6 inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
-          Continue Learning <ChevronRight size={18}/>
-        </button>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <button onClick={()=>activeLevel==="N5"?goTo("lessons"):goTo("levelDetail",activeLevel)} className="inline-flex items-center gap-2 bg-red-700 hover:bg-red-600 transition-colors px-6 py-3 rounded-xl font-semibold">
+            Continue Learning <ChevronRight size={18}/>
+          </button>
+          <button onClick={onChangeExam} className="inline-flex items-center gap-2 border border-white/40 bg-white/10 hover:bg-white/20 transition-colors px-5 py-3 rounded-xl font-semibold">
+            <ChevronLeft size={18}/> Change JLPT exam
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1">Current Level</div>
-          <div className="text-2xl font-bold text-stone-900">N5</div>
+          <div className="text-2xl font-bold text-stone-900">{activeLevel}</div>
         </Card>
         <Card className="p-5">
           <div className="text-stone-500 text-xs mb-1 flex items-center gap-1"><Flame size={14} className="text-red-600"/> Streak</div>
@@ -579,7 +604,7 @@ function Home({progress, lessons, goTo}){
           <div className="text-2xl font-bold text-stone-900">{progress.xp}</div>
         </Card>
         <Card className="p-5">
-          <div className="text-stone-500 text-xs mb-1">N5 Progress</div>
+          <div className="text-stone-500 text-xs mb-1">{activeLevel} Progress</div>
           <div className="text-2xl font-bold text-stone-900">{pct}%</div>
         </Card>
       </div>
@@ -625,7 +650,7 @@ function Home({progress, lessons, goTo}){
 }
 
 // ---------------- Level Selector ----------------
-function LevelSelector({progress, lessons, goTo, otherLevels}){
+function LevelSelector({progress, lessons, goTo, otherLevels, activeLevel}){
   const completedCount = Object.keys(progress.completedLessons).length;
   const pct = Math.round((completedCount/lessons.length)*100);
   return (
@@ -633,25 +658,25 @@ function LevelSelector({progress, lessons, goTo, otherLevels}){
       <h2 className="text-2xl font-bold text-stone-900">レベル選択 <span className="text-stone-400 text-base font-normal">Level Selector</span></h2>
       <div className="grid md:grid-cols-2 gap-4">
         {LEVELS.map(lv=>{
-          const active = lv === "N5";
+          const active = lv === activeLevel;
           const labels = {N5:"Beginner · ஆரம்பநிலை", N4:"Elementary · தொடக்கநிலை", N3:"Intermediate · இடைநிலை", N2:"Upper Intermediate · மேல்நிலை", N1:"Advanced · மேம்பட்ட நிலை"};
           return (
-            <Card key={lv} className={`p-6 ${!active && "opacity-80"}`}>
+            <Card key={lv} className="p-6 level-choice">
               <div className="flex items-center justify-between mb-2">
                 <div className="text-2xl font-bold text-stone-900">{lv}</div>
-                {!active && <Lock size={16} className="text-stone-400"/>}
+                {active && <span className="text-xs font-semibold text-red-700 bg-red-50 px-2.5 py-1 rounded-full">Your target</span>}
               </div>
               <div className="text-sm text-stone-500 mb-4">{labels[lv]}</div>
               {active ? (
                 <>
                   <ProgressBar pct={pct}/>
                   <div className="text-xs text-stone-500 mt-2 mb-4">{pct}% complete · {completedCount}/{lessons.length} lessons</div>
-                  <button onClick={()=>goTo("lessons")} className="w-full bg-stone-900 text-white rounded-xl py-2.5 font-medium">Study N5</button>
+                  <button onClick={()=>goTo("levelDetail", lv)} className="w-full bg-stone-900 text-white rounded-xl py-2.5 font-medium">Study {lv}</button>
                 </>
               ) : (
                 <>
                   <p className="text-xs text-stone-500 mb-4">{otherLevels[lv].desc}</p>
-                  <button onClick={()=>goTo("levelDetail", lv)} className="w-full border border-stone-300 text-stone-700 rounded-xl py-2.5 font-medium">Preview sample grammar</button>
+                  <button onClick={()=>goTo("levelDetail", lv)} className="w-full border border-stone-300 text-stone-700 rounded-xl py-2.5 font-medium">Start {lv} study path</button>
                 </>
               )}
             </Card>
@@ -662,30 +687,100 @@ function LevelSelector({progress, lessons, goTo, otherLevels}){
   );
 }
 
-function LevelDetail({level, otherLevels, goTo}){
-  const data = otherLevels[level];
-  return (
-      <AITutor level={level} module="Grammar" compact={false}/>
-    <div className="space-y-4 pb-24 md:pb-6">
-      <button onClick={()=>goTo("levels")} className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-800"><ChevronLeft size={16}/> Back to levels</button>
-      <h2 className="text-2xl font-bold text-stone-900">{level} <span className="text-stone-400 text-base font-normal">Sample syllabus (external reference)</span></h2>
-      <Card className="p-5 bg-amber-50 border-amber-200 text-amber-800 text-sm">
-        This {level} content is a sample set curated from public JLPT study references, not from your uploaded Minna no Nihongo notes. Full {level} lesson tracks (like N5) can be expanded next.
-      </Card>
-      <p className="text-stone-600">{data.desc}</p>
-      <div className="space-y-3">
-        {data.sampleGrammar.map((g,i)=>(
-          <Card key={i} className="p-5">
-            <JapaneseReading jp={g.t} className="mb-1" />
-            <div className="text-sm text-stone-500 mb-2">{g.en}</div>
-            <div className="text-xs text-stone-400 mb-2">Formation: {g.form}</div>
-            <div className="bg-stone-50 rounded-lg p-3">
-              <JapaneseReading jp={g.ex.jp} className="mb-1" />
-              <div className="text-sm text-stone-500">{g.ex.en}</div>
-            </div>
-          </Card>
-        ))}
+function CurriculumModuleCard({module, goTo}){
+  const [open,setOpen]=useState(false);
+  return <Card className="overflow-hidden">
+    <button onClick={()=>setOpen(v=>!v)} className="w-full text-left p-5 hover:bg-stone-50 transition-colors">
+      <div className="flex items-start gap-4">
+        <div className="w-10 h-10 rounded-xl bg-red-50 text-red-700 flex items-center justify-center font-bold shrink-0">{module.sourceLesson || module.id.split("-M").pop()}</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-xs text-stone-400 mb-1">{module.level} · {module.sourceLesson ? `Minna lesson ${module.sourceLesson}` : "NihongoVertex advanced module"}</div>
+          <div className="font-semibold text-stone-900">{module.title}</div>
+          <div className="text-sm text-stone-500 mt-1" lang="ja">{module.jp}</div>
+          <div className="text-sm text-stone-500 mt-1">{module.ta}</div>
+        </div>
+        <ChevronRight size={18} className={`text-stone-300 transition-transform ${open?"rotate-90":""}`}/>
       </div>
+    </button>
+    {open && <div className="border-t border-stone-100 p-5 space-y-4">
+      <div><div className="text-xs uppercase tracking-wide text-stone-400 mb-1">Objective</div><p className="text-sm text-stone-700">{module.objective}</p></div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="rounded-xl bg-stone-50 p-4"><div className="font-semibold text-sm mb-2">Grammar / 文法</div><ul className="space-y-1 text-sm text-stone-600">{module.grammar.map((g,i)=><li key={i} lang="ja">• {g}</li>)}</ul></div>
+        <div className="rounded-xl bg-stone-50 p-4"><div className="font-semibold text-sm mb-2">Vocabulary themes / 語彙</div><div className="flex flex-wrap gap-2">{module.vocabThemes.map((v,i)=><span key={i} className="px-2 py-1 rounded-full bg-white border border-stone-200 text-xs text-stone-600">{v}</span>)}</div></div>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+        {module.skills.map((x,i)=><div key={i} className="rounded-lg border border-stone-200 px-3 py-2 text-xs text-stone-600">✓ {x}</div>)}
+      </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div><div className="text-xs uppercase tracking-wide text-stone-400 mb-2">Materials</div><ul className="text-sm text-stone-600 space-y-1">{module.materials.map((x,i)=><li key={i}>• {x}</li>)}</ul></div>
+        <div><div className="text-xs uppercase tracking-wide text-stone-400 mb-2">Quiz coverage</div><div className="flex flex-wrap gap-2">{module.quizTypes.map((x,i)=><span key={i} className="px-2 py-1 rounded-lg bg-red-50 text-red-700 text-xs">{x}</span>)}</div></div>
+      </div>
+      <div className="flex flex-wrap gap-2 pt-1">
+        <button onClick={()=>goTo("moduleLesson",module.id)} className="bg-red-700 text-white px-4 py-2 rounded-xl text-sm font-semibold">Open {module.level} module →</button>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("open-ai-tutor",{detail:{level:module.level,context:`${module.title} module: ${module.grammar.join(", ")}`}}))} className="border border-stone-300 px-4 py-2 rounded-xl text-sm">Ask AI tutor</button>
+      </div>
+    </div>}
+  </Card>;
+}
+
+function ModuleLesson({module, goTo}){
+  if(!module) return <Card className="p-6">Module unavailable.</Card>;
+  const number = module.sourceLesson || module.id.split("-M").pop();
+  return <div className="space-y-5 pb-24 md:pb-6">
+    <button onClick={()=>goTo("levelDetail",module.level)} className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-800"><ChevronLeft size={16}/> Back to {module.level} syllabus</button>
+    <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-7 md:p-9">
+      <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-red-700/20 blur-2xl"/>
+      <div className="relative"><div className="text-red-400 text-xs tracking-[0.24em] uppercase mb-2">{module.level} · Module {number}</div><h1 className="text-3xl md:text-4xl font-bold">{module.title}</h1><p className="mt-2 text-stone-300" lang="ja">{module.jp}</p><p className="mt-1 text-sm text-stone-300">{module.ta}</p></div>
+    </div>
+    <Card className="p-6"><h2 className="font-bold text-stone-900 mb-2">Lesson goal</h2><p className="text-stone-600 leading-7">{module.objective}</p></Card>
+    <div className="grid md:grid-cols-2 gap-4">
+      <Card className="p-6"><h2 className="font-bold text-stone-900 mb-4">Grammar targets</h2><ol className="space-y-3">{module.grammar.map((item,index)=><li key={item} className="flex gap-3 text-sm text-stone-700"><span className="w-6 h-6 shrink-0 rounded-full bg-red-50 text-red-700 flex items-center justify-center text-xs font-bold">{index+1}</span><span lang="ja">{item}</span></li>)}</ol></Card>
+      <Card className="p-6"><h2 className="font-bold text-stone-900 mb-4">Vocabulary themes</h2><div className="flex flex-wrap gap-2">{module.vocabThemes.map(item=><span key={item} className="px-3 py-2 rounded-xl bg-stone-50 border border-stone-200 text-sm text-stone-700">{item}</span>)}</div></Card>
+    </div>
+    <Card className="p-6"><h2 className="font-bold text-stone-900 mb-4">Practice areas</h2><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">{module.skills.map(skill=><div key={skill} className="rounded-xl border border-stone-200 p-4"><div className="font-semibold text-stone-800">{skill}</div><div className="text-xs text-stone-500 mt-1">Practice this skill with the module targets.</div></div>)}</div></Card>
+    <Card className="p-6"><h2 className="font-bold text-stone-900 mb-3">Module checkpoint</h2><div className="flex flex-wrap gap-2">{module.quizTypes.map(type=><span key={type} className="px-3 py-2 rounded-xl bg-red-50 text-red-700 text-sm font-medium">{type}</span>)}</div><button onClick={()=>window.dispatchEvent(new CustomEvent("open-ai-tutor",{detail:{level:module.level,context:`Create a practice set for ${module.title}: ${module.grammar.join(", ")}.`}}))} className="mt-4 bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold">Open module practice</button></Card>
+  </div>;
+}
+
+function LevelDetail({level, otherLevels, goTo}){
+  const data = JLPT_CURRICULUM[level];
+  if(!data) return <Card className="p-6">Curriculum unavailable.</Card>;
+  const stats = CURRICULUM_STATS[level];
+  return (
+    <div className="space-y-5 pb-24 md:pb-6">
+      <div className="flex items-center justify-between gap-3">
+        <button onClick={()=>goTo("levels")} className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-800"><ChevronLeft size={16}/> Back to levels</button>
+        <span className="text-xs px-3 py-1.5 rounded-full bg-green-50 text-green-700 font-medium">Curriculum built</span>
+      </div>
+      <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-7 md:p-9">
+        <div className="absolute -right-12 -top-12 w-56 h-56 rounded-full bg-red-700/20 blur-3xl"/>
+        <div className="relative">
+          <div className="text-red-400 text-xs tracking-[0.25em] uppercase mb-2">JLPT · {level}</div>
+          <h2 className="text-3xl md:text-4xl font-bold">{data.title}</h2>
+          <p className="text-stone-300 mt-2 max-w-3xl">{data.source}</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+            <div className="rounded-xl bg-white/10 p-3"><div className="text-2xl font-bold">{stats.modules}</div><div className="text-xs text-stone-300">modules</div></div>
+            <div className="rounded-xl bg-white/10 p-3"><div className="text-2xl font-bold">{stats.quizSets}</div><div className="text-xs text-stone-300">quiz sets</div></div>
+            <div className="rounded-xl bg-white/10 p-3"><div className="text-2xl font-bold">{stats.materials}</div><div className="text-xs text-stone-300">learning resources</div></div>
+            <div className="rounded-xl bg-white/10 p-3"><div className="text-2xl font-bold">3</div><div className="text-xs text-stone-300">languages</div></div>
+          </div>
+        </div>
+      </div>
+      <Card className="p-5 bg-amber-50 border-amber-200">
+        <div className="font-semibold text-amber-900 mb-1">English · தமிழ் · 日本語 learning layer</div>
+        <p className="text-sm text-amber-800">NihongoVertex uses the public Minna no Nihongo lesson structure as an alignment layer for N5/N4 and provides original English/Tamil explanations, drills and examples. It does not reproduce the textbook's copyrighted translation/grammar notes verbatim. For N3–N1, the curriculum is an original advanced bridge built on the same foundations and JLPT skill domains.</p>
+      </Card>
+      <div className="flex items-center justify-between">
+        <div><h3 className="text-xl font-bold text-stone-900">Complete syllabus</h3><p className="text-sm text-stone-500">Every module expands into grammar, vocabulary, four skills, materials and quiz coverage.</p></div>
+      </div>
+      <div className="space-y-3">
+        {data.modules.map(m=><CurriculumModuleCard key={m.id} module={m} goTo={goTo}/>)}
+      </div>
+      <Card className="p-5">
+        <div className="font-semibold text-stone-900 mb-2">Exam structure</div>
+        <div className="flex flex-wrap gap-2 mb-2">{data.exam.sections.map((s,i)=><span key={i} className="px-3 py-1.5 rounded-full bg-stone-100 text-sm text-stone-700">{s}</span>)}</div>
+        <p className="text-xs text-stone-500">{data.exam.quizPolicy}</p>
+      </Card>
     </div>
   );
 }
@@ -693,7 +788,6 @@ function LevelDetail({level, otherLevels, goTo}){
 // ---------------- Lesson List ----------------
 function LessonList({lessons, progress, goTo}){
   return (
-      <AITutor level={"N5"} module="Vocabulary" compact={true}/>
     <div className="space-y-4 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">学習 <span className="text-stone-400 text-base font-normal">N5 Lessons (based on Minna no Nihongo 1–25)</span></h2>
       <div className="grid sm:grid-cols-2 gap-3">
@@ -714,6 +808,39 @@ function LessonList({lessons, progress, goTo}){
       </div>
     </div>
   );
+}
+
+// The sidebar Lessons item follows the learner's selected JLPT exam.  N5 keeps
+// its detailed legacy lesson flow; every other exam uses its own module list.
+function ExamModuleList({level, goTo, moduleLimit, title, description}){
+  const curriculum = JLPT_CURRICULUM[level];
+  if(!curriculum) return <Card className="p-6">Curriculum unavailable.</Card>;
+  const modules = moduleLimit ? curriculum.modules.slice(0,moduleLimit) : curriculum.modules;
+  return <div className="space-y-4 pb-24 md:pb-6">
+    <div className="flex items-end justify-between gap-3"><div><h2 className="text-2xl font-bold text-stone-900">{title || `${level} Lessons`}</h2><p className="text-sm text-stone-500 mt-1">{description || `${curriculum.modules.length} separate modules for your selected JLPT exam.`}</p></div><button onClick={()=>goTo("levels")} className="text-sm font-semibold text-red-700">Study paths</button></div>
+    <div className="grid sm:grid-cols-2 gap-3">
+      {modules.map((module,index)=><button key={module.id} onClick={()=>goTo("moduleLesson",module.id)} className="text-left"><Card className="p-4 flex items-center justify-between hover:border-red-300 transition-colors h-full"><div className="flex items-start gap-3"><div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold shrink-0 bg-stone-100 text-stone-500">{index+1}</div><div><div className="font-semibold text-stone-900">{module.title}</div><div className="text-xs text-red-700 mt-1" lang="ja">{module.jp}</div><div className="text-xs text-stone-500 mt-1">{module.grammar.slice(0,2).join(" · ")}</div></div></div><ChevronRight className="text-stone-300 shrink-0" size={20}/></Card></button>)}
+    </div>
+  </div>;
+}
+
+function StudyTierSelector({level, goTo}){
+  const curriculum=JLPT_CURRICULUM[level];
+  if(!curriculum) return <Card className="p-6">Curriculum unavailable.</Card>;
+  const total=curriculum.modules.length;
+  const tiers=[
+    {id:"beginner",name:"Beginner",target:"Core foundation",count:Math.ceil(total*.5),desc:"Start with the essential foundation modules and build confidence before timed practice.",icon:"1"},
+    {id:"intermediate",name:"Intermediate",target:"Exam-ready coverage",count:Math.ceil(total*.8),desc:"Study the foundation plus the wider grammar, vocabulary, reading and listening range.",icon:"2"},
+    {id:"hard",name:"Hard",target:"Complete high-score path",count:total,desc:"Complete every module, then use review and mock practice to aim for your strongest result.",icon:"3"}
+  ];
+  return <div className="space-y-5 pb-24 md:pb-6"><div><h2 className="text-2xl font-bold text-stone-900">{level} Study Levels</h2><p className="text-sm text-stone-500 mt-1">Choose the depth of syllabus coverage you want for {level}. These are study paths, not score guarantees.</p></div><div className="grid md:grid-cols-3 gap-4">{tiers.map(tier=><Card key={tier.id} className="p-6 level-choice"><div className="w-10 h-10 rounded-xl bg-red-50 text-red-700 flex items-center justify-center font-bold mb-5">{tier.icon}</div><div className="text-xl font-bold text-stone-900">{tier.name}</div><div className="text-sm font-semibold text-red-700 mt-1">{tier.target}</div><p className="text-sm text-stone-500 leading-6 mt-3 min-h-24">{tier.desc}</p><div className="text-sm text-stone-700 mb-4"><b>{tier.count}</b> of {total} modules</div><button onClick={()=>goTo("tierLessons",{tier:tier.id})} className="w-full bg-stone-900 text-white rounded-xl py-2.5 font-semibold">Open {tier.name} path</button></Card>)}</div></div>;
+}
+
+function TierLessonList({level,tier,goTo}){
+  const total=JLPT_CURRICULUM[level]?.modules.length || 0;
+  const configs={beginner:{name:"Beginner",count:Math.ceil(total*.5),target:"core foundation"},intermediate:{name:"Intermediate",count:Math.ceil(total*.8),target:"exam-ready coverage"},hard:{name:"Hard",count:total,target:"complete high-score coverage"}};
+  const selected=configs[tier] || configs.beginner;
+  return <ExamModuleList level={level} goTo={goTo} moduleLimit={selected.count} title={`${level} ${selected.name} Path`} description={`${selected.count} modules for ${selected.target}.`} />;
 }
 
 
@@ -770,7 +897,7 @@ function JapaneseReading({jp, reading, className=""}){
   const r = reading || toRomaji(jp);
   return (
     <div className={className}>
-      <div lang="ja" className="text-stone-900">{jp}</div>
+      <div lang="ja" className="jp-word">{Array.from(jp).map((char,i)=><span className={`jp-glyph jp-glyph-${i%5}`} key={`${char}-${i}`}>{char}</span>)}</div>
       {r && <div className="text-sm text-red-700 font-medium mt-0.5">🔤 {r}</div>}
       <button type="button" onClick={()=>speakJapanese(jp)} className="mt-1 inline-flex items-center gap-1 text-xs text-stone-400 hover:text-red-700">
         <Volume2 size={13}/> Listen
@@ -816,6 +943,19 @@ const BASIC_KANJI = [
   ["年","ねん / とし","nen / toshi","year","📅"],["時","じ / とき","ji / toki","time · hour","⏰"]
 ];
 
+// Visual mnemonics supplied for the character lab. Each card links shape → object → sound.
+const HIRAGANA_MNEMONICS = {
+  "\u3042":["Apple","Draw the character as the stem and curve of an apple."], "\u3044":["Two people","Use the two strokes as two people standing together."], "\u3046":["U-shaped smile","Turn the curve into a smiling mouth."], "\u3048":["Elevator","Use the vertical lines as a small elevator."], "\u304a":["Octopus","Let the lower strokes become octopus tentacles."],
+  "\u304b":["Kite","Draw a kite around the crossing lines."], "\u304d":["Key","Use the strokes as the head, shaft and teeth of a key."], "\u304f":["Bird beak","Use the sharp curve as an open bird beak."], "\u3051":["Keg","Build a barrel/keg around the upright strokes."], "\u3053":["Two corners","See the two horizontal corner lines."],
+  "\u3055":["Samurai sword","Extend the long stroke into a samurai sword."], "\u3057":["Fishing hook","Curl the line into a fishing hook."], "\u3059":["Swing","Make the loop and line into a playground swing."], "\u305b":["Sail","Turn the upright shape into a sailboat sail."], "\u305d":["Sewing needle","Make the thin stroke a sewing needle and thread."],
+  "\u305f":["Table","Use the top stroke as a small table top."], "\u3061":["Cheese","Draw a cheese wedge around the crossing stroke."], "\u3064":["Wave","Use the curved line as a sea wave."], "\u3066":["Tea cup","Make the curve a teacup handle."], "\u3068":["Toe","Turn the small mark into a toe on a foot."],
+  "\u306a":["Nail","Use the long upright line as a hammer nail."], "\u306b":["Knee","Shape the two lines like a bent knee."], "\u306c":["Noodle","Let the loop become a noodle bowl and strand."], "\u306d":["Net","Draw a net around the looping line."], "\u306e":["Noose","Use the loop as a hanging rope noose."],
+  "\u306f":["Hat","Put a hat brim around the top strokes."], "\u3072":["Heels","Use the curve as the heel of a shoe."], "\u3075":["Mount Fuji","Turn the wide shape into Mount Fuji."], "\u3078":["Hill","The angled line is a hill."], "\u307b":["Hoe","Use the upright strokes to make a garden hoe."],
+  "\u307e":["Mask","Frame the shape as a theatrical mask."], "\u307f":["Measuring ruler","Make the strokes into ruler marks."], "\u3080":["Cow","Use the rounded form as a cow saying moo."], "\u3081":["Eye","Circle the crossing lines as an eye."], "\u3082":["Moustache","Let the bottom curve become a moustache."],
+  "\u3084":["Yacht","Draw a yacht sail along the long line."], "\u3086":["U-shaped bowl","Use the lower curve as a bowl."], "\u3088":["Yo-yo","Turn the two circles/loops into a yo-yo."], "\u3089":["Rabbit","Use the upper marks as rabbit ears."], "\u308a":["Reed","Turn the two marks into reeds."],
+  "\u308b":["Rope loop","Use the circular form as a rope loop."], "\u308c":["Ribbon","Tie the character into a ribbon bow."], "\u308d":["Road","Make the long curve a road."], "\u308f":["Wagon","Use the curve as a wagon body."], "\u3092":["Walking person","Turn the lines into a walking person."], "\u3093":["String noodle","Use the final curve as a long noodle/string."]
+};
+
 function WritingPad({character}){
   const canvasRef=useRef(null);
   const drawing=useRef(false);
@@ -843,92 +983,69 @@ function WritingPad({character}){
       </div>
       <div className="relative max-w-sm mx-auto">
         <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 pointer-events-none opacity-30"><div className="border-r border-stone-300 border-dashed"/><div/><div className="border-t border-stone-300 border-dashed col-span-2"/></div>
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-8xl text-stone-200">{character}</div>
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-8xl trace-character">{character}</div>
         <canvas ref={canvasRef} width="360" height="360" onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} className="w-full aspect-square border border-stone-200 rounded-2xl bg-white touch-none relative"/>
       </div>
-      <p className="text-xs text-stone-400 mt-3 text-center">Write over the faint character, then clear and try from memory.</p>
+      <p className="text-xs text-stone-400 mt-3 text-center">Follow the glowing character, trace it once, then clear and draw it from memory.</p>
     </Card>
   );
 }
 
-function CharacterLab(){
-  const [script,setScript]=useState("hiragana");
-  const [idx,setIdx]=useState(0);
-  const [mode,setMode]=useState("learn");
-  const [query,setQuery]=useState("");
-  const list=script==="hiragana"?HIRAGANA:script==="katakana"?KATAKANA:BASIC_KANJI;
-  const item=list[idx]||list[0];
-  const char=item[0], reading=item[1].split(" / ")[0], romaji=script==="kanji"?item[2]:item[1];
-  const filtered=list.filter(x=>(x[0]+" "+x[1]+" "+x[2]+" "+(x[3]||"")).toLowerCase().includes(query.toLowerCase()));
-  function chooseChar(c){ const i=list.findIndex(x=>x[0]===c); if(i>=0){setIdx(i); setQuery("");} }
-  return (
-      <AITutor level={"N5"} module="Characters" compact={false}/>
-    <div className="space-y-5 pb-24 md:pb-6">
-      <div>
-        <div className="text-xs text-red-700 font-semibold tracking-widest uppercase">Character Lab</div>
-        <h2 className="text-2xl font-bold text-stone-900">ひらがな · カタカナ · 漢字</h2>
-        <p className="text-stone-500">Japanese + English-letter pronunciation + sound + memory object + writing practice.</p>
-      </div>
-      <Card className="p-4 bg-red-50 border-red-100">
-        <div className="font-semibold text-stone-900 mb-1">🧠 Never guess the reading</div>
-        <p className="text-sm text-stone-600">Every character card gives you <b>Japanese → Romaji → English meaning → sound</b>. Use the object/emoji as a memory hook, then write it.</p>
-      </Card>
-      <div className="flex flex-wrap gap-2">
-        {[["hiragana","Hiragana ひらがな"],["katakana","Katakana カタカナ"],["kanji","Kanji 漢字"]].map(([k,l])=>
-          <button key={k} onClick={()=>{setScript(k);setIdx(0);setMode("learn")}} className={`px-4 py-2 rounded-xl text-sm font-semibold ${script===k?"bg-stone-900 text-white":"bg-stone-100 text-stone-600"}`}>{l}</button>
-        )}
-        <button onClick={()=>setMode("practice")} className={`px-4 py-2 rounded-xl text-sm font-semibold ${mode==="practice"?"bg-red-700 text-white":"bg-stone-100 text-stone-600"}`}>✍️ Writing mode</button>
-      </div>
-      <Card className="p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <Search size={16} className="text-stone-400"/>
-          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Find a Japanese letter / romaji / meaning..." className="flex-1 outline-none bg-stone-50 rounded-lg px-3 py-2 text-sm"/>
-        </div>
-        <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 max-h-52 overflow-auto">
-          {(query?filtered:list).map((x,i)=>{
-            const actual=list.findIndex(y=>y[0]===x[0]);
-            return <button key={x[0]} onClick={()=>{setIdx(actual);setQuery("")}} className={`p-2 rounded-xl border ${actual===idx?"border-red-600 bg-red-50":"border-stone-200 bg-white"}`}>
-              <div className="text-2xl font-bold">{x[0]}</div><div className="text-[10px] text-red-700">{script==="kanji"?x[2]:x[1]}</div>
-            </button>
-          })}
-        </div>
-      </Card>
-      <div className="grid md:grid-cols-2 gap-4">
-        <Card className="p-6 text-center">
-          <div className="text-xs text-stone-400 mb-2">Your character</div>
-          <div className="text-8xl font-bold text-stone-900 mb-2">{char}</div>
-          <div className="text-2xl font-semibold text-red-700">🔤 {romaji}</div>
-          {script==="kanji" && <div className="text-sm text-stone-500 mt-2">{item[3]}</div>}
-          {script!=="kanji" && <div className="text-4xl mt-3">{item[2]}</div>}
-          {script==="kanji" && <div className="text-3xl mt-3">{item[4]}</div>}
-          <button onClick={()=>speakJapanese(char)} className="mt-4 inline-flex items-center gap-2 bg-stone-900 text-white px-5 py-2.5 rounded-xl"><Volume2 size={17}/> Hear pronunciation</button>
-          <div className="mt-4 text-xs text-stone-400">Say it aloud: <b>{romaji}</b></div>
-        </Card>
-        {mode==="practice" ? <WritingPad character={char}/> : (
-          <Card className="p-6">
-            <div className="font-semibold mb-3">🎯 Memory trick</div>
-            <div className="text-5xl mb-3">{script==="kanji"?item[4]:item[2]}</div>
-            <div className="text-stone-700 font-medium mb-2">{script==="kanji"?item[3]:item[3]}</div>
-            <p className="text-sm text-stone-500">Look at the shape, say <b>{romaji}</b> three times, connect it to the object, then write it without looking.</p>
-            <div className="mt-5 p-4 rounded-xl bg-stone-50">
-              <div className="text-xs uppercase tracking-wide text-stone-400 mb-1">3-step memory loop</div>
-              <div className="text-sm">👀 See → 🔊 Say → ✍️ Write → 🔁 Repeat</div>
-            </div>
-          </Card>
-        )}
-      </div>
-      <Card className="p-5">
-        <div className="flex items-center justify-between mb-3">
-          <div><div className="font-semibold">⚡ Rapid recall</div><div className="text-xs text-stone-400">Can you say the romaji before looking?</div></div>
-          <button onClick={()=>setIdx((idx+1)%list.length)} className="px-3 py-2 rounded-lg bg-red-700 text-white text-sm">Next character →</button>
-        </div>
-        <div className="text-4xl font-bold">{char}</div>
-        <div className="text-sm text-red-700 mt-1">{romaji}</div>
-      </Card>
-    </div>
-  );
+function ShapeMnemonic({character, romaji, meaning, mnemonic}){
+  const isKey = character === "\u304d" || character === "\u30ad";
+  const isBirdBeak = character === "\u304f" || character === "\u30af";
+  const isMoustache = character === "\u3082" || character === "\u30e2";
+  const isHook = character === "\u3057" || character === "\u30b7";
+  if(isKey) return <div className="shape-mnemonic">
+    <div className="shape-caption"><b>{character} · {romaji}</b> — build it like a <b>key</b></div>
+    <svg className="key-sketch" viewBox="0 0 340 150" role="img" aria-label={`${character} drawn as a key`}>
+      <circle className="key-line key-ring" cx="70" cy="73" r="39"/>
+      <path className="key-line key-hole" d="M70 54v38M51 73h38"/>
+      <path className="key-line key-stem" d="M110 73H258"/>
+      <path className="key-line key-tooth-one" d="M208 73v30h18"/>
+      <path className="key-line key-tooth-two" d="M244 73v18h22"/>
+      <text x="70" y="86" textAnchor="middle" className="key-character">{character}</text>
+    </svg>
+    <div className="shape-steps"><span>1</span> round key head <span>2</span> long stem <span>3</span> two teeth — say “ki, key”</div>
+  </div>;
+  if(isBirdBeak) return <div className="shape-mnemonic">
+    <div className="shape-caption"><b>{character} · {romaji}</b> — the character is the bird’s <b>beak</b></div>
+    <svg className="bird-sketch" viewBox="0 0 340 150" role="img" aria-label={`${character} drawn into a bird beak`}>
+      <path className="bird-line bird-head" d="M80 111C53 87 52 48 82 28c39-26 97-8 111 34 8 26-4 55-28 72-25 18-61 14-85-3Z"/>
+      <circle className="bird-line bird-eye" cx="123" cy="63" r="5"/>
+      <path className="bird-line bird-wing" d="M92 103c17-31 54-38 80-15-18 2-32 15-38 31"/>
+      <path className="bird-line bird-beak-top" d="M171 66l91-20-69 44"/>
+      <path className="bird-line bird-beak-bottom" d="M171 90l69 0-69-24"/>
+      <text x="193" y="86" textAnchor="middle" className="bird-character">{character}</text>
+    </svg>
+    <div className="shape-steps"><span>1</span> draw bird head <span>2</span> the sharp <b>{character}</b> shape makes the beak <span>3</span> say “ku”</div>
+  </div>;
+  if(isMoustache) return <div className="shape-mnemonic">
+    <div className="shape-caption"><b>{character} · {romaji}</b> — draw a <b>moustache</b>, then reveal <b>mo</b></div>
+    <svg className="moustache-sketch" viewBox="0 0 340 150" role="img" aria-label={`${character} revealed from a moustache drawing`}>
+      <path className="moustache-line moustache-left" d="M169 80c-22-25-48-34-76-19 10 4 13 15 7 26-6 12-22 15-34 9 12 28 50 31 75 12 13-10 21-20 28-28Z"/>
+      <path className="moustache-line moustache-right" d="M171 80c22-25 48-34 76-19-10 4-13 15-7 26 6 12 22 15 34 9-12 28-50 31-75 12-13-10-21-20-28-28Z"/>
+      <path className="moustache-line moustache-join" d="M151 76c9-7 29-7 38 0"/>
+      <text x="170" y="92" textAnchor="middle" className="moustache-character">{character}</text>
+    </svg>
+    <div className="shape-steps"><span>1</span> draw left moustache curl <span>2</span> draw right curl <span>3</span> the middle reveals <b>{character}</b> — “mo”</div>
+  </div>;
+  if(isHook) return <div className="shape-mnemonic"><div className="shape-caption"><b>{character} · {romaji}</b> — a fishing <b>hook</b> straightens into the character</div><svg className="hook-sketch" viewBox="0 0 340 150"><path className="hook-line" d="M168 23v66c0 30-22 40-42 26-20-14-7-48 16-37"/><path className="hook-line hook-thread" d="M168 23c0-12 11-16 22-16"/><text x="168" y="115" textAnchor="middle" className="hook-character">{character}</text></svg><div className="shape-steps"><span>1</span> draw fishing line <span>2</span> curl the hook <span>3</span> the hook line reveals <b>{character}</b> — “shi”</div></div>;
+  const [object, drawingTip] = mnemonic || ["shape story", "Draw an object around the character strokes."];
+  return <div className="shape-mnemonic">
+    <div className="shape-caption"><b>{character} · {romaji}</b> — see it as a <b>{object}</b></div>
+    <svg className="generic-shape-svg" viewBox="0 0 240 150" role="img" aria-label={`${character} animated outline drawing`}>
+      <text x="120" y="108" textAnchor="middle" className="character-outline">{character}</text>
+      <text x="120" y="108" textAnchor="middle" className="character-fill">{character}</text>
+    </svg>
+    <div className="mnemonic-instruction">{drawingTip}</div>
+    <div className="shape-steps"><span>1</span> watch the outline draw <span>2</span> say “{romaji}” <span>3</span> trace it, then draw from memory</div>
+  </div>;
 }
 
+function CharacterLab({ onGainXP }){
+  return <CharacterLabEngine onGainXP={onGainXP} />;
+}
 
 
 // ---------------- AI Tutor (every module, every JLPT level) ----------------
@@ -1048,7 +1165,6 @@ function ListeningPractice({items=[]}){
   const [show,setShow]=useState(false);
   const item=items[idx]||{};
   return (
-      <AITutor level={"N5"} module="Listening" compact={false}/>
     <Card className="p-5">
       <div className="text-xs uppercase tracking-widest text-red-700 font-semibold">🎧 Listening</div>
       <div className="font-semibold mt-1 mb-4">Listen first. Do not read. Then reveal the answer.</div>
@@ -1076,7 +1192,6 @@ function QuickRevision({lesson, compact=false}){
   const grammar = lesson.grammar || [];
   const vocab = lesson.vocab || [];
   return (
-      <AITutor level={"N5"} module="Quick Revision" compact={false}/>
     <Card className={`${compact ? "p-4" : "p-6"} bg-amber-50/60 border-amber-200`}>
       <div className="flex items-center justify-between gap-3 mb-3">
         <div>
@@ -1122,7 +1237,6 @@ function LevelCompletionNotes({level="N5", lessons, progress, goTo}){
   const grammar = lessons.flatMap(l=>l.grammar || []);
   const pct = Math.round((done.length/Math.max(lessons.length,1))*100);
   return (
-      <AITutor level={level} module="Level Review" compact={false}/>
     <div className="space-y-5 pb-24 md:pb-6">
       <div className="relative overflow-hidden rounded-3xl bg-stone-900 text-white p-7 md:p-10">
         <div className="text-red-400 text-xs tracking-[0.25em] uppercase">Level Complete</div>
@@ -1210,7 +1324,6 @@ function LessonFlow({lesson, onComplete, goTo, isLastLesson=false}){
   }
   useEffect(()=>{setStage(0);setQuizIdx(0);setSelected(null);setScore(0);setFinished(false)},[lesson.id]);
   return (
-      <AITutor level={"N5"} module={stages[stage] || "Lesson"} lesson={lesson} compact={true}/>
     <div className="space-y-5 pb-24 md:pb-6">
       <button onClick={()=>goTo("lessons")} className="flex items-center gap-1 text-sm text-stone-500"><ChevronLeft size={16}/> All lessons</button>
       <div>
@@ -1301,7 +1414,6 @@ function ProgressDashboard({progress, lessons}){
   const mockBest = progress.mockAttempts.length ? Math.max(...progress.mockAttempts.map(m=>Math.round(m.score/m.total*100))) : null;
 
   return (
-      <AITutor level={"N5"} module="Progress" compact={true}/>
     <div className="space-y-6 pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">進捗 <span className="text-stone-400 text-base font-normal">Progress</span></h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1394,7 +1506,6 @@ const MOCK_SECTIONS = [
 
 function MockExamIntro({onStart, goTo}){
   return (
-      <AITutor level={"N5"} module="Mock Exam" compact={false}/>
     <div className="space-y-6 max-w-2xl pb-24 md:pb-6">
       <h2 className="text-2xl font-bold text-stone-900">模擬試験 <span className="text-stone-400 text-base font-normal">JLPT N5 Mock Exam</span></h2>
       <Card className="p-6">
@@ -1858,18 +1969,28 @@ export function AIExamPlanner({ level = "N5" }) {
 
 export default function NihongoVertex(){
   const [screen, setScreen] = useState("home");
+  const [hasChosenLevel, setHasChosenLevel] = useState(()=>{try{return localStorage.getItem("nv-level-chosen")==="true";}catch(e){return false;}});
   const [param, setParam] = useState(null);
   const [mockExamData, setMockExamData] = useState(null);
   const [mockResult, setMockResult] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mistakes, setMistakes] = useState([]);
   const [activeLevel, setActiveLevel] = useState(()=>{try{return localStorage.getItem("nv-active-level")||"N5";}catch(e){return "N5";}});
   useEffect(()=>{try{localStorage.setItem("nv-active-level",activeLevel);}catch(e){}},[activeLevel]);
-  const { progress, completeLesson, recordMock, loaded } = useProgress();
+  const { progress, addXP, completeLesson, recordMock, loaded } = useProgress();
 
   function goTo(scr, p=null){
     if(scr==="levelDetail"){ setActiveLevel(typeof p==="string"?p:(p?.code||"N5")); }
     setScreen(scr); setParam(p); setSidebarOpen(false);
+    window.scrollTo(0,0);
+  }
+
+  function changeExam(){
+    try{ localStorage.removeItem("nv-level-chosen"); }catch(e){}
+    setHasChosenLevel(false);
+    setScreen("home");
+    setParam(null);
     window.scrollTo(0,0);
   }
 
@@ -1888,9 +2009,16 @@ export default function NihongoVertex(){
   }
 
   const currentLesson = param && LESSONS.find(l=>l.id===param);
+  const currentModule = typeof param === "string"
+    ? Object.values(JLPT_CURRICULUM).flatMap(data=>data.modules).find(module=>module.id===param)
+    : null;
 
   if(!loaded){
     return <div className="min-h-screen flex items-center justify-center text-stone-400">Loading...</div>;
+  }
+
+  if(!hasChosenLevel){
+    return <LevelOnboarding onChoose={(level)=>{ setActiveLevel(level); try{localStorage.setItem("nv-level-chosen","true");}catch(e){} setHasChosenLevel(true); }}/>
   }
 
   if(screen === "mockRun" && mockExamData){
@@ -1900,33 +2028,36 @@ export default function NihongoVertex(){
   return (
     <div className="min-h-screen bg-stone-50 font-sans" style={{fontFamily:"'Noto Sans JP','Noto Sans Tamil',ui-sans-serif,system-ui"}}>
       <div className="flex">
-        {/* Desktop sidebar */}
-        <aside className="hidden md:flex md:flex-col w-64 shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0">
-          <div className="p-6 border-b border-stone-100">
-            <div className="flex items-center gap-2">
+        {/* Desktop sidebar: can be compacted to icon-only navigation. */}
+        <aside className={`hidden lg:flex lg:flex-col ${sidebarCollapsed ? "w-20" : "w-64"} shrink-0 bg-white border-r border-stone-200 min-h-screen sticky top-0 transition-[width] duration-200`}>
+          <div className={`p-5 border-b border-sky-300/25 flex items-center ${sidebarCollapsed ? "justify-center" : "justify-between"}`}>
+            <div className="flex items-center gap-2 min-w-0">
               <div className="w-2.5 h-2.5 rounded-full bg-red-600"/>
-              <span className="font-bold text-stone-900 tracking-tight">Nihongo Vertex</span>
+              {!sidebarCollapsed && <span className="font-bold text-white tracking-tight whitespace-nowrap">Nihongo Vertex</span>}
             </div>
+            {!sidebarCollapsed && <button onClick={()=>setSidebarCollapsed(true)} aria-label="Collapse navigation" className="p-2 rounded-lg text-sky-100 hover:bg-white/10"><Menu size={19}/></button>}
           </div>
+          {sidebarCollapsed && <button onClick={()=>setSidebarCollapsed(false)} aria-label="Expand navigation" className="m-3 p-2 rounded-lg text-sky-100 hover:bg-white/10"><Menu size={19}/></button>}
           <nav className="flex-1 p-3 space-y-1">
             {NAV.map(n=>{
               const Icon = n.icon;
-              const active = screen===n.key || (n.key==="lessons" && screen==="lesson") || (n.key==="levels" && screen==="levelDetail") || (n.key==="mock" && (screen==="mockResult"));
+              const active = screen===n.key || (n.key==="lessons" && screen==="lesson") || (n.key==="levels" && (screen==="levelDetail" || screen==="tierLessons")) || (n.key==="mock" && (screen==="mockResult"));
               return (
-                <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-red-50 text-red-700 font-medium" : "text-stone-600 hover:bg-stone-50"}`}>
-                  <Icon size={18}/> <span lang="ja">{n.jp}</span><span className="text-stone-400 text-xs">{n.en}</span>
+                <button key={n.key} title={n.en} onClick={()=>goTo(n.key)} className={`w-full flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3"} px-3 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-white/20 text-white font-medium ring-1 ring-white/30" : "text-sky-100 hover:bg-white/10"}`}>
+                  <Icon size={18}/> {!sidebarCollapsed && <><span lang="ja">{n.jp}</span><span className="text-sky-200 text-xs">{n.en}</span></>}
                 </button>
               );
             })}
           </nav>
-          <div className="p-4 border-t border-stone-100 text-xs text-stone-400">
+          {!sidebarCollapsed && <div className="p-4 border-t border-sky-300/25 text-xs text-sky-100/70">
             Practice questions are original learning materials inspired by JLPT formats and are not official JLPT questions.
-          </div>
+          </div>}
         </aside>
 
-        {/* Mobile top bar */}
-        <div className="md:hidden fixed top-0 inset-x-0 z-30 bg-white border-b border-stone-200 flex items-center justify-between px-4 py-3">
+        {/* Mobile/tablet hamburger navigation. */}
+        <div className="lg:hidden fixed top-0 inset-x-0 z-30 bg-white border-b border-stone-200 flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
+            <button onClick={()=>setSidebarOpen(true)} aria-label="Open navigation" className="p-2 -ml-2 rounded-lg text-sky-800 hover:bg-sky-50"><Menu size={22}/></button>
             <div className="w-2 h-2 rounded-full bg-red-600"/>
             <span className="font-bold text-stone-900">Nihongo Vertex</span>
           </div>
@@ -1936,33 +2067,39 @@ export default function NihongoVertex(){
           </div>
         </div>
 
-        <main className="flex-1 p-4 md:p-8 pt-20 md:pt-8 max-w-5xl mx-auto w-full">
-          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo}/>}
-          {screen==="lessons" && <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/>}
-          {screen==="characters" && <CharacterLab/>}
+        {sidebarOpen && <button aria-label="Close navigation" onClick={()=>setSidebarOpen(false)} className="lg:hidden fixed inset-0 z-40 bg-slate-950/40"/>}
+        <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 flex w-72 max-w-[86vw] flex-col bg-white border-r border-sky-300/30 shadow-2xl transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+          <div className="p-5 border-b border-sky-300/25 flex items-center justify-between">
+            <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 rounded-full bg-red-600"/><span className="font-bold text-white">Nihongo Vertex</span></div>
+            <button onClick={()=>setSidebarOpen(false)} aria-label="Close navigation" className="p-2 rounded-lg text-sky-100 hover:bg-white/10"><X size={21}/></button>
+          </div>
+          <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+            {NAV.map(n=>{
+              const Icon=n.icon;
+              const active=screen===n.key || (n.key==="lessons" && screen==="lesson") || (n.key==="levels" && (screen==="levelDetail" || screen==="tierLessons")) || (n.key==="mock" && screen==="mockResult");
+              return <button key={n.key} onClick={()=>goTo(n.key)} className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm ${active ? "bg-white/20 text-white font-medium ring-1 ring-white/30" : "text-sky-100 hover:bg-white/10"}`}><Icon size={19}/><span lang="ja">{n.jp}</span><span className="text-sky-200 text-xs">{n.en}</span></button>;
+            })}
+          </nav>
+          <div className="p-4 border-t border-sky-300/25 text-xs text-sky-100/70">Original practice materials inspired by JLPT formats.</div>
+        </aside>
+
+        <main className="flex-1 p-4 md:p-8 pt-20 lg:pt-8 max-w-5xl mx-auto w-full">
+          {screen==="home" && <Home progress={progress} lessons={LESSONS} goTo={goTo} activeLevel={activeLevel} onChangeExam={changeExam}/>}
+          {screen==="lessons" && (activeLevel==="N5" ? <LessonList lessons={LESSONS} progress={progress} goTo={goTo}/> : <ExamModuleList level={activeLevel} goTo={goTo}/>)}
+          {screen==="characters" && <CharacterLab onGainXP={addXP}/>}
           {screen==="lesson" && currentLesson && <LessonFlow lesson={currentLesson} goTo={goTo} onComplete={handleLessonComplete} isLastLesson={currentLesson.id===LESSONS.length}/>}          {screen==="levelComplete" && <LevelCompletionNotes level="N5" lessons={LESSONS} progress={progress} goTo={goTo}/>}
-          {screen==="levels" && <LevelSelector progress={progress} lessons={LESSONS} goTo={goTo} otherLevels={OTHER_LEVELS}/>}
+          {screen==="moduleLesson" && <ModuleLesson module={currentModule} goTo={goTo}/>}
+          {screen==="levels" && <StudyTierSelector level={activeLevel} goTo={goTo}/>}
+          {screen==="tierLessons" && <TierLessonList level={activeLevel} tier={param?.tier} goTo={goTo}/>}
           {screen==="levelDetail" && <LevelDetail level={param} otherLevels={OTHER_LEVELS} goTo={goTo}/>}
           {screen==="mistakes" && <MistakeBook mistakes={mistakes}/>}
           {screen==="mock" && <MockExamIntro onStart={startMock} goTo={goTo}/>}
           {screen==="mockResult" && mockResult && <MockExamResult result={mockResult} goTo={goTo}/>}
           {screen==="progress" && <ProgressDashboard progress={progress} lessons={LESSONS}/>}
+          {screen==="aiHub" && <AIMentorHub level={activeLevel} progress={progress} goTo={goTo}/>}
         </main>
       </div>
 
-      {/* Mobile bottom nav */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-stone-200 flex justify-around py-2">
-        {NAV.map(n=>{
-          const Icon = n.icon;
-          const active = screen===n.key || (n.key==="lessons" && screen==="lesson");
-          return (
-            <button key={n.key} onClick={()=>goTo(n.key)} className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-[10px] ${active ? "text-red-700" : "text-stone-400"}`}>
-              <Icon size={20}/>
-              <span lang="ja">{n.jp}</span>
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }

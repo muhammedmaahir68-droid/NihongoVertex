@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  jlpt-db:
+    image: postgres:16-alpine
+    container_name: jlpt-syllabus-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jlpt_syllabus
+      POSTGRES_USER: jlpt_admin
+      POSTGRES_PASSWORD: change_me_in_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - jlpt_pgdata:/var/lib/postgresql/data
+      # SQL files in this folder run automatically, in filename order,
+      # on first container start (Postgres official image behavior).
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jlpt_admin -d jlpt_syllabus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  jlpt_pgdata:
